@@ -1,1 +1,3 @@
-#save system här?
+import main
+
+#save system här? Separate file?
