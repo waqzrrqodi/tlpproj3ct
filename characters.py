@@ -1,7 +1,6 @@
 class Main_Char( ):
-    def __init__(self)
     def __init__(self, chosen_name, chosen_strength, chosen_health):
-        self.kappe = "ööööh"
+        self.name = chosen_name
         self.strength = chosen_strength
         HP  = chosen_health
 
@@ -12,13 +11,13 @@ class Inventory_Sys():
         self.inv = list()
         self.inv_cap = inv_max_space
     def drop(self):
-        if b in self.inv == "":
+        if self.inv == []:
             print("Thou doth not have any items")
         else:
             print("Which item would you like to drop?")
-            for a in range(self.inv:):
+            for a in range(self.inv):
                 print(f"Example. {self.inv[a]} is number {a}")
-    def pickup_item(self, item, ):
+    def pickup_item(self, item):
         if self.inv_cap >= 3:
             print("you do not have enough space to pickup an item, would you like to swap or discard?")
              
