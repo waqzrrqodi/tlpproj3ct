@@ -1,10 +1,23 @@
+from emoji import emojize
+import main
+
+#--------------------------------------------------------------
 intro_name = '''
 ▄▄▄ ..▄▄ ·  ▄▄·  ▄▄▄·  ▄▄▄·▄▄▄ .  ·▄▄▄▄▄▄        • ▌ ▄ ·.   ▄▄▄  ▪  • ▌ ▄ ·. ▄▄▄▄·       
 ▀▄.▀·▐█ ▀. ▐█ ▌▪▐█ ▀█ ▐█ ▄█▀▄.▀·  ▐▄▄ ▀▄ █· ▄█▀▄ ·██ ▐███▪  ▀▄ █·██ ·██ ▐███▪▐█ ▀█▪ ▄█▀▄ 
 ▐▀▀▪▄▄▀▀▀█▄██ ▄▄▄█▀▀█  ██▀·▐▀▀▪▄  █  ▪▐▀▀▄ ▐█▌.▐▌▐█ ▌▐▌▐█·  ▐▀▀▄ ▐█·▐█ ▌▐▌▐█·▐█▀▀█▄▐█▌.▐▌
 ▐█▄▄▌▐█▄▪▐█▐███▌▐█▪ ▐▌▐█▪·•▐█▄▄▌  ██ .▐█•█▌▐█▌.▐▌██ ██▌▐█▌  ▐█•█▌▐█▌██ ██▌▐█▌██▄▪▐█▐█▌.▐▌
- ▀▀▀  ▀▀▀▀ ·▀▀▀  ▀  ▀ .▀    ▀▀▀   ▀▀▀ .▀  ▀ ▀█▄▀▪▀▀  █▪▀▀▀  .▀  ▀▀▀▀▀▀  █▪▀▀▀·▀▀▀▀  ▀█▄▀▪ to the Osk
+ ▀▀▀  ▀▀▀▀ ·▀▀▀  ▀  ▀ .▀    ▀▀▀   ▀▀▀ .▀  ▀ ▀█▄▀▪▀▀  █▪▀▀▀  .▀  ▀▀▀▀▀▀  █▪▀▀▀·▀▀▀▀  ▀█▄▀▪ 
+
+                           【ＰＲＥＳＳ　ＡＮＹ　ＢＵＴＴＯＮ】
 '''
+
+name_select = '''
+----------===============----------
+ What does thou wish to be called?
+----------===============----------
+'''
+
 bilo = '''
 ===========================================================
 |                                                         |  
@@ -70,6 +83,7 @@ characterselect = '''
 |                  Choose your class:                     |
 |         1 - Human                2 - Beast              |
 ===========================================================
+                 type "i" for more info
 '''
 
 waldy = '''
@@ -96,12 +110,14 @@ waldy = '''
 
 ui_actionmenu = f'''
 ============================-----
-|       Choose your action                     
-|           1 - ***action_1***
-|           2 - ***action_2***
-|           3 - ***action_3***
+| Choose your action:                   
+| 1 - ***action_1***
+| 2 - ***action_2***
+| 3 - ***action_3***
 ============================-----
 '''
+#possible actions: attack, defend, enemy info, flee, inventory
+
 
 ui_textbox = f'''
 ============================-----
@@ -113,11 +129,9 @@ ui_textbox = f'''
 '''
 
 ui_newitem = f'''
-============================-----
-|
-|      You got a ***item_name***
-|
-============================-----
+----------==================----------
+       You got a ***item_name***
+----------==================----------
 '''
 
 ui_inventory = f'''
@@ -125,7 +139,7 @@ ui_inventory = f'''
 ============================--
 |       gold: ***balance***
 ============================--
-|1|\U00012659|     ***inventory_items***
+|1|{emojize(":smiling_face_with_sunglasses:")}|     ***inventory_items***
 ============================--
 '''
 
@@ -135,6 +149,8 @@ What in the name of God didst thou claim of me, thou miserable wretch?
 I must inform thee that I am a knight of unsurpassed valor and 
 I have many a time participated in raids against the Viking rebels and 
 have assuredly slain thirtyscore of them."""
+
+# *sigh* det är för mycket text Sebbe
 
 BossFight_Voice2 ="""
 I have trained in the art of simian warfare and none can challenge my skills of archery. 
@@ -163,5 +179,3 @@ Thou art truly smote, knave.
 VoiceLineSample ="""
 why are we still here? Just to suffer? 
 """
-
-print(ui_inventory)
