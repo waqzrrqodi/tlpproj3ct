@@ -10,18 +10,19 @@ class Main_Char( ):
 
 #för alla fiender
 class enemy():
-    def __init__(self, enemy_name, enemy_damage, enemy_health):
+    def __init__(self, enemy_name, enemy_damage, enemy_health, enemy_type):
         self.name = enemy_name
         self.damage = enemy_damage
         self.health = enemy_health
+        self.type = enemy_type
 
 #Lista av alla fiender
-valma = enemy("Waldy", 100, 100)
-simon = enemy("Simpa", 50, 200)
+valma = enemy("Waldy", 100, 100, "Boss")
+simon = enemy("Simpa", 50, 200, "Cuc")
 goblin = enemy("Lwittle Gwoblin", 50, 50)
 bilo = enemy("Bilo, the Town Rapist", 100, 50)
 qlex = enemy("Qlex", 25, 400)
-candide = enemy("Candide", 200, 50)
+pangloss = enemy("Pangloss", 200, 50, "Boss")
 
 
 #För alla inventory system inklusive 
