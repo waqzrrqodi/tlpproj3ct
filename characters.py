@@ -1,11 +1,12 @@
 #för spelaren
 class Main_Char( ):
-    def __init__(self, chosen_subclass, chosen_name, chosen_strength, chosen_health):
-        self.subclass = chosen_subclass
+    def __init__(self, chosen_strength, chosen_health):
         #subclass kan antingen vara human eller beast
-        self.name = chosen_name
         self.strength = chosen_strength
         HP  = chosen_health
+    def char_creator5000(self, chosen_subclass, chosen_name):
+        self.subclass = chosen_subclass
+        self.name = chosen_name
 
 
 #för alla fiender

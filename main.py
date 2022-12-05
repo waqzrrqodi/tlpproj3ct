@@ -36,11 +36,26 @@ def main():
 if __name__ == "__main__":
     main()
 
+def fight():
+    print("Do thau wish to fight")
+
+def menu():
+    menu_choice = int(input("What do thau wish to do?"));
+    if menu_choice == 1:
+        #tutorial()
+        print("tutoral")
+    if menu_choice == 2:
+        print("Save + Exit")
+    if menu_choice == 3:
+        print("inv")
 animate_text("Hello world")
 sp.call("cls", shell=True)
 print(ui_elements.ui_inventory)
 
-
+#def ending1
+    
+#def ending2:
+#def death:
 #-------------------------------------------------------------------------Selection System-----------------------------------------------------------------
 
 class default_action_menu():
