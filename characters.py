@@ -1,16 +1,14 @@
 #för spelaren
-class Main_Char( ):
-    def __init__(self, chosen_strength, chosen_health):
+class Player( ):
+    def __init__(self, chosen_strength, chosen_health, chosen_name):
         #subclass kan antingen vara human eller beast
         self.strength = chosen_strength
         HP  = chosen_health
-    def char_creator5000(self, chosen_subclass, chosen_name):
-        self.subclass = chosen_subclass
         self.name = chosen_name
 
 
 #för alla fiender
-class enemy():
+class Enemy():
     def __init__(self, enemy_name, enemy_damage, enemy_health, enemy_type):
         self.name = enemy_name
         self.damage = enemy_damage
@@ -18,19 +16,26 @@ class enemy():
         self.type = enemy_type
 
 #Lista av alla fiender
-valma = enemy("Waldy", 100, 100, "Boss")
-simon = enemy("Simpa", 50, 200, "Cuc")
-goblin = enemy("Lwittle Gwoblin", 50, 50)
-bilo = enemy("Bilo, the Town Rapist", 100, 50)
-qlex = enemy("Qlex", 25, 400)
-pangloss = enemy("Pangloss", 200, 50, "Boss")
-
+valma = Enemy("Waldy", 100, 100, "Boss")
+simon = Enemy("Simpa", 50, 200, "Cuc")
+goblin = Enemy("Lwittle Gwoblin", 50, 50, "Goblin")
+bilo = Enemy("Bilo, the Town Rapist", 100, 50, "bilo")
+qlex = Enemy("Qlex", 25, 400, "Qlex")
+pangloss = Enemy("Pangloss", 200, 50, "Boss")
 
 #För alla inventory system inklusive 
+MAX_INV_CAP = 5
 class Inventory_Sys():
     def __init__(self, inv_max_space, ):
         self.inv = list()
         self.inv_cap = inv_max_space
+
+    def inv_max_space_upgrade(self, upgrade_range):
+        if self.inv_cap == max_inv_capacity:
+            print("Error, already at max capacity")
+        else:
+            self.inv_cap += upgrade_range
+
     def drop(self):
         if self.inv == []:
             print("Thou doth not have any items")
@@ -38,20 +43,37 @@ class Inventory_Sys():
             print("Which item would you like to drop?")
             for a in range(self.inv):
                 print(f"Example. {self.inv[a]} is number {a}")
+
     def pickup_item(self, item):
-        if self.inv_cap >= 3:
-            input("You do not have enough space to pickup an item, would you like to swap or discard? \n -->")
+        if self.inv_cap >= self.inv_cap:
+            try:
+                the_item_dilemma = str(input("You do not have enough space to pickup an item, would you like to swap and discard? \n Y/n -->"))
+            except TypeError:
+                print("Please provide a Y/n answer")
+            except:
+                print("Unknown error has occured")
+            if the_item_dilemma.lower == "y" or the_item_dilemma == "yes":
+                print("item menu")
+                print("Which item would thau most prefferably switch?")
+
+                for item_numbah in range(self.inv):
+                    print(f"{item_numbah + 1}, self.inv{item_numbah}")
+
+                the_item_dilemma_final_choice = int(input("Choose numbah----->"))
+                self.inv.pop(the_item_dilemma_final_choice-1)
+                self.inv.append(item)
+
+            elif the_item_dilemma.lower == "n" or the_item_dilemma == "no":
+                print("As thau wish good sir")
+            else:
+                print("Please provide a Y/n answer")
         else: 
             self.inv.append(item)
             print(f"{item} successfully picked up")
 
-
-
 #Chest system
-class chest_sys():
+class Chest_sys():
     def __init__(self):
         self.chest = list()
     def chest_add(self, item):
         self.chest.append(item)
-    def chest_item_swap() -> None:
-        pass
