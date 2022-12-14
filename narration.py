@@ -25,11 +25,7 @@ of rogue goblins hop out. They run towards you and a fight breaks out.
 '''
 
 r1_txt2 = '''
-You won the battle and the goblins befriend you out of respect, they offer to take you to their leader, 
-you agree to follow them. You arrive at their hideout and are met with a strange man named Fulcrum.
-He takes a sip from his vape and offers an alliance. Before you get to speak to him any further a 
-group of bandits storm into the room. You have three choices. You can fight for the bandits, 
-take the side of Fulcrum or escape, what will you do?
+You won the battle and commence forward.
 '''
 
 
@@ -49,20 +45,6 @@ You ignore the wardrobe, and proceed forward through the alley.
 Not getting any items and feeling depressed.
 '''
 
-r2_txt3 = '''
-When you get out of the alley you're greeted with a large wooden house. 
-You get a little closer but a group of goblins storm you before there is a chance to react. 
-A fight begins.
-'''
-
-r2_txt4 = '''
-You beat the goblins and enter the house. You're greeted by a strange man who sits on a throne. 
-He takes a sip from his vape before introducing himself to you. He says that his name is Fulcrum and 
-that he's the leader of the goblins. He offers a treaty of peace but a group of bandits storm into 
-the room before you get to speak any further. You're gravely outnumbered, will you fight for the 
-bandits or alongside Fulcrum?
-'''
-
 
 #Route 3 - "Go Beyond the Rickety Bridge"
 r3_txt1 = '''You go towards the rickety bridge and get approached by a massive muscular testosterone-
@@ -71,32 +53,42 @@ and the first men, lord of the seven kingdoms and protector of the realm. He get
 to you and whispers in your ear "don't go beyond the rickety bridge" before disappearing without a trace. 
 Will you still continue?'''
 
-r3_txt2 = '''
-You go beyond the bridge and find an abandoned missile silo. You see a strange man running in your 
-direction. You realize that it isn't an ordinary man, it's Pangloss from the hit new york time's 
-best seller candide, written by Voltaire. He swings his arms towards you in a wild manner, and a 
-fight breaks out.
+r3_txt2_option1 = '''
+You go beyond the bridge and see a strange man running in your direction. You realize that it isn't 
+an ordinary man, it's Pangloss from the hit new york time's best seller candide, written by Voltaire. 
+He swings his arms towards you in a wild manner, and a fight breaks out.
 '''
 
-r3_txt3_option1 = '''
-You go beyond the bridge and find an abandoned missile silo. You see a strange man running in your 
-direction. You realize that it isn't an ordinary man, it's Pangloss from the hit new york time's 
-best seller candide, written by Voltaire. He swings his arms towards you in a wild manner, and a 
-fight breaks out.
-'''
-
-r3_txt3_option2 = '''
+r3_txt2_option2 = '''
 You depressingly stumble back to the bus station, feeling like you missed out on something. 
 The bus has already left, so your only choice is to go through the alley.
 '''
 
-r3_txt4 = '''
-You enter the missile silo and see two people fighting over a protein shake. 
+
+#Route 4 - "Missile silo"
+
+r4_txt1 = '''
+You enter the abandoned missile silo and see two people fighting over a protein shake. 
 One of the people is Neo Malmros, a local warlord. The other one is Bilo, an infamous sex-offender. 
 Neo asks you to help him take the protein shake, Bilo asks you to steal the shake from Neo. 
 What will you do? 
 '''
 
+
+#Route 5 - "Penjamin City"
+
+r5_txt1 = ''' 
+You make your way towards the house but a group of goblins storm you before there is a chance to react. 
+A fight begins.
+'''
+
+r5_txt2 = '''
+You beat the goblins and enter the house. You're greeted by a strange man who sits on a throne. 
+He takes a sip from his vape before introducing himself to you. He says that his name is Fulcrum and 
+that he's the leader of the goblins. He offers a treaty of peace but a group of bandits storm into 
+the room before you get to speak any further. You're gravely outnumbered, will you fight for the 
+bandits or alongside Fulcrum?
+'''
 
 # Coward Ending
 coward_end = '''
