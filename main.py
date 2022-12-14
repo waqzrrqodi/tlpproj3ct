@@ -2,17 +2,27 @@ import sys
 import time
 import subprocess as sp
 import pkg_resources
-import msvcrt as m
+import os
+from platform import system
+
+
 
 # Check if the user has the required packages installed
-required = {'progressbar', 'emoji', 'pydub'}
+required = {'progressbar', 'emoji', 'pydub', 'getch'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
+
+# for clearing console (windows and unix systems)
+clear = "cls"
+if os.name == "posix":
+    clear = "clear"
+def clear_screen():
+    sp.call(clear, shell=True)
 
 # If the user is missing any of the required packages, install them
 if missing:
     sp.check_call([sys.executable, '-m', 'pip', 'install', *missing], stdout=sp.DEVNULL)
-    sp.call("cls", shell=True)
+    clear_screen()
     print("Dependencies installed")
 
 import ui_elements as ui
@@ -20,18 +30,27 @@ import characters as ch
 from pydub import AudioSegment
 from pydub.playback import play
 
+if system() == "Windows":
+    from msvcrt import getch as getkey
+else:
+    import getch
+
 def animate_text(text):
     '''Makes text appear one letter at a time'''
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(0.05)
+    time.sleep(1)
 
 def wait_for_keypress():
-        m.getch()
+    if system() == "Windows":
+        getkey.getch()
+    else:
+        getch.getch()
 
 def intro():
-    sp.call("cls", shell=True) # Clears the screen
+    sp.call(clear, shell=True) # Clears the screen
     print("nah no way")
     print(ui.intro_name)
     wait_for_keypress()
@@ -75,7 +94,7 @@ def menu():
         print("inv")
 
 animate_text("Hello world")
-sp.call("cls", shell=True)
+clear_screen()
 print(ui.ui_inventory)
 
 #def ending1
@@ -106,27 +125,26 @@ class Default_action_menu():
                 continue
 
 def player_and_name_select():
-    name = input("What is thy name? -->")
+    name = input(ui.name_select)
     HUMAN = 1
     BEAST = 2
     # Lista av spelbara karaktärer
     player_human = ch.Player(100, 100, name, "Human", 5)
     player_beast = ch.Player(200, 50, name, "Beast", 10)
-    more_info = "i"
-    print(ui.characterselect)
-    player_choice = input("What doth thou choose? -->")
-    if player_choice == HUMAN:
-        print("Human selected")
-        return player_human
-    elif player_choice == BEAST:
-        print("Beast selected")
-        return player_beast
-    elif player_choice == more_info:
-        print("More info") # TODO: Skriv mer info
-        player_and_name_select()
-    else:
-        print("Please enter a valid choice")
-        player_and_name_select()
-    
+    MORE_INFO = "i"
+    def player_select():
+        print(ui.characterselect)
+        player_choice = input("What doth thou choose? --> ")
+        if player_choice == HUMAN:
+            print("Human selected")
+            return player_human
+        elif player_choice == BEAST:
+            print("Beast selected")
+            return player_beast
+        elif player_choice == MORE_INFO:
+            print("More info") # TODO: Skriv mer info
+            input("Press enter to go back...")
+            player_select()
+    print(f"Welcome {name} the {player_select()}")
 
 player_and_name_select()
