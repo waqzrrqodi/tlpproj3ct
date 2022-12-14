@@ -15,8 +15,8 @@ if missing:
     sp.call("cls", shell=True)
     print("Dependencies installed")
 
-import ui_elements
-import characters
+import ui_elements as ui
+import characters as ch
 from pydub import AudioSegment
 from pydub.playback import play
 
@@ -33,7 +33,7 @@ def wait_for_keypress():
 def intro():
     sp.call("cls", shell=True) # Clears the screen
     print("nah no way")
-    print(ui_elements.intro_name)
+    print(ui.intro_name)
     wait_for_keypress()
 
 def main():
@@ -42,36 +42,51 @@ def main():
 if __name__ == "__main__":
     main()
 
-def fight():
-    print("Do thau wish to fight")
+FIGHT = 1
+RUN = 2
+
+def fight_start():
+    print("Do thau wish to fight, or wish to run? 1 = FIHT, 2 = RUN")
+    fight_or_flight = int(input("Yeh m8"))
+    if fight_or_flight == FIGHT:
+        fight_loop_tm()
+    
+    if fight_or_flight == RUN:
+        running_coward_tm()
+
+def fight_loop_tm():
+    print("")
+
+def running_coward_tm():
+    print("")
+
 
 def menu():
-    Goto_tutorial = 1
-    Save_and_exit = 2
-    inventory = 3
+    GOTO_TUTORIAL = 1
+    SAVE_AND_EXIT = 2
+    INVENTORY = 3
     menu_choice = int(input("What do thau wish to do?"));
-    if menu_choice == Goto_tutorial:
+    if menu_choice == GOTO_TUTORIAL:
         #tutorial()
         print("tutoral")
-    if menu_choice == Save_and_exit:
+    if menu_choice == SAVE_AND_EXIT:
         print("Save + Exit")
-    if menu_choice == inventory:
+    if menu_choice == INVENTORY:
         print("inv")
 
 animate_text("Hello world")
 sp.call("cls", shell=True)
-print(ui_elements.ui_inventory)
+print(ui.ui_inventory)
 
 #def ending1
     
 #def ending2:
 #def death:
 #-------------------------------------------------------------------------Selection System-----------------------------------------------------------------
-
 class Default_action_menu():
     def default_action_menu(self, action_1, action_2, action_3):
         while True:
-            print(ui_elements)
+            print(ui.ui_actionmenu)
             self.selection = int(input("Your command -->"))
             try:
                 if self.selection == 1:
@@ -95,11 +110,11 @@ def player_and_name_select():
     HUMAN = 1
     BEAST = 2
     # Lista av spelbara karaktärer
-    player_human = characters.Player(100, 100, name)
-    player_beast = characters.Player(200, 50, name)
+    player_human = ch.Player(100, 100, name, "Human", 5)
+    player_beast = ch.Player(200, 50, name, "Beast", 10)
     more_info = "i"
-    print(ui_elements.characterselect)
-    player_choice = int(input("What doth thou choose? -->"))
+    print(ui.characterselect)
+    player_choice = input("What doth thou choose? -->")
     if player_choice == HUMAN:
         print("Human selected")
         return player_human
@@ -107,7 +122,7 @@ def player_and_name_select():
         print("Beast selected")
         return player_beast
     elif player_choice == more_info:
-        print("More info")
+        print("More info") # TODO: Skriv mer info
         player_and_name_select()
     else:
         print("Please enter a valid choice")

@@ -1,10 +1,12 @@
 #för spelaren
 class Player( ):
-    def __init__(self, chosen_strength, chosen_health, chosen_name):
+    def __init__(self, chosen_strength, chosen_health, chosen_name, chosen_subclass, chosen_speed):
         #subclass kan antingen vara human eller beast
         self.strength = chosen_strength
         HP  = chosen_health
         self.name = chosen_name
+        self.subclass = chosen_subclass
+        self.speed = chosen_speed
 
 
 #för alla fiender
@@ -32,7 +34,7 @@ class Inventory_Sys():
         self.inv_cap = inv_max_space
 
     def inv_max_space_upgrade(self, upgrade_range):
-        if self.inv_cap == max_inv_capacity:
+        if self.inv_cap == MAX_INV_CAP:
             print("Error, already at max capacity")
         else:
             self.inv_cap += upgrade_range
