@@ -22,6 +22,7 @@ goblin = Enemy("Lwittle Gwoblin", 50, 50, "Goblin")
 bilo = Enemy("Bilo, the Town Rapist", 100, 50, "bilo")
 qlex = Enemy("Qlex", 25, 400, "Qlex")
 pangloss = Enemy("Pangloss", 200, 50, "Boss")
+bill = Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Boss")
 
 #För alla inventory system inklusive 
 MAX_INV_CAP = 5
