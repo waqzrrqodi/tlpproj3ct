@@ -191,11 +191,3 @@ Thou art truly smote, knave.
 VoiceLineSample ="""
 why are we still here? Just to suffer? 
 """
-
-Class_Info = '''
-The human has a balanced amount of health, as well as the ability to deal moderate damage to the enemy. 
-He can also wear armour and wield weapons.
-
-The beast is equipped with sharp claws and thick skin, and is therefore
-more powerful in comparison to the human. It cannot, however, equip weapons or armour.
-'''
