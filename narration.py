@@ -126,3 +126,6 @@ true_end_win = '''
 You have won, finally. Now you have one final choice, will you send Valma to the shadow realm or 
 let her walk among mortals?
 '''
+# Choices:
+# 1 - Kill her
+# 2 - Let her live

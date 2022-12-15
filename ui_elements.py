@@ -179,3 +179,5 @@ Thou art truly smote, knave.
 VoiceLineSample ="""
 why are we still here? Just to suffer? 
 """
+
+print(ui_inventory)
