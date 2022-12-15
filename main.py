@@ -4,6 +4,7 @@ import subprocess as sp
 import pkg_resources
 import os
 from platform import system
+import random
 
 
 
@@ -76,19 +77,15 @@ def fight_start():
     if fight_or_flight == RUN:
         running_coward_tm()
 
+CLASS_CHOICE_1 = 1
+CLASS_CHOICE_2 = 2
+CLASS_CHOICE_3 = 3
 def fight_loop_tm():
-    """
-    Fight loop with the tutorial monster (tm) and the player.
-    A fight loop is a loop that runs until one of the two characters die.
-    The fight loop will also call the menu function when the player presses the menu button.
-    The menu function will then return the player to the fight loop.
-    The fight loop will also call the default_action_menu function when the player presses the action button.
-    The default_action_menu function will then return the player to the fight loop.
-    """
     print("")
-    
+
 def running_coward_tm():
-    print("")
+    print("You've successfully escaped!")
+    print("Though it came with an item loss")
 
 
 def menu():
