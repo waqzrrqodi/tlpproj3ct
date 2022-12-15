@@ -8,7 +8,10 @@ from platform import system
 
 
 # Check if the user has the required packages installed
-required = {'progressbar', 'emoji', 'pydub', 'getch'}
+if system() == "Windows":
+    required = {'progressbar', 'emoji', 'pydub'}
+else:
+    required = {'progressbar', 'emoji', 'pydub', 'getch'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -33,7 +36,7 @@ from pydub.playback import play
 if system() == "Windows":
     from msvcrt import getch as getkey
 else:
-    import getch
+    import getch as getkey_linux
 
 def animate_text(text):
     '''Makes text appear one letter at a time'''
@@ -45,12 +48,12 @@ def animate_text(text):
 
 def wait_for_keypress():
     if system() == "Windows":
-        getkey.getch()
+        getkey()
     else:
-        getch.getch()
+        getkey_linux()
 
 def intro():
-    sp.call(clear, shell=True) # Clears the screen
+    clear_screen() # Clears the screen
     print("nah no way")
     print(ui.intro_name)
     wait_for_keypress()
@@ -144,6 +147,9 @@ def player_and_name_select():
         elif player_choice == MORE_INFO:
             print("More info") # TODO: Skriv mer info
             input("Press enter to go back...")
+            player_select()
+        else:
+            print("Please enter a valid choice")
             player_select()
     print(f"Welcome {name} the {player_select()}")
 
