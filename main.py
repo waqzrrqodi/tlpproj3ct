@@ -4,6 +4,7 @@ import subprocess as sp
 import pkg_resources
 import os
 from platform import system
+import random
 
 
 
@@ -76,11 +77,18 @@ def fight_start():
     if fight_or_flight == RUN:
         running_coward_tm()
 
+CLASS_CHOICE_1 = 1
+CLASS_CHOICE_2 = 2
+CLASS_CHOICE_3 = 3
 def fight_loop_tm():
-    print("")
+    print("You have chosen to fight!")
+    print("Insert fighting choice")
 
+ESCAPE_SUCCESS_RATE = 0.2
+ITEM_LOSS_CHANCE = 0.1
 def running_coward_tm():
-    print("")
+    print("You've successfully escaped!")
+    print("Though it came with an item loss")
 
 
 def menu():
