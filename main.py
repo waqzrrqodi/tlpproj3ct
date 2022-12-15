@@ -36,7 +36,7 @@ from pydub.playback import play
 if system() == "Windows":
     from msvcrt import getch as getkey
 else:
-    import getch as getkey_linux
+    import getch as getkey_linux # For linux systems, getch is not included in the standard library on windows.
 
 def animate_text(text):
     '''Makes text appear one letter at a time'''
@@ -77,8 +77,16 @@ def fight_start():
         running_coward_tm()
 
 def fight_loop_tm():
+    """
+    Fight loop with the tutorial monster (tm) and the player.
+    A fight loop is a loop that runs until one of the two characters die.
+    The fight loop will also call the menu function when the player presses the menu button.
+    The menu function will then return the player to the fight loop.
+    The fight loop will also call the default_action_menu function when the player presses the action button.
+    The default_action_menu function will then return the player to the fight loop.
+    """
     print("")
-
+    
 def running_coward_tm():
     print("")
 
@@ -127,30 +135,36 @@ class Default_action_menu():
                 print("Unknown error has occured")
                 continue
 
+
+def player_select():
+    HUMAN = "1"
+    BEAST = "2"
+    MORE_INFO = "i"
+    print(ui.characterselect)
+    player_choice = input("What doth thou choose? --> ")
+    if player_choice == HUMAN:
+        print("Human selected")
+        return "Human"
+    elif player_choice == BEAST:
+        print("Beast selected")
+        return "Beast"
+    elif player_choice == MORE_INFO:
+        print("More info") # TODO: Skriv mer info
+        input("Press enter to go back...")
+        player_select()
+    else:
+        print("Please enter a valid choice")
+        player_select()
+
+
 def player_and_name_select():
     name = input(ui.name_select)
-    HUMAN = 1
-    BEAST = 2
-    # Lista av spelbara karaktärer
-    player_human = ch.Player(100, 100, name, "Human", 5)
-    player_beast = ch.Player(200, 50, name, "Beast", 10)
-    MORE_INFO = "i"
-    def player_select():
-        print(ui.characterselect)
-        player_choice = input("What doth thou choose? --> ")
-        if player_choice == HUMAN:
-            print("Human selected")
-            return player_human
-        elif player_choice == BEAST:
-            print("Beast selected")
-            return player_beast
-        elif player_choice == MORE_INFO:
-            print("More info") # TODO: Skriv mer info
-            input("Press enter to go back...")
-            player_select()
-        else:
-            print("Please enter a valid choice")
-            player_select()
-    print(f"Welcome {name} the {player_select()}")
+    selected_player = player_select()
+    if selected_player == "Human":
+        player = ch.Player(100, 100, name, "Human", 5)
+    elif selected_player == "Beast":
+        player = ch.Player(200, 50, name, "Beast", 10)
+    print(f"Welcome {name} the {ch.Player}")
+    print (f"Your health is {player.health}")
 
 player_and_name_select()
