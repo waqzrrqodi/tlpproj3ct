@@ -147,7 +147,7 @@ def player_select():
             print("Beast selected")
             return player_beast
         elif player_choice == MORE_INFO:
-            print("More info") # TODO: Skriv mer info
+            print("More info") # TODO: Ta in Class_Info från ui_elements
             input("Press enter to go back...")
             player_select()
         else:
