@@ -40,14 +40,26 @@ from pydub.playback import play
 if system() == "Windows":
     from msvcrt import getch as getkey
 else:
-    import getch as getkey_linux # For linux systems, getch is not included in the standard library on windows.
+    from getch import getch as getkey_linux # For linux systems, getch is not included in the standard library on windows.
 
-def animate_text(text):
-    '''Makes text appear one letter at a time'''
+def animate_text(text, sleep_time):
+    '''
+    Makes text appear one letter at a time at a given speed
+    fast, slow, or default
+    '''
+    FAST = 0.03
+    SLOW = 0.1
+    DEFAULT = 0.05
+    if sleep_time == "fast":
+        sleep_time = FAST
+    elif sleep_time == "slow":
+        sleep_time = SLOW
+    else:
+        sleep_time = DEFAULT
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
-        time.sleep(0.05)
+        time.sleep(sleep_time)
     time.sleep(1)
 
 def wait_for_keypress():
@@ -62,11 +74,7 @@ def intro():
     print(ui.intro_name)
     wait_for_keypress()
 
-def main():
-    intro()
-    
-if __name__ == "__main__":
-    main()
+
 
 
 FIGHT = 1
@@ -92,20 +100,9 @@ def running_coward_tm():
     print("Though it came with an item loss")
 
 
-def menu():
-    GOTO_TUTORIAL = 1
-    SAVE_AND_EXIT = 2
-    INVENTORY = 3
-    menu_choice = int(input("What do thau wish to do?"));
-    if menu_choice == GOTO_TUTORIAL:
-        #tutorial()
-        print("tutoral")
-    if menu_choice == SAVE_AND_EXIT:
-        print("Save + Exit")
-    if menu_choice == INVENTORY:
-        print("inv")
 
-animate_text("Hello world")
+
+animate_text("Hello world", "fast")
 clear_screen()
 print(ui.ui_inventory)
 
@@ -116,6 +113,10 @@ print(ui.ui_inventory)
 #-------------------------------------------------------------------------Selection System-----------------------------------------------------------------
 class Default_action_menu():
     def default_action_menu(self, action_1, action_2, action_3):
+        """
+        This is the default action menu that is used in the game.
+        It is used in the main game loop and in the menu system.
+        """
         while True:
             print(ui.ui_actionmenu)
             self.selection = int(input("Your command -->"))
@@ -135,10 +136,16 @@ class Default_action_menu():
             except:
                 print("Unknown error has occured")
                 continue
-    def subclass_selection(self, subclass_1, subclass_2, more_info):
+    def subclass_selection(self, subclass_1, subclass_2):
+        """
+        The menu of the choices of the subclasses (Human or Beast) of the player and the name of the player.
+        """
+        clear_screen()
+        print(ui.characterselect)
         HUMAN = "1"
         BEAST = "2"
         MORE_INFO = "i"
+        player = None
         self.choice = input("What is your choice? --> ")
         try:
             if self.choice == HUMAN:
@@ -155,28 +162,107 @@ class Default_action_menu():
                 elif user_choice == "y" or user_choice == "Y":
                     print("Hidden user aquired! (not really) \nYou are the god now.")
                     player = ch.More_Info_Player()
+            else:
+                print("Please enter a valid input...")
+                time.sleep(1)
+                input("Press enter to continue...")
+                return
             return player
         except ValueError:
             print("Please enter a valid number.")
             return
-        
         except:
             print("Unknown error has occured")
+            time.sleep(1)
+            clear_screen()
+            animate_text("Retrying...", "default")
             return
 
 class Player_And_Name_Select(Default_action_menu):
+    """for selecting the player and the name of the player"""
     def __init__(self):
         clear_screen()
         self.player = None
         self.name = None
         self.player_select()
+        while True:
+            if self.player == None:
+                self.player_select()
+            else:
+                break
         self.name_select()
     def player_select(self):
-        print(ui.characterselect)
-        self.player = self.subclass_selection("Human", "Beast", "More info")
+        self.player = self.subclass_selection("Human", "Beast")
     def name_select(self):
         self.name = input("What is your name? --> ")
         print(f"Welcome {self.name} the {self.player.SUBCLASS}")
 
+def menu():
+    """
+    The menu system of the game that is used to navigate, save, and exit the game.
+    """
+    GOTO_TUTORIAL = "1"
+    SAVE_AND_EXIT = "2"
+    INVENTORY = "3"
+    CONTINUE = ""
+    clear_screen()
+    print(ui.ui_textbox)
+    menu_choice = input("What do thau wish to do? ");
+    if menu_choice == GOTO_TUTORIAL:
+        #tutorial()
+        print("tutoral")
+    if menu_choice == SAVE_AND_EXIT:
+        print("Save + Exit")
+    if menu_choice == INVENTORY:
+        print("inv")
+    if menu_choice == CONTINUE:
+        animate_text("Continuing with story...", "default")
 
-Player_And_Name_Select()
+def tutorial():
+    # This is the tutorial to make sure the player knows how to play the game
+    pass
+
+def level_choice():
+    # Choose level and "difficulty"
+    pass
+
+def fleeflight():
+    # Probability of success or failure
+    pass
+
+def fight():
+    # If boss fight, then fight_loop_tm(), else fight_loop()
+    # If player dies, then death()
+    # If boss fight, make choice to save available at the end of the fight (if player dies, then death())
+    pass
+
+def death():
+    # Shows the death screen and the ending of the game
+    # Shows the player their total score and items/triumphs
+    pass
+
+def ending1():
+    pass
+
+def ending2():
+    pass
+
+def ending3():
+    pass
+
+#-------------------------------------------------------------------------Game Functions-----------------------------------------------------------------
+
+def main():
+    intro()
+    Player_And_Name_Select()
+    menu()
+    tutorial()
+    level_choice()
+    fleeflight()
+    fight()
+    death()
+    
+
+    
+if __name__ == "__main__":
+    main()
