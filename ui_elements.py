@@ -143,7 +143,7 @@ ui_inventory = f'''
 ============================--
 '''
 
-Class_Info = '''
+class_info = '''
 ================================================================
 |        The human has a balanced amount of health,            |
 | as well as the ability to deal moderate damage to the enemy. | 

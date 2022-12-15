@@ -25,9 +25,12 @@ def clear_screen():
 
 # If the user is missing any of the required packages, install them
 if missing:
+    print("Installing dependencies... \nThis may take a while")
     sp.check_call([sys.executable, '-m', 'pip', 'install', *missing], stdout=sp.DEVNULL)
     clear_screen()
     print("Dependencies installed")
+    time.sleep(0.5)
+    clear_screen()
 
 import ui_elements as ui
 import characters as ch
@@ -131,28 +134,48 @@ class Default_action_menu():
             except:
                 print("Unknown error has occured")
                 continue
+    def subclass_selection(self, subclass_1, subclass_2, more_info):
+        HUMAN = "1"
+        BEAST = "2"
+        MORE_INFO = "i"
+        self.choice = input("What is your choice? --> ")
+        try:
+            if self.choice == HUMAN:
+                print(f"{subclass_1} selected")
+                player = ch.Human()
+            elif self.choice == BEAST:
+                print(f"{subclass_2} selected")
+                player = ch.Beast()
+            elif self.choice == MORE_INFO:
+                print(f"{ui.class_info}")
+                user_choice = input("Please type b to go back (or y?)--> ")
+                if user_choice == "b" or user_choice == "B":
+                    Player_And_Name_Select()
+                elif user_choice == "y" or user_choice == "Y":
+                    print("Hidden user aquired! (not really) \nYou are the god now.")
+                    player = ch.More_Info_Player()
+            return player
+        except ValueError:
+            print("Please enter a valid number.")
+            return
+        
+        except:
+            print("Unknown error has occured")
+            return
 
-
-def player_select():
-    HUMAN = "1"
-    BEAST = "2"
-    MORE_INFO = "i"
-    def player_select():
+class Player_And_Name_Select(Default_action_menu):
+    def __init__(self):
+        clear_screen()
+        self.player = None
+        self.name = None
+        self.player_select()
+        self.name_select()
+    def player_select(self):
         print(ui.characterselect)
-        player_choice = input("What doth thou choose? --> ")
-        if player_choice == HUMAN:
-            print("Human selected")
-            return player_human
-        elif player_choice == BEAST:
-            print("Beast selected")
-            return player_beast
-        elif player_choice == MORE_INFO:
-            print("More info") # TODO: Skriv mer info
-            input("Press enter to go back...")
-            player_select()
-        else:
-            print("Please enter a valid choice")
-            player_select()
-    print(f"Welcome {name} the {player_select()}")
+        self.player = self.subclass_selection("Human", "Beast", "More info")
+    def name_select(self):
+        self.name = input("What is your name? --> ")
+        print(f"Welcome {self.name} the {self.player.SUBCLASS}")
 
-player_and_name_select()
+
+Player_And_Name_Select()

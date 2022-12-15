@@ -7,11 +7,48 @@ class Player( ):
         self.name = chosen_name
         self.subclass = chosen_subclass
         self.speed = chosen_speed
+        self.inventory = Inventory_Sys(5)
+        self.gold = 0
+        self.armour = None
+        self.weapon = None
+        self.level = 1
+        self.xp = 0
+        self.level_max_xp = 100
+    
+    def attack(self, enemy):
+        if self.weapon == None:
+            enemy.health -= self.strength
+        else:
+            enemy.health -= self.strength + self.weapon.damage
+    
+    def defend(self):
+        pass
 
+class Human( ):
+    def __init__(self) -> None:
+        self.HP = 100
+        self.SPEED = 5
+        self.STRENGHT = 100
+        self.SUBCLASS = "Human"
+
+class Beast( ):
+    def __init__(self) -> None:
+        self.HP = 200
+        self.SPEED = 10
+        self.STRENGHT = 50
+        self.SUBCLASS = "Beast"
+
+class More_Info_Player( ):
+    def __init__(self) -> None:
+        self.HP = 999999
+        self.SPEED = 999999
+        self.STRENGHT = 999999
+        self.SUBCLASS = "God"
 class Armour( ):
     def __init__(self, armour_name, armour_defence):
         self.name = armour_name
         self.defence = armour_defence
+
 wardrobe = Armour("simpa_wardrobe", 100)
 condom = Armour("mega_condom", 70)
 steelplate = Armour("Steel Breastplate", 50)
