@@ -82,7 +82,7 @@ CLASS_CHOICE_1 = 1
 CLASS_CHOICE_2 = 2
 CLASS_CHOICE_3 = 3
 def fight_loop_tm():
-    print("")
+    print("Kasper jag är oskyldig")
 
 def running_coward_tm():
     print("You've successfully escaped!")
