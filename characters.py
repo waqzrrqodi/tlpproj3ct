@@ -12,10 +12,22 @@ class Armour( ):
     def __init__(self, armour_name, armour_defence):
         self.name = armour_name
         self.defence = armour_defence
-
-
 wardrobe = Armour("simpa_wardrobe", 100)
 condom = Armour("mega_condom", 70)
+
+class Weapon( ):
+    def __init__(self, weapon_name, weapon_dmg):
+        self.name = weapon_name
+        self.damage = weapon_dmg
+sword = Weapon("Sword", 100)
+greatsword = Weapon("Greatsword", 200)
+dragonslayer = Weapon("DragonSlayer Sword", 250)
+
+class Heals( ):
+    def __init__(self, heal_name, health_restored, heal_rarity):
+        self.name = heal_name
+        self.healstat = health_restored
+        self.rarity = heal_rarity
 
 
 #för alla fiender
