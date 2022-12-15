@@ -8,6 +8,15 @@ class Player( ):
         self.subclass = chosen_subclass
         self.speed = chosen_speed
 
+class Armour( ):
+    def __init__(self, armour_name, armour_defence):
+        self.name = armour_name
+        self.defence = armour_defence
+
+
+wardrobe = Armour("simpa_wardrobe", 100)
+condom = Armour("mega_condom", 70)
+
 
 #för alla fiender
 class Enemy():
