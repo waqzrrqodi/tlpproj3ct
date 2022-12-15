@@ -65,6 +65,7 @@ def main():
 if __name__ == "__main__":
     main()
 
+
 FIGHT = 1
 RUN = 2
 
