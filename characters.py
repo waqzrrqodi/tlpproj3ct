@@ -14,6 +14,7 @@ class Armour( ):
         self.defence = armour_defence
 wardrobe = Armour("simpa_wardrobe", 100)
 condom = Armour("mega_condom", 70)
+steelplate = Armour("Steel Breastplate", 50)
 
 class Weapon( ):
     def __init__(self, weapon_name, weapon_dmg):
@@ -21,13 +22,16 @@ class Weapon( ):
         self.damage = weapon_dmg
 sword = Weapon("Sword", 100)
 greatsword = Weapon("Greatsword", 200)
-dragonslayer = Weapon("DragonSlayer Sword", 250)
+dragonslayer = Weapon("DragonSlayer Greatsword", 250)
 
 class Heals( ):
     def __init__(self, heal_name, health_restored, heal_rarity):
         self.name = heal_name
         self.healstat = health_restored
         self.rarity = heal_rarity
+meth = Heals("Crystal Meth", 40, 30)
+heroin = Heals("Heroin", 50, 30)
+cocaine = Heals("Crack Cocaine", 30, 50)
 
 
 #för alla fiender
@@ -39,13 +43,16 @@ class Enemy():
         self.type = enemy_type
 
 #Lista av alla fiender
-valma = Enemy("Waldy", 100, 100, "Boss")
-simon = Enemy("Simpa", 50, 200, "Cuc")
-goblin = Enemy("Lwittle Gwoblin", 50, 50, "Goblin")
-bilo = Enemy("Bilo, the Town Rapist", 100, 50, "bilo")
-qlex = Enemy("Qlex", 25, 400, "Qlex")
-pangloss = Enemy("Pangloss", 200, 50, "Boss")
-bill = Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Boss")
+valma = Enemy("Waldy", 200, 1000, "God")
+simon = Enemy("Simpa", 50, 100, "Human")
+goblin = Enemy("Lwittle Gwoblin", 50, 100, "Monster")
+bilo = Enemy("Bilo, the Town Rapist", 100, 50, "Human")
+qlex = Enemy("Steroid Beast", 25, 400, "Monster")
+pangloss = Enemy("Pangloss", 200, 50, "Human")
+bandits = Enemy("Bandits", 100, 100, "Human")
+neo = Enemy("Neo Järnmalm", 200, 200, "Human")
+fulcrum = Enemy("Fulcrum", 250, 100, "Yodie Gang")
+bill = Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
 
 #För alla inventory system inklusive 
 MAX_INV_CAP = 5
