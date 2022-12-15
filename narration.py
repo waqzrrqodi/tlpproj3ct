@@ -105,6 +105,14 @@ bandits or alongside Fulcrum?
 # 3 - Escape
 
 
+#Route 6 - "Dark Forest"
+r6_txt1 = '''
+You enter the forest and find a giant man surrounded by steroid needles. He looks at you and starts
+speaking gibberish. He pulls out a rolling pin and a fight breaks out.
+'''
+#Battle - Steroid Beast
+
+
 # Coward Ending
 coward_end = '''
 You get tracked down and captured by Rimbo advanced special forces. 
