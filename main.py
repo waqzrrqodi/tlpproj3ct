@@ -37,7 +37,7 @@ from pydub.playback import play
 if system() == "Windows":
     from msvcrt import getch as getkey
 else:
-    import getch as getkey_linux
+    import getch as getkey_linux # For linux systems, getch is not included in the standard library on windows.
 
 def animate_text(text):
     '''Makes text appear one letter at a time'''
@@ -81,11 +81,8 @@ CLASS_CHOICE_1 = 1
 CLASS_CHOICE_2 = 2
 CLASS_CHOICE_3 = 3
 def fight_loop_tm():
-    print("You have chosen to fight!")
-    print("Insert fighting choice")
+    print("")
 
-ESCAPE_SUCCESS_RATE = 0.2
-ITEM_LOSS_CHANCE = 0.1
 def running_coward_tm():
     print("You've successfully escaped!")
     print("Though it came with an item loss")
@@ -135,13 +132,10 @@ class Default_action_menu():
                 print("Unknown error has occured")
                 continue
 
-def player_and_name_select():
-    name = input(ui.name_select)
-    HUMAN = 1
-    BEAST = 2
-    # Lista av spelbara karaktärer
-    player_human = ch.Player(100, 100, name, "Human", 5)
-    player_beast = ch.Player(200, 50, name, "Beast", 10)
+
+def player_select():
+    HUMAN = "1"
+    BEAST = "2"
     MORE_INFO = "i"
     def player_select():
         print(ui.characterselect)
@@ -153,7 +147,7 @@ def player_and_name_select():
             print("Beast selected")
             return player_beast
         elif player_choice == MORE_INFO:
-            print("more info") # TODO: Skriv mer info
+            print("More info") # TODO: Skriv mer info
             input("Press enter to go back...")
             player_select()
         else:
