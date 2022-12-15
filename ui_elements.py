@@ -143,6 +143,18 @@ ui_inventory = f'''
 ============================--
 '''
 
+Class_Info = '''
+================================================================
+|        The human has a balanced amount of health,            |
+| as well as the ability to deal moderate damage to the enemy. | 
+|        He can also wear armour and wield weapons.            |
+|                                                              | 
+|  The beast is equipped with sharp claws and thick skin,      |
+| and is thereforemore powerful in comparison to the human.    |
+|        It cannot, however, equip weapons or armour.          |
+================================================================
+'''
+
 #-------------------------------------------------------------------------Voice Lines Section-----------------------------------------------------------------
 BossFight_Voice1 = """
 What in the name of God didst thou claim of me, thou miserable wretch? 
@@ -180,4 +192,10 @@ VoiceLineSample ="""
 why are we still here? Just to suffer? 
 """
 
-print(ui_inventory)
+Class_Info = '''
+The human has a balanced amount of health, as well as the ability to deal moderate damage to the enemy. 
+He can also wear armour and wield weapons.
+
+The beast is equipped with sharp claws and thick skin, and is therefore
+more powerful in comparison to the human. It cannot, however, equip weapons or armour.
+'''
