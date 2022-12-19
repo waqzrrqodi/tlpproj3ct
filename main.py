@@ -1,10 +1,10 @@
 import sys
 import time
+import random
 import subprocess as sp
-import pkg_resources
 import os
 from platform import system
-import random
+import pkg_resources
 
 
 
@@ -17,11 +17,12 @@ installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
 # for clearing console (windows and unix systems)
-clear = "cls"
+CLEAR = "cls"
 if os.name == "posix":
-    clear = "clear"
+    CLEAR = "clear"
 def clear_screen():
-    sp.call(clear, shell=True)
+    """Clears the screen"""
+    sp.call(CLEAR, shell=True)
 
 # If the user is missing any of the required packages, install them
 if missing:
@@ -32,10 +33,10 @@ if missing:
     time.sleep(0.5)
     clear_screen()
 
-import ui_elements as ui
-import characters as ch
 from pydub import AudioSegment
 from pydub.playback import play
+import ui_elements as ui
+import characters as ch
 
 if system() == "Windows":
     from msvcrt import getch as getkey
@@ -111,7 +112,10 @@ print(ui.ui_inventory)
 #def ending2:
 #def death:
 #-------------------------------------------------------------------------Selection System-----------------------------------------------------------------
-class Default_action_menu():
+class DefaultActionMenu():
+    """
+    Default action menu that is used in the game.
+    """
     def default_action_menu(self, action_1, action_2, action_3):
         """
         This is the default action menu that is used in the game.
@@ -119,15 +123,15 @@ class Default_action_menu():
         """
         while True:
             print(ui.ui_actionmenu)
-            self.selection = int(input("Your command -->"))
+            selection = int(input("Your command -->"))
             try:
-                if self.selection == 1:
+                if selection == 1:
                     print(f"{action_1} selected")
                     return 1
-                if self.selection == 2:
+                if selection == 2:
                     print(f"{action_2} selected")
                     return 2
-                if self.selection == 3:
+                if selection == 3:
                     print(f"{action_3} selected")
                     return 3
             except ValueError:
@@ -146,19 +150,19 @@ class Default_action_menu():
         BEAST = "2"
         MORE_INFO = "i"
         player = None
-        self.choice = input("What is your choice? --> ")
+        choice = input("What is your choice? --> ")
         try:
-            if self.choice == HUMAN:
+            if choice == HUMAN:
                 print(f"{subclass_1} selected")
                 player = ch.Human()
-            elif self.choice == BEAST:
+            elif choice == BEAST:
                 print(f"{subclass_2} selected")
                 player = ch.Beast()
-            elif self.choice == MORE_INFO:
+            elif choice == MORE_INFO:
                 print(f"{ui.class_info}")
                 user_choice = input("Please type b to go back (or y?)--> ")
                 if user_choice == "b" or user_choice == "B":
-                    Player_And_Name_Select()
+                    PlayerAndNameSelect()
                 elif user_choice == "y" or user_choice == "Y":
                     print("Hidden user aquired! (not really) \nYou are the god now.")
                     player = ch.More_Info_Player()
@@ -178,22 +182,27 @@ class Default_action_menu():
             animate_text("Retrying...", "default")
             return
 
-class Player_And_Name_Select(Default_action_menu):
+class PlayerAndNameSelect(DefaultActionMenu):
     """for selecting the player and the name of the player"""
     def __init__(self):
         clear_screen()
         self.player = None
         self.name = None
-        self.player_select()
         while True:
-            if self.player == None:
+            if self.player is None:
                 self.player_select()
             else:
                 break
         self.name_select()
     def player_select(self):
+        """
+        player selection menu
+        """
         self.player = self.subclass_selection("Human", "Beast")
     def name_select(self):
+        """
+        name selection menu
+        """
         self.name = input("What is your name? --> ")
         print(f"Welcome {self.name} the {self.player.SUBCLASS}")
 
@@ -254,7 +263,7 @@ def ending3():
 
 def main():
     intro()
-    Player_And_Name_Select()
+    PlayerAndNameSelect()
     menu()
     tutorial()
     level_choice()

@@ -1,5 +1,6 @@
 #för spelaren
 class Player( ):
+    """The player class"""
     def __init__(self, chosen_strength, chosen_health, chosen_name, chosen_subclass, chosen_speed):
         #subclass kan antingen vara human eller beast
         self.strength = chosen_strength
@@ -16,6 +17,7 @@ class Player( ):
         self.level_max_xp = 100
     
     def attack(self, enemy):
+        """Attack an enemy"""
         if self.weapon == None:
             enemy.health -= self.strength
         else:
@@ -25,6 +27,7 @@ class Player( ):
         pass
 
 class Human( ):
+    """The human subclass"""
     def __init__(self) -> None:
         self.HP = 100
         self.SPEED = 5
@@ -32,6 +35,7 @@ class Human( ):
         self.SUBCLASS = "Human"
 
 class Beast( ):
+    """The beast subclass"""
     def __init__(self) -> None:
         self.HP = 200
         self.SPEED = 10
@@ -39,6 +43,7 @@ class Beast( ):
         self.SUBCLASS = "Beast"
 
 class More_Info_Player( ):
+    """The player class with more info aka the god class"""
     def __init__(self) -> None:
         self.HP = 999999
         self.SPEED = 999999
@@ -54,6 +59,7 @@ condom = Armour("mega_condom", 70)
 steelplate = Armour("Steel Breastplate", 50)
 
 class Weapon( ):
+    """The weapon class"""
     def __init__(self, weapon_name, weapon_dmg):
         self.name = weapon_name
         self.damage = weapon_dmg
@@ -62,6 +68,7 @@ greatsword = Weapon("Greatsword", 200)
 dragonslayer = Weapon("DragonSlayer Greatsword", 250)
 
 class Heals( ):
+    """The healing class"""
     def __init__(self, heal_name, health_restored, heal_rarity):
         self.name = heal_name
         self.healstat = health_restored
@@ -73,6 +80,7 @@ cocaine = Heals("Crack Cocaine", 30, 50)
 
 #för alla fiender
 class Enemy():
+    """The enemy class"""
     def __init__(self, enemy_name, enemy_damage, enemy_health, enemy_type):
         self.name = enemy_name
         self.damage = enemy_damage
@@ -93,18 +101,21 @@ bill = Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
 
 #För alla inventory system inklusive 
 MAX_INV_CAP = 5
-class Inventory_Sys():
+class InventorySys():
+    """The inventory system"""
     def __init__(self, inv_max_space, ):
         self.inv = list()
         self.inv_cap = inv_max_space
 
     def inv_max_space_upgrade(self, upgrade_range):
+        """Upgrade the inventory max space"""
         if self.inv_cap == MAX_INV_CAP:
             print("Error, already at max capacity")
         else:
             self.inv_cap += upgrade_range
 
     def drop(self):
+        """Drop an item"""
         if self.inv == []:
             print("Thou doth not have any items")
         else:
@@ -113,6 +124,7 @@ class Inventory_Sys():
                 print(f"Example. {self.inv[a]} is number {a}")
 
     def pickup_item(self, item):
+        """Pickup an item"""
         if self.inv_cap >= self.inv_cap:
             try:
                 the_item_dilemma = str(input("You do not have enough space to pickup an item, would you like to swap and discard? \n Y/n -->"))
@@ -140,7 +152,8 @@ class Inventory_Sys():
             print(f"{item} successfully picked up")
 
 #Chest system
-class Chest_sys():
+class ChestSys():
+    """The chest system"""
     def __init__(self):
         self.chest = list()
     def chest_add(self, item):
