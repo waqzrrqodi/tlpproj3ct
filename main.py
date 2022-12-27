@@ -76,70 +76,54 @@ def intro():
     wait_for_keypress()
 
 
-
-
-FIGHT = 1
-RUN = 2
-
-def fight_start():
-    print("Do thau wish to fight, or wish to run? 1 = FIHT, 2 = RUN")
-    fight_or_flight = int(input("Yeh m8"))
-    if fight_or_flight == FIGHT:
-        fight_loop_tm()
-    
-    if fight_or_flight == RUN:
-        running_coward_tm()
-
-CLASS_CHOICE_1 = 1
-CLASS_CHOICE_2 = 2
-CLASS_CHOICE_3 = 3
-def fight_loop_tm():
-    print("Kasper jag är oskyldig")
-
-def running_coward_tm():
-    print("You've successfully escaped!")
-    print("Though it came with an item loss")
-
-
-
-
 animate_text("Hello world", "fast")
 clear_screen()
 print(ui.ui_inventory)
 
-#def ending1
-    
-#def ending2:
-#def death:
+
 #-------------------------------------------------------------------------Selection System-----------------------------------------------------------------
 class DefaultActionMenu():
     """
-    Default action menu that is used in the game.
+    Default player_action menu that is used in the game.
     """
     def default_action_menu(self, action_1, action_2, action_3):
         """
-        This is the default action menu that is used in the game.
+        This is the default player_action menu that is used in the game.
         It is used in the main game loop and in the menu system.
         """
         while True:
-            print(ui.ui_actionmenu)
-            selection = int(input("Your command -->"))
+            # Prompt the player to attack or defend
+            player_action = input("What do you want to do? (A)ttack, (D)efend?")
+
+            # Handle the player's player_action
             try:
-                if selection == 1:
-                    print(f"{action_1} selected")
-                    return 1
-                if selection == 2:
-                    print(f"{action_2} selected")
-                    return 2
-                if selection == 3:
-                    print(f"{action_3} selected")
-                    return 3
-            except ValueError:
-                print("Please enter a valid number")
+                if player_action.lower() == "a":
+                    print("Select Attack")
+                    if selection == 1:
+                        print(f"{action_1} selected")
+                        return 1
+                    if selection == 2:
+                        print(f"{action_2} selected")
+                        return 2
+                    if selection == 3:
+                        print(f"{action_3} selected")
+                        return 3
+                    # Calculate the damage dealt by the player
+                    print(f"You attack the enemy and deal {damage} points of damage!")
+                elif player_action.lower() == "d":
+                    # Reduce the damage taken by the player by 50%
+                    print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
+
+            except(IndexError,ValueError):
+                print("Invalid player_action. Please try again.")
                 continue
+
             except:
                 print("Unknown error has occured")
+                print(ui.ui_actionmenu)
+                selection = int(input("Your command -->"))
                 continue
+
     def subclass_selection(self, subclass_1, subclass_2):
         """
         The menu of the choices of the subclasses (Human or Beast) of the player and the name of the player.
@@ -235,20 +219,67 @@ def level_choice():
     # Choose level and "difficulty"
     pass
 
-def fleeflight():
-    # Probability of success or failure
-    pass
+#-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 
-def fight():
-    # If boss fight, then fight_loop_tm(), else fight_loop()
-    # If player dies, then death()
-    # If boss fight, make choice to save available at the end of the fight (if player dies, then death())
-    pass
+FIGHT = 1
+RUN = 2
+def fight_start():
+    print("Do thau wish to fight, or wish to run? 1 = FIHT, 2 = RUN")
+    fight_or_flight = int(input("Yeh m8"))
+    if fight_or_flight == FIGHT:
+        fight_loop_tm()
+    
+    if fight_or_flight == RUN:
+        running_coward_tm()
+
+
+def running_coward_tm():
+    if random.randint(1, 100) <= 20:
+        print("You try to run, but the enemy blocks thau escape!")
+        fight_loop_tm()
+    elif random.randint(1, 100) <= 5:
+        print("You try to run, but thau trips and falls, shattering every bone in your body.")
+        death()
+    else:
+        print("Thau successfully run away from the fight!")
+        print("Though it came with an item loss")
+
+
+
+
+
+
+# Start the fight loop
+def fight_loop_tm():
+    while True:
+        # Display the current health of the player and the enemy
+        print(f"Player health: {player_health}")
+        print(f"Enemy health: {enemy_health}")
+
+        DefaultActionMenu().action_menu()
+
+        # Check if the enemy has been defeated
+        if enemy_health <= 0:
+            print("You have defeated the enemy!")
+            break
+
+        # Enemy attacks the player
+        print(f"The enemy attacks you and deals {damage} points of damage.")
+
+        # Check if the player has been a "has been"
+        if player_health <= 0: death()
+
+#--------------------------------------------------------------Death and Endings-----------------------------------------------------------------------#
+
+
+
 
 def death():
-    # Shows the death screen and the ending of the game
-    # Shows the player their total score and items/triumphs
-    pass
+    print("You have died")
+    print("Game over")
+    wait_for_keypress()
+    time.sleep(2)
+    quit()
 
 def ending1():
     pass
