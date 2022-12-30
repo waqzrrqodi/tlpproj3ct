@@ -8,7 +8,7 @@ class Player( ):
         self.name = chosen_name
         self.subclass = chosen_subclass
         self.speed = chosen_speed
-        self.inventory = Inventory_Sys(5)
+        self.inventory = InventorySys(5)
         self.gold = 0
         self.armour = None
         self.weapon = None
@@ -86,18 +86,6 @@ class Enemy():
         self.damage = enemy_damage
         self.health = enemy_health
         self.type = enemy_type
-
-#Lista av alla fiender
-valma = Enemy("Waldy", 200, 1000, "God")
-simon = Enemy("Simpa", 50, 100, "Human")
-goblin = Enemy("Lwittle Gwoblin", 50, 100, "Monster")
-bilo = Enemy("Bilo, the Town Rapist", 100, 50, "Human")
-qlex = Enemy("Steroid Beast", 25, 400, "Monster")
-pangloss = Enemy("Pangloss", 200, 50, "Human")
-bandits = Enemy("Bandits", 100, 100, "Human")
-neo = Enemy("Neo Järnmalm", 200, 200, "Human")
-fulcrum = Enemy("Fulcrum", 250, 100, "Yodie Gang")
-bill = Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
 
 #För alla inventory system inklusive 
 MAX_INV_CAP = 5
