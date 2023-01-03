@@ -8,7 +8,7 @@ class Player( ):
         self.name = chosen_name
         self.subclass = chosen_subclass
         self.speed = chosen_speed
-        self.inventory = InventorySys(5)
+        self.inventory = InventorySys(3)
         self.gold = 0
         self.armour = None
         self.weapon = None
@@ -91,7 +91,7 @@ class Enemy():
 MAX_INV_CAP = 5
 class InventorySys():
     """The inventory system"""
-    def __init__(self, inv_max_space, ):
+    def __init__(self, inv_max_space):
         self.inv = list()
         self.inv_cap = inv_max_space
 
@@ -101,6 +101,11 @@ class InventorySys():
             print("Error, already at max capacity")
         else:
             self.inv_cap += upgrade_range
+
+    def item(self, item_name, item_strength_bonus):
+        """The item class"""
+        self.name = item_name
+        self.strength_bonus = item_strength_bonus
 
     def drop(self):
         """Drop an item"""
@@ -121,7 +126,7 @@ class InventorySys():
             except:
                 print("Unknown error has occured")
             if the_item_dilemma.lower == "y" or the_item_dilemma == "yes":
-                print("item menu")
+                print(Player.inventory.inv)
                 print("Which item would thau most prefferably switch?")
 
                 for item_numbah in range(self.inv):

@@ -1,5 +1,13 @@
 from emoji import emojize
 
+# action_1 = ""
+# action_2 = ""
+# action_3 = ""
+# action_4 = ""
+# name = ""
+# text_rad1 = ""
+# text_rad2 = ""
+# text_rad3 = ""
 
 #--------------------------------------------------------------
 intro_name = '''
@@ -122,9 +130,10 @@ ui_actionmenu = f'''
 ui_textbox = f'''
 ============================-----
 | ***name***:
-| ***text_rad1***
-| ***text_rad2***
-| ***text_rad3***
+| ***action_1***
+| ***action_2***
+| ***action_3***
+| ***action_4***
 ============================-----
 '''
 

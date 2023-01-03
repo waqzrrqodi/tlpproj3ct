@@ -35,7 +35,8 @@ if missing:
 
 from pydub import AudioSegment
 from pydub.playback import play
-import ui_elements as ui
+# import ui_elements as ui
+from ui_elements import * # For testing purposes
 import characters as ch
 
 if system() == "Windows":
@@ -71,10 +72,10 @@ def wait_for_keypress():
 
 def intro():
     clear_screen() # Clears the screen
-    print(ui.intro_name)
+    print(intro_name)
     wait_for_keypress()
 
-#-------------------------------------------------------------------------Player and Enemy-----------------------------------------------------------------
+#-------------------------------------------------------------------------Player and Enemy----------------------------------------------------------------#
 valma = ch.Enemy("Waldy", 200, 1000, "God")
 simon = ch.Enemy("Simpa", 50, 100, "Human")
 goblin = ch.Enemy("Lwittle Gwoblin", 50, 100, "Monster")
@@ -87,7 +88,7 @@ fulcrum = ch.Enemy("Fulcrum", 250, 100, "Yodie Gang")
 bill = ch.Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
 player = None
 
-#-------------------------------------------------------------------------Selection System-----------------------------------------------------------------
+#-------------------------------------------------------------------------Selection System----------------------------------------------------------------#
 class DefaultActionMenu():
     """
     Default player_action menu that is used in the game.
@@ -99,26 +100,21 @@ class DefaultActionMenu():
         """
         while True:
             # Prompt the player to attack or defend
-            player_action = input("What do you want to do? (A)ttack, (D)efend?")
+            # print(ui_actionmenu)
+            print ("Action Menu: \n 1. Action 1 \n 2. Action 2 \n 3. Action 3") # For testing purposes
+            selection = int(input("Your command -->"))
 
             # Handle the player's player_action
             try:
-                if player_action.lower() == "a":
-                    print("Select Attack")
-                    if selection == 1:
-                        print(f"{action_1} selected")
-                        return 1
-                    if selection == 2:
-                        print(f"{action_2} selected")
-                        return 2
-                    if selection == 3:
-                        print(f"{action_3} selected")
-                        return 3
-                    # Calculate the damage dealt by the player
-                    print(f"You attack the enemy and deal {damage} points of damage!")
-                elif player_action.lower() == "d":
-                    # Reduce the damage taken by the player by 50%
-                    print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
+                if selection == 1:
+                    print(f"{action_1} selected")
+                    return 1
+                if selection == 2:
+                    print(f"{action_2} selected")
+                    return 2
+                if selection == 3:
+                    print(f"{action_3} selected")
+                    return 3
 
             except(IndexError,ValueError):
                 print("Invalid player_action. Please try again.")
@@ -126,17 +122,20 @@ class DefaultActionMenu():
 
             except:
                 print("Unknown error hath occured")
-                print(ui.ui_actionmenu)
-                selection = int(input("Your command -->"))
                 continue
 
 
-    def fight_menu(self, action_1, action_2, action_3):
+    def fight_menu(self):
         """
         The menu of the choices of the player's attacks.
         """
+        # action_menu = ui_actionmenu
+        # action_1 = "Attack"
+        # action_2 = "Defend"
+        # action_3 = "Heal"
         clear_screen()
-        print(ui.ui_actionmenu)
+        # print(ui_actionmenu)
+        print("Action Menu: \n 1. Attack \n 2. Defend \n 3. Heal") # For testing purposes
         ATTACK = "a"
         DEFEND = "d"
         HEAL = "h"
@@ -181,7 +180,7 @@ class DefaultActionMenu():
         The menu of the choices of the subclasses (Human or Beast) of the player and the name of the player.
         """
         clear_screen()
-        print(ui.characterselect)
+        print(characterselect)
         HUMAN = "1"
         BEAST = "2"
         MORE_INFO = "i"
@@ -196,7 +195,7 @@ class DefaultActionMenu():
                 player_subclass = ch.Beast()
             elif choice == MORE_INFO:
                 clear_screen()
-                print(f"{ui.class_info}")
+                print(f"{class_info}")
                 user_choice = input("Please type b to go back (or y?)--> ")
                 if user_choice == "b" or user_choice == "B":
                     PlayerAndNameSelect()
@@ -213,7 +212,22 @@ class DefaultActionMenu():
             print("Please enter a valid number.")
             return
 
-#-------------------------------------------------------------------------Player and Name Selection-----------------------------------------------------------------
+def inv_show():
+    """
+    Shows the player's inventory
+    """
+    clear_screen()
+    if len(player.inventory.inv) == 0:
+        print("Inventory is empty")
+        input("Press enter to continue...")
+        return
+    else:
+        print("Inventory: ")
+        for item in player.inventory.inv:
+            print(f"{item.name} - {item.strength_bonus} strength bonus")
+        input("Press enter to continue...")
+
+#-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
 class PlayerAndNameSelect(DefaultActionMenu):
     """for selecting the player and the name of the player"""
     def __init__(self):
@@ -246,7 +260,7 @@ class PlayerAndNameSelect(DefaultActionMenu):
         player = ch.Player(self.player_subclass.STRENGHT, self.player_subclass.HP, self.name, self.player_subclass.SUBCLASS, self.player_subclass.SPEED)
         return player
 
-#-----------------------------------------------------------------------------------Menus-------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------Menus------------------------------------------------------------------------#
 def menu():
     """
     The menu system of the game that is used to navigate, save, and exit the game.
@@ -254,18 +268,27 @@ def menu():
     GOTO_TUTORIAL = "1"
     SAVE_AND_EXIT = "2"
     INVENTORY = "3"
-    CONTINUE = ""
+    CONTINUE = "4"
+    # name = "Navigation Menu"
+    # action_1 = "Tutorial"
+    # action_2 = "Save and Exit"
+    # action_3 = "Inventory"
+    # action_4 = "Continue"
     clear_screen()
-    print(ui.ui_textbox)
+    # print(ui_textbox)
+    print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory \n4. Continue") # For testing purposes
     menu_choice = input("What do thau wish to do? ");
     if menu_choice == GOTO_TUTORIAL:
-        #tutorial()
         print("tutoral")
+        tutorial()
     if menu_choice == SAVE_AND_EXIT:
         print("Save + Exit")
+        exit()
     if menu_choice == INVENTORY:
         print("inv")
-    if menu_choice == CONTINUE:
+        player.inventory.inv.append(player.inventory.item("Test Item", 10))
+        inv_show()
+    if menu_choice == CONTINUE or menu_choice == "":
         animate_text("Continuing with story...", "default")
 
 def tutorial():
@@ -397,7 +420,7 @@ def ending2():
 def ending3():
     pass
 
-#-------------------------------------------------------------------------Game Functions-----------------------------------------------------------------
+#-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
 
 intro()
