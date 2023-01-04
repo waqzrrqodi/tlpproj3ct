@@ -5,7 +5,7 @@ import subprocess as sp
 import os
 from platform import system
 import pkg_resources
-
+import narration as narr
 
 
 # Check if the user has the required packages installed
@@ -65,6 +65,9 @@ def animate_text(text, sleep_time):
     time.sleep(1)
 
 def wait_for_keypress():
+    '''
+    Waits for a keypress on the keyboard
+    '''
     if system() == "Windows":
         getkey()
     else:
@@ -75,7 +78,7 @@ def intro():
     print(intro_name)
     wait_for_keypress()
 
-#-------------------------------------------------------------------------Player and Enemy----------------------------------------------------------------#
+#----------------------------------------------------------------------Player, Enemy and Objects----------------------------------------------------------#
 valma = ch.Enemy("Waldy", 200, 1000, "God")
 simon = ch.Enemy("Simpa", 50, 100, "Human")
 goblin = ch.Enemy("Lwittle Gwoblin", 50, 100, "Monster")
@@ -87,6 +90,7 @@ neo = ch.Enemy("Neo Järnmalm", 200, 200, "Human")
 fulcrum = ch.Enemy("Fulcrum", 250, 100, "Yodie Gang")
 bill = ch.Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
 player = None
+level = 0
 
 #-------------------------------------------------------------------------Selection System----------------------------------------------------------------#
 class DefaultActionMenu():
@@ -197,11 +201,11 @@ class DefaultActionMenu():
                 clear_screen()
                 print(f"{class_info}")
                 user_choice = input("Please type b to go back (or y?)--> ")
-                if user_choice == "b" or user_choice == "B":
+                if user_choice.lower() == "b":
                     PlayerAndNameSelect()
                 elif user_choice == "y" or user_choice == "Y":
                     print("Hidden user aquired! (not really) \nYou are the god now.")
-                    player = ch.More_Info_Player()
+                    player_subclass = ch.More_Info_Player()
             else:
                 print("Please enter a valid input...")
                 time.sleep(1)
@@ -223,9 +227,10 @@ def inv_show():
         return
     else:
         print("Inventory: ")
-        for item in player.inventory.inv:
-            print(f"{item.name} - {item.strength_bonus} strength bonus")
+        for item in enumerate(player.inventory.inv):
+            print(f"Item Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n")
         input("Press enter to continue...")
+        
 
 #-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
 class PlayerAndNameSelect(DefaultActionMenu):
@@ -286,13 +291,17 @@ def menu():
         exit()
     if menu_choice == INVENTORY:
         print("inv")
-        player.inventory.inv.append(player.inventory.item("Test Item", 10))
+        player.inventory.inv.append(player.inventory.item("Test Item", 10)) # For testing purposes
+        player.inventory.inv.append(player.inventory.item("Test Item 2", 5)) # For testing purposes
         inv_show()
+        menu()
     if menu_choice == CONTINUE or menu_choice == "":
         animate_text("Continuing with story...", "default")
 
 def tutorial():
-    # This is the tutorial to make sure the player knows how to play the game
+    '''
+    This is the tutorial to make sure the player knows how to play the game
+    '''
     user_input = input("Wouldst thou like to see the tutorial, or art thou bold enough to continue without it? (y/n) --> ")
     try:
         if user_input.lower() == "y":
@@ -305,17 +314,36 @@ def tutorial():
     except:
         print("Unknown error hath occured")
         tutorial()
-            
 
-def level_choice():
-    # Choose level and "difficulty"
-    pass
+
+def story(player_choice_route):
+    # Intro text for level
+    # Choose path and stick with it
+    # Enemy encounter, fight, loot, etc., trap encounter, or chest encounter.
+    global level
+    for path_level in enumerate(PATH):
+        if level == 0:
+            print(path_level[0])
+            input("Press enter to continue...")
+            clear_screen()
+        ending = None
+        PATH = [narr.INTRO_TXT1, narr.INTRO_TXT2, narr.ROUTE1, player_choice_route, narr.ROUTE2, player_choice_route,
+                narr.ROUTE3, player_choice_route, narr.ROUTE4, player_choice_route, narr.ROUTE5, player_choice_route,
+                narr.ROUTE6, player_choice_route, ending]
+        #try: Test if there is a another text box to display
+            #print(PATH[level])
+            #input("Press enter to continue...")
+            #clear_screen()
+        #except:
+
+    level += 1
+
 
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
 
 
-    def __init__(self):
+    def __init__(self, enemy):
         self.player_health = player.health
         self.player_max_health = player.max_health
         self.player_weapon = player.weapon
@@ -367,7 +395,9 @@ class FightLoopTM(DefaultActionMenu):
             print(f"Oh no, The enemy is listening to some banger tunes and attacks you with double ({damage * 2}) points of damage.")
 
     def fight_loop(self):
-        '''The proprieatary fighting loop of the game (no copying pls) which is used to fight enemies and makes the shots about what happens next'''
+        '''
+        The proprieatary fighting loop of the game (no copying pls) which is used to fight enemies and makes the shots about what happens next
+        '''
         while self.player_health > 0 or self.enemy_health > 0:
             # Display the current health of the player and the enemy
             print(f"Player health: {self.player_health}")
@@ -422,12 +452,12 @@ def ending3():
 
 #-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
-
-intro()
-PlayerAndNameSelect()
-menu()
-tutorial()
-    # while True:
+def game_loop():
+    '''
+    The main game loop of the game which is used to run the main mechanics of the game
+    '''
+    while True:
+        story()
     # level_choice() with narration and the story
     # default action menu
     # if there is enemy spawn enemy and enter fight loop
@@ -437,3 +467,12 @@ tutorial()
     # Go back to top of loop
     # Give player option to go back to menu
     # If player goes back to menu give them option to save and exit or continue
+
+
+intro()
+PlayerAndNameSelect()
+menu()
+player.inventory.pickup_item("fjord", 1) # For testing purposes
+menu()
+tutorial()
+game_loop()

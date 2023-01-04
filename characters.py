@@ -106,6 +106,8 @@ class InventorySys():
         """The item class"""
         self.name = item_name
         self.strength_bonus = item_strength_bonus
+        item = {'name': self.name, 'strength_bonus': self.strength_bonus}
+        return item
 
     def drop(self):
         """Drop an item"""
@@ -116,9 +118,9 @@ class InventorySys():
             for a in range(self.inv):
                 print(f"Example. {self.inv[a]} is number {a}")
 
-    def pickup_item(self, item):
+    def pickup_item(self, item_name, item_strength_bonus):
         """Pickup an item"""
-        if self.inv_cap >= self.inv_cap:
+        if len(self.inv) >= self.inv_cap:
             try:
                 the_item_dilemma = str(input("You do not have enough space to pickup an item, would you like to swap and discard? \n Y/n -->"))
             except TypeError:
@@ -126,7 +128,7 @@ class InventorySys():
             except:
                 print("Unknown error has occured")
             if the_item_dilemma.lower == "y" or the_item_dilemma == "yes":
-                print(Player.inventory.inv)
+                inv_show()
                 print("Which item would thau most prefferably switch?")
 
                 for item_numbah in range(self.inv):
@@ -134,15 +136,16 @@ class InventorySys():
 
                 the_item_dilemma_final_choice = int(input("Choose numbah----->"))
                 self.inv.pop(the_item_dilemma_final_choice-1)
-                self.inv.append(item)
+                self.inv.append(self.item(item_name, item_strength_bonus))
+                # Not working fully yet dingus
 
             elif the_item_dilemma.lower == "n" or the_item_dilemma == "no":
                 print("As thau wish good sir")
             else:
                 print("Please provide a Y/n answer")
         else: 
-            self.inv.append(item)
-            print(f"{item} successfully picked up")
+            self.inv.append(self.item(item_name, item_strength_bonus))
+            print(f"{item_name} successfully picked up")
 
 #Chest system
 class ChestSys():
