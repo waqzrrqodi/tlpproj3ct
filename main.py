@@ -10,9 +10,9 @@ import narration as narr
 
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'emoji', 'pydub'}
+    required = {'progressbar', 'emoji', 'pydub', 'pickle'}
 else:
-    required = {'progressbar', 'emoji', 'pydub', 'getch'}
+    required = {'progressbar', 'emoji', 'pydub', 'getch', 'pickle'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -35,6 +35,7 @@ if missing:
 
 from pydub import AudioSegment
 from pydub.playback import play
+import pickle
 # import ui_elements as ui
 from ui_elements import * # For testing purposes
 import characters as ch
@@ -468,7 +469,47 @@ def game_loop():
     # Give player option to go back to menu
     # If player goes back to menu give them option to save and exit or continue
 
+def save_game():
+    """
+    Save the game to the savegame.dat file
+    """
+    save_game = input("Would you like to save your game? (y/n): ")
+    savefile_name = input("What is the name of the save file? (default: savegame.dat)")
+    if savefile_name == "":
+        savefile_name = "savegame.dat"
+    if save_game.lower() == "y":
+        user_data = {}
+        
+        with open(savefile_name, 'wb') as file:
+            pickle.dump(user_data, file)
 
+def load_game():
+    """
+    Load the game from the savegame.dat file or a file specified by the user
+    """
+    global player
+    savefile_name = input("What is the name of the save file? (default: savegame.dat)")
+    if savefile_name == "":
+        savefile_name = "savegame.dat"
+    try:
+        testInfile = open(savefile_name, 'rb')
+        testInfile.close()
+        doesSaveExist = True
+    except FileNotFoundError:
+        print("That save file does not exist")
+        load_game()
+
+    if doesSaveExist == True:
+        with open(savefile_name, 'rb') as file:
+            user_data = pickle.load(file)
+
+        player = ch.Player() # Not implemented yet
+        player.inventory = "" # Not implemented yet
+        story_progress = "" # Not implemented yet
+        tutorial_done = bool # Not implemented yet
+
+
+#-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
 intro()
 PlayerAndNameSelect()
 menu()

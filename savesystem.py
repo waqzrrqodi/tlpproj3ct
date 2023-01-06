@@ -1,13 +1,5 @@
 # Saving system for the game
 import pickle
-import characters
-
-
-class Status():
-    """The status of the game"""
-    def __init__(self, param):
-        self.param = param
-
 
 def save_game(obj):
     """Save the game to the savegame.dat file"""
