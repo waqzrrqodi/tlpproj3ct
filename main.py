@@ -10,9 +10,9 @@ import narration as narr
 
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'emoji', 'pydub', 'pickle'}
+    required = {'progressbar', 'emoji', 'pydub'}
 else:
-    required = {'progressbar', 'emoji', 'pydub', 'getch', 'pickle'}
+    required = {'progressbar', 'emoji', 'pydub', 'getch'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -78,6 +78,7 @@ def intro():
     clear_screen() # Clears the screen
     print(intro_name)
     wait_for_keypress()
+    intro_menu()
 
 #----------------------------------------------------------------------Player, Enemy and Objects----------------------------------------------------------#
 valma = ch.Enemy("Waldy", 200, 1000, "God")
@@ -92,6 +93,8 @@ fulcrum = ch.Enemy("Fulcrum", 250, 100, "Yodie Gang")
 bill = ch.Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
 player = None
 level = 0
+story_progress = 0
+tutorial_done = bool
 
 #-------------------------------------------------------------------------Selection System----------------------------------------------------------------#
 class DefaultActionMenu():
@@ -267,6 +270,49 @@ class PlayerAndNameSelect(DefaultActionMenu):
         return player
 
 #-----------------------------------------------------------------------------------Menus------------------------------------------------------------------------#
+def intro_menu():
+    """
+    The menu that is used to start the game.
+    """
+    PLAY = "1"
+    TUTORIAL = "2"
+    CREDITS = "3"
+    EXIT = "4"
+    clear_screen()
+    print(intro_menu_choices)
+    menu_choice = input("What doth thou wish to do? --> ")
+    if menu_choice == PLAY:
+        LOAD = "1"
+        NEW_GAME = "2"
+        try:
+            clear_screen()
+            choice = input("Do you wish to load a save file or start a new game? (1)Load or (2)New Game --> ")
+            # Check if the player has a save file
+            # If the player has a save file, ask if the player wants to load the save file
+            # If the player does not have a save file, start the game
+            if choice == LOAD: # Not implemented yet
+                animate_text("Loading...", "fast")
+                time.sleep(1)
+                clear_screen()
+                load_game()
+            elif choice == NEW_GAME:
+                PlayerAndNameSelect()
+                menu()
+                play()
+        except ValueError:
+            print("Invalid input")
+            intro_menu()
+        clear_screen()
+        animate_text("Loading...", "fast")
+    elif menu_choice == TUTORIAL:
+        tutorial()
+        intro_menu()
+    elif menu_choice == CREDITS:
+        credits()
+        intro_menu()
+    elif menu_choice == EXIT:
+        exit()
+
 def menu():
     """
     The menu system of the game that is used to navigate, save, and exit the game.
@@ -306,12 +352,15 @@ def tutorial():
     user_input = input("Wouldst thou like to see the tutorial, or art thou bold enough to continue without it? (y/n) --> ")
     try:
         if user_input.lower() == "y":
-            print("Tutorial")
+            animate_text("Loading tutorial...", "fast")
+            print("Haha Silly, you thought there was a tutorial, but there is not.")
+            time.sleep(1)
         elif user_input.lower() == "n":
-            print("Continuing without tutorial...")
+            animate_text("Continuing without tutorial...", "fast")
         else:
             print("Invalid input")
             tutorial()
+        input("Press enter to go back to the main menu...")
     except:
         print("Unknown error hath occured")
         tutorial()
@@ -474,13 +523,13 @@ def save_game():
     Save the game to the savegame.dat file
     """
     save_game = input("Would you like to save your game? (y/n): ")
-    savefile_name = input("What is the name of the save file? (default: savegame.dat)")
+    savefile_name = input("What is the name of the save file? (default: savegame)")
     if savefile_name == "":
-        savefile_name = "savegame.dat"
+        savefile_name = "savegame"
     if save_game.lower() == "y":
-        user_data = {}
+        user_data = [player, story_progress, tutorial_done]
         
-        with open(savefile_name, 'wb') as file:
+        with open(savefile_name + ".dat", 'wb') as file:
             pickle.dump(user_data, file)
 
 def load_game():
@@ -488,32 +537,44 @@ def load_game():
     Load the game from the savegame.dat file or a file specified by the user
     """
     global player
-    savefile_name = input("What is the name of the save file? (default: savegame.dat)")
+    global story_progress
+    global tutorial_done
+    savefile_name = input("What is the name of the save file? (default: savegame)")
     if savefile_name == "":
-        savefile_name = "savegame.dat"
+        savefile_name = "savegame"
     try:
-        testInfile = open(savefile_name, 'rb')
+        testInfile = open(savefile_name + ".dat", 'rb')
         testInfile.close()
         doesSaveExist = True
     except FileNotFoundError:
         print("That save file does not exist")
-        load_game()
+        choice = input("Would you like to try again? (y/n): ")
+        if choice.lower() == "y":
+            load_game()
+        else:
+            doesSaveExist = False
 
     if doesSaveExist == True:
         with open(savefile_name, 'rb') as file:
             user_data = pickle.load(file)
 
-        player = ch.Player() # Not implemented yet
-        player.inventory = "" # Not implemented yet
-        story_progress = "" # Not implemented yet
-        tutorial_done = bool # Not implemented yet
+        player = user_data[0] # Not implemented yet
+        story_progress = user_data[1] # Not implemented yet
+        tutorial_done = user_data[2] # Not implemented yet
+    elif doesSaveExist == False:
+        intro_menu()
 
+def credits():
+    print(credits_text)
+    user_input = input("Press enter to return to the main menu")
+    return
 
 #-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
+def play():
+    '''
+    The main function of the game which is used to run the main functions of the game
+    '''
+    player.inventory.pickup_item("fjord", 1) # For testing purposes
+    game_loop()
 intro()
-PlayerAndNameSelect()
-menu()
-player.inventory.pickup_item("fjord", 1) # For testing purposes
-menu()
-tutorial()
-game_loop()
+play()
