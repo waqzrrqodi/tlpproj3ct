@@ -312,6 +312,10 @@ def intro_menu():
         intro_menu()
     elif menu_choice == EXIT:
         exit()
+    else:
+        print("Invalid input")
+        time.sleep(1)
+        intro_menu()
 
 def menu():
     """

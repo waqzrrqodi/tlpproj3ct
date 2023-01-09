@@ -13,6 +13,7 @@ The only trip is to Norrtälje, and the time of departure is suspiciously missin
 Apart from that you see a dark alley and a rickety bridge. You have to choose between 
 a bus that may never arrive, a mysterious dark alley and a rickety bridge. What will you do?
 '''
+INTRO_TXT = [INTRO_TXT1, INTRO_TXT2]
 
 # Choices:
 # 1 - Wait for the bus
@@ -30,7 +31,7 @@ of rogue goblins hop out. They run towards you and a fight breaks out.
 R1_TXT2 = '''
 You won the battle and proceed to steal the bus and drive away. You drive until you run out of fuel.
 '''
-
+ROUTE1 = [R1_TXT1, R1_TXT2]
 
 #Route 2 - "The Dark Alley"
 R2_TXT1 = '''
@@ -49,7 +50,7 @@ R2_TXT2_OPTION2 = '''
 You ignore the wardrobe, and proceed forward through the alley. 
 Not getting any items and feeling depressed.
 '''
-
+ROUTE2 = [R2_TXT1, R2_TXT2_OPTION1, R2_TXT2_OPTION2]
 
 #Route 3 - "Go Beyond the Rickety Bridge"
 R3_TXT1 = '''You go towards the rickety bridge and get approached by a massive muscular testosterone-
@@ -71,7 +72,7 @@ You depressingly stumble back to the bus station, feeling like you missed out on
 The bus has already left, so your only choice is to go through the alley.
 '''
 # Sends you to Route 2
-
+ROUTE3 = [R3_TXT1, R3_TXT2_OPTION1, R3_TXT2_OPTION2]
 
 #Route 4 - "Missile silo"
 R4_TXT1 = '''
@@ -84,7 +85,7 @@ What will you do?
 # 1 - Help Neo (Battle - Bilo)
 # 2 - Help Bilo (Battle - Neo)
 # 3 - Escape (Coward Ending)
-
+ROUTE4 = [R4_TXT1]
 
 #Route 5 - "Penjamin City"
 R5_TXT1 = ''' 
@@ -103,7 +104,7 @@ bandits or alongside Fulcrum?
 # 1 - Fight for Fulcrum (Battle - bandits)
 # 2 - Fight for bandits (Battle - Fulcrum)
 # 3 - Escape
-
+ROUTE5 = [R5_TXT1, R5_TXT2]
 
 #Route 6 - "Dark Forest"
 R6_TXT1 = '''
@@ -111,7 +112,7 @@ You enter the forest and find a giant man surrounded by steroid needles. He look
 speaking gibberish. He pulls out a rolling pin and a fight breaks out.
 '''
 #Battle - Steroid Beast
-
+ROUTE6 = [R6_TXT1]
 
 # Coward Ending
 COWARD_END = '''
