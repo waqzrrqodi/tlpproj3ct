@@ -76,9 +76,23 @@ def wait_for_keypress():
 
 def intro():
     clear_screen() # Clears the screen
+    print(disclaimer)
+    time.sleep(3)
+    clear_screen()
+
+    print(thx_disclaimer)
+    time.sleep(1)
+    clear_screen()
     print(intro_name)
+
     wait_for_keypress()
     intro_menu()
+
+def intro_splash_only():
+    clear_screen()
+    wait_for_keypress()
+    intro_menu()
+
 
 #----------------------------------------------------------------------Player, Enemy and Objects----------------------------------------------------------#
 valma = ch.Enemy("Waldy", 200, 1000, "God")
@@ -237,6 +251,12 @@ def inv_show():
         
 
 #-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
+VIKING_NAMES=[
+    #Viking names
+    "Arne", "Birger","Bjorn","Bjornulf","Bo", "Frode", "Knud", "Odger", "Trygve", "Troels"
+    
+    "Astrid","Bodil","Frida","Gertrud", "Gudrun","Gunnhild","Gunnvor","Halla","Hedvig","Helga",
+    ]
 class PlayerAndNameSelect(DefaultActionMenu):
     """for selecting the player and the name of the player"""
     def __init__(self):
@@ -260,8 +280,17 @@ class PlayerAndNameSelect(DefaultActionMenu):
         """
         name selection menu
         """
-        self.name = input("What is your name? --> ")
-        print(f"Welcome {self.name} the {self.player_subclass.SUBCLASS}")
+        user_name_input = input("What is your name? --> ")
+        self.name = random.choice(VIKING_NAMES)
+        clear_screen()
+        print(f"{user_name_input} is a good name, though I think {self.name} is a stronger and more viking name.")
+        time.sleep(1)
+        input(f"Confirm {self.name}? yes/absolutly --> ")
+        print(f"{self.name} accepted")
+        time.sleep(2)
+        clear_screen()
+
+        animate_text(f"Welcome {self.name} the {self.player_subclass.SUBCLASS}", "fast")
     def create_player(self):
         """
         creates the player
@@ -339,6 +368,7 @@ def menu():
         tutorial()
     if menu_choice == SAVE_AND_EXIT:
         print("Save + Exit")
+        save_game()
         exit()
     if menu_choice == INVENTORY:
         print("inv")
@@ -489,7 +519,7 @@ def death():
     # if player does something stupid and dies play ending 1
     # if player dies in a boss fight play ending 2
     # if player dies in a normal fight play ending 3
-    print("Game over")
+    print(game_over)
     # Prints the ending and stats of the player and their achievements.
     wait_for_keypress()
     time.sleep(2)
@@ -522,30 +552,40 @@ def game_loop():
     # Give player option to go back to menu
     # If player goes back to menu give them option to save and exit or continue
 
+saveFileNumberTracker = 0 #for all the lazy mfs
 def save_game():
     """
     Save the game to the savegame.dat file
     """
     save_game = input("Would you like to save your game? (y/n): ")
-    savefile_name = input("What is the name of the save file? (default: savegame)")
-    if savefile_name == "":
-        savefile_name = "savegame"
-    if save_game.lower() == "y":
+    
+    if save_game.lower() == "y" or save_game == "":
+        savefile_name = input("What is the name of the save file? (default: savegame {+ number})")
+        saveFileNumberTracker += 1
+        if savefile_name == "":
+            savefile_name = f"savegame_save_{saveFileNumberTracker}"
+    
         user_data = [player, story_progress, tutorial_done]
         
         with open(savefile_name + ".dat", 'wb') as file:
             pickle.dump(user_data, file)
 
+    if save_game.lower() == "n":
+        return
+    else:
+        print("Not a valid choice")
+
 def load_game():
     """
     Load the game from the savegame.dat file or a file specified by the user
     """
+    
     global player
     global story_progress
     global tutorial_done
     savefile_name = input("What is the name of the save file? (default: savegame)")
     if savefile_name == "":
-        savefile_name = "savegame"
+        savefile_name = f"savegame_save_{saveFileNumberTracker}"
     try:
         testInfile = open(savefile_name + ".dat", 'rb')
         testInfile.close()
