@@ -12,3 +12,5 @@ From the developers of "Anthem" and "Poker for grandma 2016" now comes "***Escap
 "The most anticipated game this year and it's not for nothing" - Unknown
 
 "This game is the sloppiest game I've ever seen and the studio "Tax Fraud Studios" are the wo-🤓🪓" - Loke 2022 (R.I.P)
+
+"I am gaming" - Holger
