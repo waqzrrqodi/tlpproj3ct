@@ -33,6 +33,17 @@ The developer and publisher of the game will not be held liable for any damages 
 By playing 'Escape from Rimbo,' you agree to these terms and conditions.
 """
 
+credits_text = """
+"Starring:
+John Doe as Jack
+Jane Smith as Jill
+Mike Brown as Mike
+Directed by: Steven Spielberg
+Written by: Jane Austen
+Produced by: George Lucas
+Music by: Hans Zimmer
+Special Thanks to: The cast and crew for their hard work and dedication"""
+
 thx_disclaimer = '''
         ,----,                                                                                         
       ,/   .`|                                                                 ,----..                 

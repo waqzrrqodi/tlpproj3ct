@@ -259,7 +259,6 @@ def inv_show():
             clear_screen()
             
             print(f"HP: {player.HP} stronks:{player.strength} armor:{player.armour} lvl{player.level}")
-        
             print("---------------------------------------------")
             #expand to full inventory view
             if len(player.inventory.inv) == 0:
@@ -393,7 +392,7 @@ def menu():
     print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory \n4. Continue") # For testing purposes
     menu_choice = input("What do thau wish to do? ");
     if menu_choice == GOTO_TUTORIAL:
-        print("tutoral")
+        print("tutorial")
         tutorial()
     if menu_choice == SAVE_AND_EXIT:
         print("Save + Exit")
@@ -459,30 +458,12 @@ def sound_engine(sound):
     mixer.music.set_volume(0.7)
     mixer.music.play()
 
-chest_sound = sound_engine("SoundEngine5000/Chest_sound.mp3")
-item_sound = sound_engine("SoundEngine5000/Item_sound.mp3")
+# chest_sound = sound_engine("SoundEngine5000/Chest_sound.mp3")
+# item_sound = sound_engine("SoundEngine5000/Item_sound.mp3")
 
-chest_sound()
 
 #-----------------------------------------------------------------------------------NPC chatbot------------------------------------------------------------------------#
 
-# Define a function to generate responses
-#def chatbot_response(input_text):
-    # Preprocess the input text
-    #input_sequence = tokenize_and_pad(input_text)
-    
-    # Generate the response
-    #response = model.predict(input_sequence)
-    
-    # Postprocess the response
-    #return postprocess(response)
-
-#while True:
-    #print("type exit to leave, or ")
-    #input_text = input("You: ")
-    #if input_text == "exit":
-        #break
-    #print("Chatbot: " + chatbot_response(input_text))
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
 
@@ -529,14 +510,74 @@ class FightLoopTM(DefaultActionMenu):
         elif self.player_health == self.player_max_health:
             print("Thou art already at full health!")
 
-    def enemy_attack(self, damage):
+    
+    def enemy_attack(self, damage, type):
+        HUMAN_ATTACK_LIST = {
+            "Punch": {"type": "Physical", "damage": 10},
+            "Kick": {"type": "Physical", "damage": 15},
+            "Block": {"type": "Physical", "damage": 5},
+            "Dodge": {"type": "Physical", "damage": 0},
+            "Sweep": {"type": "Physical", "damage": 12},
+            "Jab": {"type": "Physical", "damage": 8},
+            "Uppercut": {"type": "Physical", "damage": 20},
+            "Haymaker": {"type": "Physical", "damage": 25},
+            "Elbow Strike": {"type": "Physical", "damage": 15},
+            "Headbutt": {"type": "Physical", "damage": 18},
+        }
+
+        MONSTER_ATTACK_LIST = {
+            "Bite": {"type": "Physical", "damage": 20},
+            "Claw": {"type": "Physical", "damage": 15},
+            "Tail Whip": {"type": "Physical", "damage": 10},
+            "Roar": {"type": "Physical", "damage": 0},
+            "Pounce": {"type": "Physical", "damage": 25},
+            "Charge": {"type": "Physical", "damage": 20},
+            "Slam": {"type": "Physical", "damage": 30},
+            "Poison Spit": {"type": "Magical", "damage": 15},
+            "Acid Spray": {"type": "Magical", "damage": 20},
+            "Fire Breath": {"type": "Magical", "damage": 25},
+        }
+
+        GOD_ATTACK_LIST = {
+            "Divine Strike": {"type": "Magical", "damage": 30},
+            "Holy Smite": {"type": "Magical", "damage": 25},
+            "Celestial Blast": {"type": "Magical", "damage": 35},
+            "Divine Shield": {"type": "Magical", "damage": 0},
+            "Divine Healing": {"type": "Magical", "damage": -20},
+            "Divine Summoning": {"type": "Magical", "damage": 20},
+            "Divine Retribution": {"type": "Magical", "damage": 40},
+            "Divine Judgement": {"type": "Magical", "damage": 50},
+            "Divine Intervention": {"type": "Magical", "damage": 0},
+            "Divine Wrath": {"type": "Magical", "damage": 60},
+        }
+
+        YODIE_GANG_ATTACK_LIST = {
+            "Yodie Blast": {"type": "Magical", "damage": 25},
+            "Yodie Strike": {"type": "Magical", "damage": 20},
+            "Yodie Flail": {"type": "Magical", "damage": 15},
+            "Yodie Swing": {"type": "Magical", "damage": 30},
+            "Yodie Rush": {"type": "Magical", "damage": 25},
+            "Yodie Shout": {"type": "Magical", "damage": 10},
+            "Yodie Scream": {"type": "Magical", "damage": 15},
+            "Yodie Smack": {"type": "Magical", "damage": 20},
+        }
+        if type == "Human":
+            attack = random.choice(HUMAN_ATTACK_LIST)
+        elif type == "God":
+            attack = random.choice(GOD_ATTACK_LIST)
+        elif type == "Monster":
+            attack = random.choice(MONSTER_ATTACK_LIST)
+        elif type == "Yodie Gang":
+            attack = random.choice(YODIE_GANG_ATTACK_LIST)
+            
+
         # "Oh no, the enemy hath practiced jujutsu and maketh double damage."
         # damage = damage * 2
         # "Oh no, the enemy hath drunken a kong strong and maketh triple damage."
         # damage = damage * 3
         attack_probability = random.randint(1, 100)
         if attack_probability <= 20:
-            print(f"The enemy attacks you and deals {damage} points of damage.")
+            print(f"The enemy attacks you with {attack}and deals {damage} points of damage.")
         elif attack_probability <= 5:
             print(f"Oh no, The enemy is listening to some banger tunes and attacks you with double ({damage * 2}) points of damage.")
 
@@ -559,8 +600,8 @@ class FightLoopTM(DefaultActionMenu):
                 self.defend(self.damage)
             elif user_selection == "heal":
                 self.heal()
-            elif user_selection == "Converse":
-                NPC_converse()
+            elif user_selection == "enemy stats":
+                print(enemy_stats)
 
             # Check if the enemy has been defeated
             if self.enemy_health <= 0:
@@ -584,6 +625,7 @@ def death():
     # if player dies in a boss fight play ending 2
     # if player dies in a normal fight play ending 3
     print(game_over)
+    animate_text(credits_text, "fast")
     # Prints the ending and stats of the player and their achievements.
     wait_for_keypress()
     time.sleep(2)
