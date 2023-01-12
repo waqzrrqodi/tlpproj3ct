@@ -25,7 +25,24 @@ Consent
 By using our website, you hereby consent to our disclaimer and agree to its terms.
 
 Update
-Should we update, amend or make any changes to this document, those changes will be prominently posted here."""
+Should we update, amend or make any changes to this document, those changes will be prominently posted here.
+
+Disclaimer: 'Escape from Rimbo' is a work of fiction and any resemblance to real persons, living or dead, or actual events is purely coincidental.
+The game is intended for entertainment purposes only and does not condone or promote any illegal or dangerous activities. 
+The developer and publisher of the game will not be held liable for any damages or injuries resulting from playing the game. 
+By playing 'Escape from Rimbo,' you agree to these terms and conditions.
+"""
+
+credits_text = """
+"Starring:
+John Doe as Jack
+Jane Smith as Jill
+Mike Brown as Mike
+Directed by: Steven Spielberg
+Written by: Jane Austen
+Produced by: George Lucas
+Music by: Hans Zimmer
+Special Thanks to: The cast and crew for their hard work and dedication"""
 
 thx_disclaimer = '''
         ,----,                                                                                         

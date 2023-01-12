@@ -7,12 +7,11 @@ from platform import system
 import pkg_resources
 import narration as narr
 
-
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'emoji', 'pydub'}
+    required = {'progressbar', 'emoji', 'pygame'}
 else:
-    required = {'progressbar', 'emoji', 'pydub', 'getch'}
+    required = {'progressbar', 'emoji', 'pygame', 'getch'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -33,8 +32,14 @@ if missing:
     time.sleep(0.5)
     clear_screen()
 
-from pydub import AudioSegment
-from pydub.playback import play
+# import tensorflow as tf
+# from tensorflow.keras.preprocessing.text import Tokenizer
+# from tensorflow.keras.preprocessing.sequence import pad_sequences
+# import numpy
+# import json
+# #model = tf.keras.models.load_model('chatbot_model.h5')
+
+from pygame import mixer
 import pickle
 # import ui_elements as ui
 from ui_elements import * # For testing purposes
@@ -239,16 +244,37 @@ def inv_show():
     Shows the player's inventory
     """
     clear_screen()
-    if len(player.inventory.inv) == 0:
-        print("Inventory is empty")
-        input("Press enter to continue...")
-        return
-    else:
-        print("Inventory: ")
-        for item in enumerate(player.inventory.inv):
-            print(f"Item Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n")
-        input("Press enter to continue...")
-        
+    #small splash
+    print(f"{player.HP}")
+    print(f"{player.strength}")
+    print(f"{player.armour}")
+    print(f"{player.level}")
+
+    
+    while True:
+        inv_expasion = input("------------------------------- \n Do you wish to expand to full overview? (y/n) \n------------------------------- \n-->")
+        if inv_expasion.lower() == "y" or inv_expasion.lower() == "yes" or inv_expasion.lower() == "":
+            clear_screen()
+            
+            print(f"HP: {player.HP} stronks:{player.strength} armor:{player.armour} lvl{player.level}")
+            print("---------------------------------------------")
+            #expand to full inventory view
+            if len(player.inventory.inv) == 0:
+                print("Inventory is empty")
+                input("Press enter to continue...")
+                break
+            else:
+                print("Inventory: ")
+                for item in enumerate(player.inventory.inv):
+                    print(f"Item Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n")
+                input("Press enter to continue...")
+                break
+        elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
+            break
+        else:
+            input("Please provid valid input")
+            continue
+    return
 
 #-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
 VIKING_NAMES=[
@@ -424,7 +450,17 @@ def story(player_choice_route):
 
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
 
-chest_sound = AudioSegment.from_mp3("Chest_sound.mp3")
+def sound_engine(sound):
+    mixer.init()
+    mixer.music.load(sound)
+    mixer.music.set_volume(0.7)
+    mixer.music.play()
+
+# chest_sound = sound_engine("SoundEngine5000/Chest_sound.mp3")
+# item_sound = sound_engine("SoundEngine5000/Item_sound.mp3")
+
+
+#-----------------------------------------------------------------------------------NPC chatbot------------------------------------------------------------------------#
 
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
@@ -463,21 +499,83 @@ class FightLoopTM(DefaultActionMenu):
 
     def heal(self):
         if self.player_health != self.player_max_health:
-            pass
+            print("Thou art not at full health!")
+            inv_show()
+            
             # Show the player it's inventory and ask them to select an item to use to heal
             # Calculate the amount of health restored by the player and add it to the player's health
             # If the player's health is greater than the player's maximum health, set the player's health to the player's maximum health
         elif self.player_health == self.player_max_health:
             print("Thou art already at full health!")
 
-    def enemy_attack(self, damage):
+    
+    def enemy_attack(self, damage, type):
+        HUMAN_ATTACK_LIST = {
+            "Punch": {"type": "Physical", "damage": 10},
+            "Kick": {"type": "Physical", "damage": 15},
+            "Block": {"type": "Physical", "damage": 5},
+            "Dodge": {"type": "Physical", "damage": 0},
+            "Sweep": {"type": "Physical", "damage": 12},
+            "Jab": {"type": "Physical", "damage": 8},
+            "Uppercut": {"type": "Physical", "damage": 20},
+            "Haymaker": {"type": "Physical", "damage": 25},
+            "Elbow Strike": {"type": "Physical", "damage": 15},
+            "Headbutt": {"type": "Physical", "damage": 18},
+        }
+
+        MONSTER_ATTACK_LIST = {
+            "Bite": {"type": "Physical", "damage": 20},
+            "Claw": {"type": "Physical", "damage": 15},
+            "Tail Whip": {"type": "Physical", "damage": 10},
+            "Roar": {"type": "Physical", "damage": 0},
+            "Pounce": {"type": "Physical", "damage": 25},
+            "Charge": {"type": "Physical", "damage": 20},
+            "Slam": {"type": "Physical", "damage": 30},
+            "Poison Spit": {"type": "Magical", "damage": 15},
+            "Acid Spray": {"type": "Magical", "damage": 20},
+            "Fire Breath": {"type": "Magical", "damage": 25},
+        }
+
+        GOD_ATTACK_LIST = {
+            "Divine Strike": {"type": "Magical", "damage": 30},
+            "Holy Smite": {"type": "Magical", "damage": 25},
+            "Celestial Blast": {"type": "Magical", "damage": 35},
+            "Divine Shield": {"type": "Magical", "damage": 0},
+            "Divine Healing": {"type": "Magical", "damage": -20},
+            "Divine Summoning": {"type": "Magical", "damage": 20},
+            "Divine Retribution": {"type": "Magical", "damage": 40},
+            "Divine Judgement": {"type": "Magical", "damage": 50},
+            "Divine Intervention": {"type": "Magical", "damage": 0},
+            "Divine Wrath": {"type": "Magical", "damage": 60},
+        }
+
+        YODIE_GANG_ATTACK_LIST = {
+            "Yodie Blast": {"type": "Magical", "damage": 25},
+            "Yodie Strike": {"type": "Magical", "damage": 20},
+            "Yodie Flail": {"type": "Magical", "damage": 15},
+            "Yodie Swing": {"type": "Magical", "damage": 30},
+            "Yodie Rush": {"type": "Magical", "damage": 25},
+            "Yodie Shout": {"type": "Magical", "damage": 10},
+            "Yodie Scream": {"type": "Magical", "damage": 15},
+            "Yodie Smack": {"type": "Magical", "damage": 20},
+        }
+        if type == "Human":
+            attack = random.choice(HUMAN_ATTACK_LIST)
+        elif type == "God":
+            attack = random.choice(GOD_ATTACK_LIST)
+        elif type == "Monster":
+            attack = random.choice(MONSTER_ATTACK_LIST)
+        elif type == "Yodie Gang":
+            attack = random.choice(YODIE_GANG_ATTACK_LIST)
+            
+
         # "Oh no, the enemy hath practiced jujutsu and maketh double damage."
         # damage = damage * 2
         # "Oh no, the enemy hath drunken a kong strong and maketh triple damage."
         # damage = damage * 3
         attack_probability = random.randint(1, 100)
         if attack_probability <= 20:
-            print(f"The enemy attacks you and deals {damage} points of damage.")
+            print(f"The enemy attacks you with {attack}and deals {damage} points of damage.")
         elif attack_probability <= 5:
             print(f"Oh no, The enemy is listening to some banger tunes and attacks you with double ({damage * 2}) points of damage.")
 
@@ -525,6 +623,7 @@ def death():
     # if player dies in a boss fight play ending 2
     # if player dies in a normal fight play ending 3
     print(game_over)
+    animate_text(credits_text, "fast")
     # Prints the ending and stats of the player and their achievements.
     wait_for_keypress()
     time.sleep(2)
