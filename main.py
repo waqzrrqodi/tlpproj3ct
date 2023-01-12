@@ -364,7 +364,7 @@ def menu():
     print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory \n4. Continue") # For testing purposes
     menu_choice = input("What do thau wish to do? ");
     if menu_choice == GOTO_TUTORIAL:
-        print("tutoral")
+        print("tutorial")
         tutorial()
     if menu_choice == SAVE_AND_EXIT:
         print("Save + Exit")
@@ -500,6 +500,8 @@ class FightLoopTM(DefaultActionMenu):
                 self.defend(self.damage)
             elif user_selection == "heal":
                 self.heal()
+            elif user_selection == "enemy stats":
+                print(enemy_stats)
 
             # Check if the enemy has been defeated
             if self.enemy_health <= 0:
