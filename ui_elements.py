@@ -263,3 +263,90 @@ Thou art truly smote, knave.
 VoiceLineSample ="""
 why are we still here? Just to suffer? 
 """
+
+
+#-------------------------------------------------------------------------map-----------------------------------------------------------------
+# Define the locations of the game
+mini_map = {
+    "silo": {
+        "description": "A cozy abandoned missile silo.\n"
+        """
+ 
+              ."`-'                /
+             /                   .'
+            |                  _/
+            |                 (
+            |     SWEDEN     /
+            (               J
+            |              (
+            |              |
+            (              J
+             \            |
+             /            |
+            (             |
+            J             `-.
+            |                `.
+           .'                  \
+          /               x      )
+         (                    .'
+         |                    \
+       .-J                  FJ'
+       |                __.'
+
+        """
+    },
+    "rickety_bridge": {
+        "description": "Horribly constructed \n"
+        """
+ 
+              ."`-'                /
+             /                   .'
+            |                  _/
+            |                 (
+            |     SWEDEN     /
+            (               J
+            |              (
+            |              |
+            (              J
+             \            |
+             /            |
+            (             |
+            J             `-.
+            |                `.
+           .'                  \
+          /               x      )
+         (                    .'
+         |                    \
+       .-J                  FJ'
+       |                __.'
+
+        """
+    },
+    "bus_station": {
+        "description": "A comfortable bedroom with a large bed and a window.\n"
+        """
+ 
+              ."`-'                /
+             /                   .'
+            |                  _/
+            |                 (
+            |     SWEDEN     /
+            (               J
+            |              (
+            |              |
+            (              J
+             \            |
+             /            |
+            (             |
+            J             `-.
+            |                `.
+           .'                  \
+          /               x      )
+         (                    .'
+         |                    \
+       .-J                  FJ'
+       |                __.'
+
+        """
+    }
+}
