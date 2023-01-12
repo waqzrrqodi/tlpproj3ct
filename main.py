@@ -7,12 +7,11 @@ from platform import system
 import pkg_resources
 import narration as narr
 
-
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'emoji', 'pydub'}
+    required = {'progressbar', 'emoji', 'pygame'}
 else:
-    required = {'progressbar', 'emoji', 'pydub', 'getch'}
+    required = {'progressbar', 'emoji', 'pygame', 'getch'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -33,8 +32,14 @@ if missing:
     time.sleep(0.5)
     clear_screen()
 
-from pydub import AudioSegment
-from pydub.playback import play
+# import tensorflow as tf
+# from tensorflow.keras.preprocessing.text import Tokenizer
+# from tensorflow.keras.preprocessing.sequence import pad_sequences
+# import numpy
+# import json
+# #model = tf.keras.models.load_model('chatbot_model.h5')
+
+from pygame import mixer
 import pickle
 # import ui_elements as ui
 from ui_elements import * # For testing purposes
@@ -239,16 +244,38 @@ def inv_show():
     Shows the player's inventory
     """
     clear_screen()
-    if len(player.inventory.inv) == 0:
-        print("Inventory is empty")
-        input("Press enter to continue...")
-        return
-    else:
-        print("Inventory: ")
-        for item in enumerate(player.inventory.inv):
-            print(f"Item Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n")
-        input("Press enter to continue...")
+    #small splash
+    print(f"{player.HP}")
+    print(f"{player.strength}")
+    print(f"{player.armour}")
+    print(f"{player.level}")
+
+    
+    while True:
+        inv_expasion = input("------------------------------- \n Do you wish to expand to full overview? (y/n) \n------------------------------- \n-->")
+        if inv_expasion.lower() == "y" or inv_expasion.lower() == "yes" or inv_expasion.lower() == "":
+            clear_screen()
+            
+            print(f"HP: {player.HP} stronks:{player.strength} armor:{player.armour} lvl{player.level}")
         
+            print("---------------------------------------------")
+            #expand to full inventory view
+            if len(player.inventory.inv) == 0:
+                print("Inventory is empty")
+                input("Press enter to continue...")
+                break
+            else:
+                print("Inventory: ")
+                for item in enumerate(player.inventory.inv):
+                    print(f"Item Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n")
+                input("Press enter to continue...")
+                break
+        elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
+            break
+        else:
+            input("Please provid valid input")
+            continue
+    return
 
 #-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
 VIKING_NAMES=[
@@ -424,8 +451,36 @@ def story(player_choice_route):
 
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
 
-chest_sound = AudioSegment.from_mp3("Chest_sound.mp3")
+def sound_engine(sound):
+    mixer.init()
+    mixer.music.load(sound)
+    mixer.music.set_volume(0.7)
+    mixer.music.play()
 
+chest_sound = sound_engine("SoundEngine5000/Chest_sound.mp3")
+item_sound = sound_engine("SoundEngine5000/Item_sound.mp3")
+
+chest_sound()
+
+#-----------------------------------------------------------------------------------NPC chatbot------------------------------------------------------------------------#
+
+# Define a function to generate responses
+#def chatbot_response(input_text):
+    # Preprocess the input text
+    #input_sequence = tokenize_and_pad(input_text)
+    
+    # Generate the response
+    #response = model.predict(input_sequence)
+    
+    # Postprocess the response
+    #return postprocess(response)
+
+#while True:
+    #print("type exit to leave, or ")
+    #input_text = input("You: ")
+    #if input_text == "exit":
+        #break
+    #print("Chatbot: " + chatbot_response(input_text))
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
 
@@ -463,7 +518,9 @@ class FightLoopTM(DefaultActionMenu):
 
     def heal(self):
         if self.player_health != self.player_max_health:
-            pass
+            print("Thou art not at full health!")
+            inv_show()
+            
             # Show the player it's inventory and ask them to select an item to use to heal
             # Calculate the amount of health restored by the player and add it to the player's health
             # If the player's health is greater than the player's maximum health, set the player's health to the player's maximum health
