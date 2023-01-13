@@ -5,6 +5,7 @@ import subprocess as sp
 import os
 from platform import system
 import pkg_resources
+from itertools import chain
 import narration as narr
 # import AI
 # from AI import NPC_converse
@@ -114,7 +115,7 @@ fulcrum = ch.Enemy("Fulcrum", 250, 100, "Yodie Gang")
 bill = ch.Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
 player = None
 level = 0
-story_progress = 0
+story_progress = narr.INTRO_TXT
 tutorial_done = bool
 
 #-------------------------------------------------------------------------Selection System----------------------------------------------------------------#
@@ -433,15 +434,15 @@ def story(player_choice_route):
     # Choose path and stick with it
     # Enemy encounter, fight, loot, etc., trap encounter, or chest encounter.
     global level
-    for path_level in enumerate(PATH):
-        if level == 0:
-            print(path_level[0])
-            input("Press enter to continue...")
-            clear_screen()
-        ending = None
-        PATH = [narr.INTRO_TXT1, narr.INTRO_TXT2, narr.ROUTE1, player_choice_route, narr.ROUTE2, player_choice_route,
+    global story_progress
+    PATH = [narr.INTRO_TXT1, narr.INTRO_TXT2, narr.ROUTE1, player_choice_route, narr.ROUTE2, player_choice_route,
                 narr.ROUTE3, player_choice_route, narr.ROUTE4, player_choice_route, narr.ROUTE5, player_choice_route,
                 narr.ROUTE6, player_choice_route, ending]
+
+    for text in chain(story_progress):
+        print(text + "\n")
+        clear_screen()
+        ending = None
         #try: Test if there is a another text box to display
             #print(PATH[level])
             #input("Press enter to continue...")
