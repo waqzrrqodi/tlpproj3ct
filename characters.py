@@ -1,4 +1,6 @@
 #för spelaren
+import items 
+from items import *
 class Player( ):
     """The player class"""
     def __init__(self, chosen_strength, chosen_health, chosen_name, chosen_subclass, chosen_speed):
@@ -41,7 +43,6 @@ class Beast( ):
         self.SPEED = 10
         self.STRENGHT = 50
         self.SUBCLASS = "Beast"
-
 class More_Info_Player( ):
     """The player class with more info aka the god class"""
     def __init__(self) -> None:

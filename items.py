@@ -24,6 +24,30 @@ class Item_Creator_3000_V2():
         type = TYPE
         cost = COST
         starter_weapon=Item_Creator_3000_V2(0, 0, 0, 0, "Fists", "weapon", 0)
+    def create_item_random():
+        for item_iteration_weapon in item_list_weapons:
+            item_iteration_weapon = Item_Creator_3000_V2()
+            item_iteration_weapon.type = "weapon"
+            item_iteration_weapon.name = item_iteration_weapon
+            item_iteration_weapon.str_bonus = rand.randint(3, 5)
+            item_iteration_weapon.spd_bonus = rand.randint(5, 6)
+            item_iteration_weapon.cost = rand.randint(50,66)
+            rarity = item_rarity[item_list_weapons.index(item_iteration_weapon)]
+            if rand.randint(1, rarity) == 1:
+                return "rare", item_iteration_weapon
+            else:
+                return "common", item_iteration_weapon
+        for item_iteration_armor in item_list_armor:
+            item_iteration_armor = Item_Creator_3000_V2()
+            item_iteration_armor.type = "armor"
+            item_iteration_armor.name = "Small dagger"
+            item_iteration_armor.max_hp_bonus = rand.randint(50,70)
+            item_iteration_armor.cost = rand.randint(70, 80)
+            rarity = item_rarity[item_list_armor.index(item_iteration_armor)]
+            if rand.randint(1, rarity) == 1:
+                return "rare", item_iteration_armor
+            else:
+                return "common", item_iteration_armor
     def create_item(choice):
         for item_iteration_weapon in item_list_weapons:
             if choice == item_iteration_weapon:
@@ -50,6 +74,7 @@ class Item_Creator_3000_V2():
                     return "rare", item_iteration_armor
                 else:
                     return "common", item_iteration_armor
+    
     def get_item_name(item):
         return item.name
     def get_item_type(item):

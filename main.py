@@ -457,7 +457,7 @@ def sound_engine(sound):
     mixer.Sound(sound)
     return mixer.Sound(sound)
 
-chest_sound = sound_engine("SoundEngine5000/Chest_sound.wav")
+chest_sound = sound_engine("./SoundEngine5000/Chest_sound.wav")
 
 # chest_sound.play()
 
