@@ -1,45 +1,67 @@
 import random as rand
-class Item:
-    max_hp_bonus = 0
-    hp_bonus = max_hp_bonus #KAN ÄNDRAS INDIVIDUELLT, DEFAULT ÄR ATT DE ÄR SAMMA
-    str_bonus = 0
-    spd_bonus = 0
-    name = ""
-    type = ""
-    cost = 0
-fists = Item()
-fists.type = "weapon"
-fists.name = "Fists"
-empty_armor = Item()
-empty_armor.type = "armor"
-empty_armor.name = "None"
-empty_accessory = Item()
-empty_accessory.type = "accessory"
-empty_accessory.name = "None"
-item_list=          ["dagger", "sword", "explosive", "ultra_greatsword", "springfield rifle", "rocket launcher", "crusader helm", "leather boots", "philosophy book", "voltaire's pencil"]
-item_rarity_list =  [100,       100,     60,          20,                 60,                  1099999999,       100,             100,             100,               100]
-def create_item(choice):
-    if choice == "dagger":
-        dagger = Item()
-        dagger.type = "weapon"
-        dagger.name = "Small dagger"
-        dagger.str_bonus = rand.randint(3, 5)
-        dagger.spd_bonus = rand.randint(5, 6)
-        dagger.cost = rand.randint(50,66)
-        return dagger
-    elif choice == "crusader helm":
-        crusader_helm = Item()
-        crusader_helm.type = "armor"
-        crusader_helm.name = "Crusader helm"
-        crusader_helm.max_hp_bonus = rand.randint(50,70)
-        crusader_helm.cost = rand.randint(70, 80)
-        return crusader_helm
-    elif choice == "philosophy book":
-        philosophy_book = Item()
-        philosophy_book.type = "accessory"
-        philosophy_book.name = '''Pangloss`s "Metaphysiology collection" book'''
-        philosophy_book.max_hp_bonus = rand.randint(30, 40)
-        philosophy_book.str_bonus = rand.randint(-8, -2)
-        philosophy_book.spd_bonus = rand.randint(5, 8)
-        philosophy_book.cost = rand.randint(1, 5)
-        return philosophy_book
+import main
+from main import *
+
+MAX_HP_BONUS = 0
+HP_BONUS = MAX_HP_BONUS
+STR_BONUS = 0
+SPD_BONUS = 0
+NAME = ""
+TYPE = ""
+COST = 0
+
+item_list_weapons=["Kaspers Roasts", "sword", "NUKE_MUSIC", "aliexpress shipping time", "dabbington"]
+item_list_armor=["Cargo Pants", "stripper boots", "eldorados nudlar"]
+item_rarity =  [range(0,30), range(30,60), range(60,90), range(90,120), range(120,150)]
+
+class Item_Creator_3000_V2():
+    def __init__(self, MAX_HP_BONUS, HP_BONUS, STR_BONUS, SPD_BONUS, NAME, TYPE, COST):
+        max_hp_bonus = MAX_HP_BONUS
+        hp_bonus = HP_BONUS
+        str_bonus = STR_BONUS
+        spd_bonus = SPD_BONUS
+        name = NAME
+        type = TYPE
+        cost = COST
+        starter_weapon=Item_Creator_3000_V2(0, 0, 0, 0, "Fists", "weapon", 0)
+    def create_item(choice):
+        for item_iteration_weapon in item_list_weapons:
+            if choice == item_iteration_weapon:
+                item_iteration_weapon = Item_Creator_3000_V2()
+                item_iteration_weapon.type = "weapon"
+                item_iteration_weapon.name = item_iteration_weapon
+                item_iteration_weapon.str_bonus = rand.randint(3, 5)
+                item_iteration_weapon.spd_bonus = rand.randint(5, 6)
+                item_iteration_weapon.cost = rand.randint(50,66)
+                rarity = item_rarity[item_list_weapons.index(choice)]
+                if rand.randint(1, rarity) == 1:
+                    return "rare", item_iteration_weapon
+                else:
+                    return "common", item_iteration_weapon
+        for item_iteration_armor in item_list_armor:
+            if choice == item_iteration_armor:
+                item_iteration_armor = Item_Creator_3000_V2()
+                item_iteration_armor.type = "armor"
+                item_iteration_armor.name = "Small dagger"
+                item_iteration_armor.max_hp_bonus = rand.randint(50,70)
+                item_iteration_armor.cost = rand.randint(70, 80)
+                rarity = item_rarity[item_list_armor.index(choice)]
+                if rand.randint(1, rarity) == 1:
+                    return "rare", item_iteration_armor
+                else:
+                    return "common", item_iteration_armor
+    def get_item_name(item):
+        return item.name
+    def get_item_type(item):
+        return item.type
+    def get_item_str_bonus(item):
+        return item.str_bonus
+    def get_item_spd_bonus(item):
+        return item.spd_bonus
+    def get_item_max_hp_bonus(item):
+        return item.max_hp_bonus
+    def get_item_cost(item):
+        return item.cost
+
+
+            
