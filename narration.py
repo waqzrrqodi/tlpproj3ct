@@ -7,21 +7,10 @@ You take a few steps forward and notice a sign that reads "Rimbo Bus Station".
 The words make you fall to your knees, and you realize that you are in the middle of Sweden's 
 most dangerous city. You build up the courage to stand back up. The only path is forward.
 '''
-INTRO_TXT2 = '''
-You notice a monitor below the sign, it displays the timetable for bus arrivals. 
-The only trip is to Norrtälje, and the time of departure is suspiciously missing. 
-Apart from that you see a dark alley and a rickety bridge. You have to choose between 
-a bus that may never arrive, a mysterious dark alley and a rickety bridge. What will you do?
-'''
-INTRO_TXT = [INTRO_TXT1, INTRO_TXT2]
-
-# Choices:
-# 1 - Wait for the bus
-# 2 - Dark Alley
-# 3 - Rickety Bridge
+INTRO_TXT = [INTRO_TXT1]
 
 
-#Route 1 - "Wait for the bus"
+#Route 1 - "Bus Stop"
 R1_TXT1 = '''
 You decide to wait for the bus. You stand there in the cold for hours on end, 
 until you see a pair of headlights in the distance. A bus approaches and a group 
@@ -68,10 +57,8 @@ He swings his arms towards you in a wild manner, and a fight breaks out.
 '''
 # Battle - Pangloss
 R3_TXT2_OPTION2 = '''
-You depressingly stumble back to the bus station, feeling like you missed out on something. 
-The bus has already left, so your only choice is to go through the alley.
+You depressingly stumble away, feeling like you missed out on something. 
 '''
-# Sends you to Route 2
 ROUTE3 = [R3_TXT1, R3_TXT2_OPTION1, R3_TXT2_OPTION2]
 
 #Route 4 - "Missile silo"
@@ -113,6 +100,42 @@ speaking gibberish. He pulls out a rolling pin and a fight breaks out.
 '''
 #Battle - Steroid Beast
 ROUTE6 = [R6_TXT1]
+
+#Route 7 - "Shop"
+R7_TXT1 = '''
+You enter the small shop and decide to browse through the various products that are on display.
+'''
+ROUTE7 = [R7_TXT1]
+
+#Route 8 - "Landfill"
+R8_TXT1 = '''
+You dig around in the landfill and find a rare item!
+'''
+#Gives the player an item.
+ROUTE8 = [R8_TXT1]
+
+#Route 9 - "Shitty game development studio"
+R9_TXT1 = '''
+You come closer and see a massive sign with the words "Candide Productions". A homeless man stumbles out of the
+building and attempts to rob you. A fight begins.
+'''
+#Battle - Homeless man
+R9_TXT2 = '''
+After defeating him you realize that he's just a victim of Candide Productions, and their awful ways. You
+take him to a homeless shelter and are rewarded with a bag of cocaine.
+'''
+#Gives the player a bag of cocaine
+ROUTE9 = [R9_TXT1, R9_TXT2]
+
+#Route 10 - "Concentration camp for virgins"
+R10_TXT1 = '''
+You walk towards the concentration camp and decide that you have to free all of the virgins. You unsheathe your blade
+challenge the guards to a duel.
+'''
+#Battle - The Anti Virgin
+R10_TXT2 = '''
+You win and free all of the virgins. They run into the sunset and live to fuck another day.
+'''
 
 # Coward Ending
 COWARD_END = '''

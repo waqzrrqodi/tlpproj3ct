@@ -6,12 +6,14 @@ import os
 from platform import system
 import pkg_resources
 import narration as narr
+# import AI
+# from AI import NPC_converse
 
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'emoji', 'pygame'}
+    required = {'progressbar', 'emoji', 'pygame', 'wit'}
 else:
-    required = {'progressbar', 'emoji', 'pygame', 'getch'}
+    required = {'progressbar', 'emoji', 'pygame', 'getch', 'wit'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -40,6 +42,7 @@ if missing:
 # #model = tf.keras.models.load_model('chatbot_model.h5')
 
 from pygame import mixer
+from wit import Wit
 import pickle
 # import ui_elements as ui
 from ui_elements import * # For testing purposes
@@ -97,7 +100,6 @@ def intro_splash_only():
     clear_screen()
     wait_for_keypress()
     intro_menu()
-
 
 #----------------------------------------------------------------------Player, Enemy and Objects----------------------------------------------------------#
 valma = ch.Enemy("Waldy", 200, 1000, "God")
@@ -390,7 +392,7 @@ def menu():
     print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory \n4. Continue") # For testing purposes
     menu_choice = input("What do thau wish to do? ");
     if menu_choice == GOTO_TUTORIAL:
-        print("tutoral")
+        print("tutorial")
         tutorial()
     if menu_choice == SAVE_AND_EXIT:
         print("Save + Exit")
@@ -597,6 +599,8 @@ class FightLoopTM(DefaultActionMenu):
                 self.defend(self.damage)
             elif user_selection == "heal":
                 self.heal()
+            elif user_selection == "enemy stats":
+                print(enemy_stats)
 
             # Check if the enemy has been defeated
             if self.enemy_health <= 0:
@@ -634,6 +638,29 @@ def ending2():
 
 def ending3():
     pass
+
+#------------------------------------------------------------------------mini map-----------------------------------------------------------------------#
+# Initialize the player's current location
+current_room = "rickety_bridge"
+
+# Game loop
+def mini_map():
+    print(mini_map[current_room]["description"])
+
+    print("Exits:", end=" ")
+
+    for direction in mini_map[current_room]["exits"]:
+        print(direction, end=" ")
+    print()
+
+    move = input("Where would you like to go? ")
+
+    if move in mini_map[current_room]["exits"]:
+        current_room = mini_map[current_room]["exits"][move]
+    else:
+        print("You can't go that way.")
+
+
 
 #-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
