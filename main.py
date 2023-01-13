@@ -452,13 +452,12 @@ def story(player_choice_route):
 
 def sound_engine(sound):
     mixer.init()
-    mixer.music.load(sound)
-    mixer.music.set_volume(0.7)
-    mixer.music.play()
+    mixer.Sound(sound)
+    return mixer.Sound(sound)
 
-# chest_sound = sound_engine("SoundEngine5000/Chest_sound.mp3")
-# item_sound = sound_engine("SoundEngine5000/Item_sound.mp3")
+chest_sound = sound_engine("SoundEngine5000/Chest_sound.wav")
 
+# chest_sound.play()
 
 #-----------------------------------------------------------------------------------NPC chatbot------------------------------------------------------------------------#
 
