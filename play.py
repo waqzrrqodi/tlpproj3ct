@@ -1,4 +1,4 @@
 
 import os
-os.system('color a')
+os.system('color b')
 import main

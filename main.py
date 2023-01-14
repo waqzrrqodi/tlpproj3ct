@@ -43,10 +43,11 @@ if missing:
 # #model = tf.keras.models.load_model('chatbot_model.h5')
 
 from pygame import mixer
-from wit import Wit
 import pickle
 # import ui_elements as ui
 from ui_elements import * # For testing purposes
+from characters import *
+from item_management import *
 import characters as ch
 
 if system() == "Windows":
