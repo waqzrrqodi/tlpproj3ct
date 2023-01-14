@@ -575,7 +575,7 @@ class FightLoopTM(DefaultActionMenu):
             elif user_selection == "heal":
                 self.heal()
             elif user_selection == "enemy stats":
-                print(enemy_stats)
+                enemy_stats()
 
             # Check if the enemy has been defeated
             if self.enemy_health <= 0:

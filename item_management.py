@@ -62,12 +62,9 @@ class InventorySys():
             print(f"{item_name} successfully picked up")
 
 
-MAX_HP_BONUS = None
-HP_BONUS = MAX_HP_BONUS
-
-DAMAGE = None
-
-HEAL_RESTORED = None
+HP_BONUS = 0
+DAMAGE = 0
+HEALTH_RESTORED = 0
 
 NAME = ""
 TYPE = ""
@@ -82,32 +79,31 @@ ITEM_LIST = {
     }
 
 class Item_Creator_3000_V2():
-    def __init__(self, MAX_HP_BONUS, HP_BONUS, HEAL_RESTORED, DAMAGE, NAME, TYPE, COST, WORTH, RARITY ):
-        max_hp_bonus = MAX_HP_BONUS
-        hp_bonus = HP_BONUS
-        health_restored = HEAL_RESTORED 
-        dmg = DAMAGE
-        rarity = RARITY
-        
-        name = NAME
-        item_type = TYPE
-        cost = COST
-        worth = WORTH
+    def __init__(self, HP_BONUS, HEALTH_RESTORED, DAMAGE, NAME, TYPE, COST, WORTH, RARITY ):
+        self.hp_bonus = HP_BONUS
+        self.health_restored = HEALTH_RESTORED
+        self.damage = DAMAGE
 
+        self.name = NAME
+        self.item_type = TYPE
+        self.cost = COST
+        self.worth = WORTH
+        self.rarity = RARITY
 
     def create_item_random(self):
-        rand_item_choice = ITEM_LIST.get(rand.choice("Weapons", "Armor", "Heals"))
+        #rand_item_choice = ITEM_LIST.get(rand.choice("Weapons", "Armor"))
+        rand_item_choice = "Weapon"
         if rand_item_choice == "Weapon":
             item_iteration_weapon_list = list(ITEM_LIST.get("Weapons"))
-            item = Item_Creator_3000_V2()
+            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
             item.type = "Weapon"
             item.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
-            item.dmg = rand.randint(3, 5)
+            item.damage = rand.randint(3, 5)
             item.cost = rand.randint(50,66)
             item.worth = item.cost/2
         if rand_item_choice == "Armor":
             item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
-            item = Item_Creator_3000_V2()
+            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
             item.type = "Armor"
             item.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
             item.max_hp_bonus = rand.randint(50,70)
@@ -115,7 +111,7 @@ class Item_Creator_3000_V2():
             item.worth = item.cost/2
         if rand_item_choice == "Heals":
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
-            item = Item_Creator_3000_V2()
+            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
             item.type = "Heals"
             item.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
             item.health_restored = rand.randint(30, 50)
@@ -126,16 +122,16 @@ class Item_Creator_3000_V2():
     def create_purchasable_item(self, choice):
             if choice in ITEM_LIST.get("Weapons") == True:
                 item_iteration_weapon_list = list(ITEM_LIST.get("Weapons"))
-                item = Item_Creator_3000_V2()
+                item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
                 item.type = "Weapon"
                 item.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
-                item.dmg = rand.randint(3, 5)
+                item.damage = rand.randint(3, 5)
                 item.cost = rand.randint(50,66)
                 item.worth = item.cost/2
                 
             if choice in ITEM_LIST.get("Armor") == True:
                 item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
-                item = Item_Creator_3000_V2()
+                item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
                 item.type = "Armor"
                 item.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
                 item.max_hp_bonus = rand.randint(50,70)
@@ -143,7 +139,7 @@ class Item_Creator_3000_V2():
                 item.worth = item.cost/2
             if choice in ITEM_LIST.get("Heals") == True:
                 item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
-                item = Item_Creator_3000_V2()
+                item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
                 item.type = "Geals"
                 item.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
                 item.health_restored = rand.randint(30, 50)
@@ -158,7 +154,7 @@ class Item_Creator_3000_V2():
     def get_item_type(item):
         return item.type
     def get_item_damage(item):
-        return item.dmg
+        return item.damage
     def get_item_max_hp_bonus(item):
         return item.max_hp_bonus
     def get_item_cost(item):
@@ -178,23 +174,22 @@ def item_rarity(item):
         if item.cost >= 151 and item.cost <= 200:
             rarity = "Mythic"
         return rarity
-#Chest system
+
+#Chest system, verkligen inte klart
 class ChestSys():
     """The chest system"""
     def __init__(self):
-        self.chest = list()
+        self.chest = None
     def chest_generate(self):
         """Generate a chest"""
-        self.chest.append()
+        rand_item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+        rand_item = rand_item.create_item_random()
+        self.chest = (rand_item)
+        return self.chest
 
-# class Armour( ):
-#     def __init__(self, armour_name, armour_defence):
-#         self.name = armour_name
-#         self.defence = armour_defence
-
-# class Weapon( ):
-#     """The weapon class"""
-#     def __init__(self, weapon_name, weapon_dmg):
-#         self.name = weapon_name
-#         self.damage = weapon_dmg
-
+    def print_chest(self, chest):
+        print(f"""
+        This is in the chest: 
+        {chest.type}:
+        {chest.name}
+        """ )

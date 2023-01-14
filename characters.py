@@ -14,27 +14,41 @@ class Player( ):
         self.inventory = InventorySys(3)
         self.gold = 0
         self.armour = None
-        self.weapon = Item_Creator_3000_V2(0, 0, 0, "Fists", "weapon", 0, 0)
+        self.weapon = None
         self.level = 1  
         self.xp = 0
         self.level_max_xp = 100
     
-    def attack(self, enemy):
+    def player_attack(self, enemy):
         """Attack an enemy"""
         if self.weapon == None:
             enemy.health -= self.strength
         else:
             enemy.health -= self.strength + self.weapon.damage
     
+    def enemy_attack(self, enemy):
+        """Attack the player"""
+        if self.armour == None or self.armour <= 0:
+            self.HP -= enemy.damage
+        if self.armour != None or self.armour > 0:
+            for i in range(enemy.damage):
+                if self.armour <= 0:
+                    self.HP -= 1
+                else:
+                    self.armour -= 1
+
+    
     def defend(self):
+        """Defend"""
         pass
+        
 
 class Human( ):
     """The human subclass"""
     def __init__(self) -> None:
         self.HP = 100
         self.SPEED = 5
-        self.STRENGHT = 100
+        self.STRENGTH = 100
         self.SUBCLASS = "Human"
 
 class Beast( ):
@@ -42,14 +56,14 @@ class Beast( ):
     def __init__(self) -> None:
         self.HP = 200
         self.SPEED = 10
-        self.STRENGHT = 50
+        self.STRENGTH = 50
         self.SUBCLASS = "Beast"
 class More_Info_Player( ):
     """The player class with more info aka the god class"""
     def __init__(self) -> None:
         self.HP = 999999
         self.SPEED = 999999
-        self.STRENGHT = 999999
+        self.STRENGTH = 999999
         self.SUBCLASS = "God"
 
 #för alla fiender
@@ -60,3 +74,9 @@ class Enemy():
         self.damage = enemy_damage
         self.health = enemy_health
         self.type = enemy_type
+    def enemy_stats(self):
+        """Print the enemy stats"""
+        print("Name: " + self.name)
+        print("Damage: " + str(self.damage))
+        print("Health: " + str(self.health))
+        print("Type: " + self.type)
