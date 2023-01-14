@@ -5,7 +5,6 @@ import subprocess as sp
 import os
 from platform import system
 import pkg_resources
-from itertools import chain
 import narration as narr
 # import AI
 # from AI import NPC_converse
@@ -46,8 +45,6 @@ from pygame import mixer
 import pickle
 # import ui_elements as ui
 from ui_elements import * # For testing purposes
-from characters import *
-from item_management import *
 import characters as ch
 
 if system() == "Windows":
@@ -430,27 +427,7 @@ def tutorial():
         tutorial()
 
 
-def story(player_choice_route):
-    # Intro text for level
-    # Choose path and stick with it
-    # Enemy encounter, fight, loot, etc., trap encounter, or chest encounter.
-    global level
-    global story_progress
-    PATH = [narr.INTRO_TXT1, narr.INTRO_TXT2, narr.ROUTE1, player_choice_route, narr.ROUTE2, player_choice_route,
-                narr.ROUTE3, player_choice_route, narr.ROUTE4, player_choice_route, narr.ROUTE5, player_choice_route,
-                narr.ROUTE6, player_choice_route, ending]
 
-    for text in chain(story_progress):
-        print(text + "\n")
-        clear_screen()
-        ending = None
-        #try: Test if there is a another text box to display
-            #print(PATH[level])
-            #input("Press enter to continue...")
-            #clear_screen()
-        #except:
-
-    level += 1
 
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
 
@@ -463,12 +440,8 @@ chest_sound = sound_engine("./SoundEngine5000/Chest_sound.wav")
 
 # chest_sound.play()
 
-#-----------------------------------------------------------------------------------NPC chatbot------------------------------------------------------------------------#
-
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
-
-
     def __init__(self, enemy):
         self.player_health = player.health
         self.player_max_health = player.max_health

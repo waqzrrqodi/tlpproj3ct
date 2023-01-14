@@ -14,7 +14,7 @@ class Player( ):
         self.inventory = InventorySys(3)
         self.gold = 0
         self.armour = None
-        self.weapon = None
+        self.weapon = Item_Creator_3000_V2(0, 0, 0, "Fists", "weapon", 0, 0)
         self.level = 1  
         self.xp = 0
         self.level_max_xp = 100
