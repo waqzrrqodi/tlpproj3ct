@@ -129,6 +129,7 @@ class Item_Creator_3000_V2():
             item.health_restored = rand.randint(30, 50)
             item.cost = rand.randint(10, 20)
             item.worth = item.cost/2
+        item.rarity = item_rarity(item)
         return item
 
     def create_purchasable_item(self, choice):
@@ -224,5 +225,6 @@ class ChestSys():
             Worth: {chest.worth}
             Rarity: {chest.rarity}
             """)
+        
     def item_pickup(self):
         return self.chest
