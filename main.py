@@ -164,7 +164,7 @@ class DefaultActionMenu():
         HEAL = "h"
         MORE_INFO = "i"
         player_action = None
-        selection = input("What doth thou wish to do? (A)ttack, (D)efend, (H)eal, or get more (i)nfo? --> ")
+        selection = input(fight_menu_choices)
         try:
             if selection.lower() == ATTACK:
                 print(f"Attack Selected")

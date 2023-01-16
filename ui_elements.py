@@ -174,27 +174,16 @@ waldy = '''
 |                   \(                                    |
 ===========================================================
 '''
-
-ui_actionmenu = f'''
-============================-----
-| Choose your action:                   
-| 1 - ***action_1***
-| 2 - ***action_2***
-| 3 - ***action_3***
-============================-----
-'''
-#possible actions: attack, defend, enemy info, flee, inventory
-
-
-ui_textbox = f'''
-============================-----
-| ***name***:
-| ***action_1***
-| ***action_2***
-| ***action_3***
-| ***action_4***
-============================-----
-'''
+fight_menu_choices = """
+        ============================-----
+        | Choose your action:                   
+        | (A)ttack
+        | (D)efend
+        | (H)eal
+        | (I)nfo
+        ============================-----
+        \n--> 
+        """
 
 intro_menu_choices = '''
 ============================-----
