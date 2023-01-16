@@ -131,7 +131,8 @@ class Item_Creator_3000_V2():
         item.cost = rand.randint(30, 150)
         item.worth = round(item.cost*0.9)
         item.rarity = item_rarity(item)
-        return item
+        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Health_Restored": item.health_restored, "Damage": item.damage}
+        return finished_item
 
     def create_item_purchaseable(self, choice):
         if choice in ITEM_LIST.get("Weapons") == True:
@@ -155,7 +156,8 @@ class Item_Creator_3000_V2():
         item.cost = rand.randint(30, 150)
         item.worth = round(item.cost*0.9)
         item.rarity = item_rarity(item)
-        return item
+        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Health_Restored": item.health_restored, "Damage": item.damage}
+        return finished_item
 
     def get_item_name(item):
         return item.name
@@ -177,7 +179,9 @@ class Item_Creator_3000_V2():
 
 
 def item_rarity(item):
-    if item.cost <= 50:
+    if item.cost < 30:
+        rarity = "poop"
+    if item.cost >= 30:
         rarity = "Common"
     if item.cost >= 70:
         rarity = "Rare"
@@ -196,43 +200,40 @@ class ChestSys():
     """The chest system"""
 
     def __init__(self):
-        self.chest = None
+        self.chest = []
 
     def chest_generate(self):
         """Generate a chest"""
         rand_item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
         rand_item = rand_item.create_item_random()
-        self.chest = rand_item
+        self.chest.append(rand_item)
         return self.chest
 
     def print_chest(self, chest):
-        print(f"This chest contains a {chest.name}, with attributes:")
-        if chest.type == "Weapon":
+        if (chest[0])["Type"] == "Weapon":
             print(f""" 
-            Type: {chest.type}
-            Damage: {chest.damage}
-            Worth: {chest.worth}
-            Rarity: {chest.rarity}
+            Name: {(chest[0])["Name"]}
+            Type: {(chest[0])["Type"]}
+            Damage: {(chest[0])["Damage"]}
+            Worth: {(chest[0])["Worth"]}
+            Rarity: {(chest[0])["Rarity"]}
             """)
-        if chest.type == "Armor":
+        if (chest[0])["Type"] == "Armor":
             print(f""" 
-            Type: {chest.type}
-            Max HP Bonus: {chest.max_hp_bonus}
-            Worth: {chest.worth}
-            Rarity: {chest.rarity}
+            Name: {(chest[0])["Name"]}
+            Type: {(chest[0])["Type"]}
+            Max HP Bonus: {(chest[0])["HP_Bonus"]}
+            Worth: {(chest[0])["Worth"]}
+            Rarity: {(chest[0])["Rarity"]}
             """)
-        if chest.type == "Heals":
+        if (chest[0])["Type"] == "Heals":
             print(f""" 
-            Type: {chest.type}
-            Health Restored: {chest.health_restored}
-            Worth: {chest.worth}
-            Rarity: {chest.rarity}
+            Name: {(chest[0])["Name"]}
+            Type: {(chest[0])["Type"]}
+            Health Restored: {(chest[0])["Health_Restored"]}
+            Worth: {(chest[0])["Worth"]}
+            Rarity: {(chest[0])["Rarity"]}
             """)
-
-    def item_pickup(self):
-        return self.chest
-
-
 # Item management thingy testing
 #InvSYS = InventorySys()
 Chest = ChestSys()
