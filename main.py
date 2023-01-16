@@ -11,9 +11,9 @@ import narration as narr
 
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'emoji', 'pygame', 'wit'}
+    required = {'progressbar', 'emoji', 'pygame', 'wit', 'webp'}
 else:
-    required = {'progressbar', 'emoji', 'pygame', 'getch', 'wit'}
+    required = {'progressbar', 'emoji', 'pygame', 'getch', 'wit', 'webp'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -87,6 +87,7 @@ def intro():
     print(intro_name)
 
     wait_for_keypress()
+    theme()
     intro_menu()
 
 def intro_splash_only():
@@ -426,28 +427,13 @@ def tutorial():
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
 def theme():
     pygame.init()
-    WIDTH = 500
-    HEIGHT = 250
-    window = pygame.display.set_mode((WIDTH,HEIGHT))
-    bg_img = pygame.image.load('./theme_img.jpg')
-    bg_img = pygame.transform.scale(bg_img,(WIDTH,HEIGHT))
-
     pygame.mixer.init()
     pygame.mixer.music.load("./SoundEngine5000/theme_song.wav")
     pygame.mixer.music.play(-1)
-
-    runing = True
-    while runing:
-        window.blit(bg_img,(0,0))
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                runing = False
-    pygame.display.update()
-    pygame.quit()
+    pygame.mixer.music.set_volume(0.5)
 
 
 def sound_engine(sound):
-    pygame.mixer.init()
     pygame.mixer.Sound(sound)
     return pygame.mixer.Sound(sound)
 
@@ -769,5 +755,6 @@ def play():
     '''
     player.inventory.pickup_item("fjord", 1) # For testing purposes
     game_loop()
+
 intro()
 play()
