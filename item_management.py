@@ -195,6 +195,7 @@ def item_rarity(item):
 
 # Chest system, verkligen inte klart
 
+SCRAP_LIST = ["Rock", "Trash", "Dirty Socks", "Dr Pepper", "Macbook", "Estet Linjen"]
 
 class ChestSys():
     """The chest system"""
@@ -207,6 +208,12 @@ class ChestSys():
         rand_item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
         rand_item = rand_item.create_item_random()
         self.chest.append(rand_item)
+
+        for i in range(rand.randint(0, 1)):
+            trash = Item_Creator_3000_V2(0, 0, 0, rand.choice(SCRAP_LIST), "Trash", 0, 0, 0)
+            self.chest.append(trash)
+
+        
         return self.chest
 
     def print_chest(self, chest):
