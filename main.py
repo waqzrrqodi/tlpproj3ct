@@ -322,7 +322,7 @@ class PlayerAndNameSelect(DefaultActionMenu):
         """
         creates the player
         """
-        player = ch.Player(self.player_subclass.STRENGHT, self.player_subclass.HP, self.name, self.player_subclass.SUBCLASS, self.player_subclass.SPEED)
+        player = ch.Player(100, self.player_subclass.HP, self.name, self.player_subclass.SUBCLASS, self.player_subclass.SPEED)
         return player
 
 #-----------------------------------------------------------------------------------Menus------------------------------------------------------------------------#

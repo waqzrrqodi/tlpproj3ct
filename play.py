@@ -1,4 +1,8 @@
-
 import os
-os.system('color b')
+from platform import system
+if system() == "Windows":
+    os.system('color b')
+else:
+    pass
+
 import main

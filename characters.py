@@ -1,7 +1,7 @@
 #för spelaren
 from item_management import *
-from main import *
-
+# from main import *
+# INTE LAGLIGT ATT IMPORTERA MAIN I EN ANNAN FIL AJABAJA
 class Player( ):
     """The player class"""
     def __init__(self, chosen_strength, chosen_health, chosen_name, chosen_subclass, chosen_speed):

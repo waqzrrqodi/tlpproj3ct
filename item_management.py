@@ -1,5 +1,6 @@
 import random as rand
-from main import *
+# from main import *
+# INTE LAGLIGT ATT IMPORTERA MAIN I EN ANNAN FIL AJABAJA
 
 #För alla inventory system inklusive 
 MAX_INV_CAP = 5
