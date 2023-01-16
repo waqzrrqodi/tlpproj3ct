@@ -1,5 +1,4 @@
 import random as rand
-# from main import *
 # INTE LAGLIGT ATT IMPORTERA MAIN I EN ANNAN FIL AJABAJA
 
 #För alla inventory system inklusive 
@@ -52,6 +51,11 @@ class InventorySys():
                 the_item_dilemma_final_choice = int(input("Choose numbah----->"))
                 self.inv.pop(the_item_dilemma_final_choice-1)
                 self.inv.append(self.item(item_name, item_strength_bonus))
+                print( f'''
+                ----------==================----------
+                    You picked up ___{item_name}!___
+                ----------==================----------
+                ''')
                 # Not working fully yet dingus
 
             elif the_item_dilemma.lower == "n" or the_item_dilemma == "no":
@@ -60,7 +64,11 @@ class InventorySys():
                 print("Please provide a Y/n answer")
         else: 
             self.inv.append(self.item(item_name, item_strength_bonus))
-            print(f"{item_name} successfully picked up")
+            print( f'''
+                ----------==================----------
+                    You picked up ___{item_name}!___
+                ----------==================----------
+                ''')
 
 
 HP_BONUS = 0
@@ -74,13 +82,16 @@ WORTH = 0
 RARITY = ""
 
 ITEM_LIST = {
-    "Weapons": {"Kaspers Roasts", "sword", "NUKE_MUSIC", "aliexpress shipping time", "dabbington", "DragonSlayer Greatsword", "Greatsword"},
-    "Armor": {"Cargo Pants", "stripper boots", "eldorados nudlar", "simpa_wardrobe", "mega_condom", "Steel Breastplate"},
-    "Heals": {"Crystal Meth", "Heroin", "Crack Cocaine", "Penjamin"},
+    "Weapons": {"Kaspers Roasts", "sword", "NUKE_MUSIC", "aliexpress shipping time", "dabbington", "DragonSlayer Greatsword", "Greatsword", "Big Wheel"},
+    "Armor": {"Cargo Pants", "stripper boots", "eldorados nudlar", "simpa_wardrobe", "mega_condom", "Steel Breastplate", "OsKars Jawline"},
+    "Heals": {"Crystal Meth", "Heroin", "Crack Cocaine", "Penjamin", "Ketamine", "LSD", "MDMA", "Rohypnol", "Täby AK steroider"},
     }
 
 class Item_Creator_3000_V2():
-    def __init__(self, HP_BONUS, HEALTH_RESTORED, DAMAGE, NAME, TYPE, COST, WORTH, RARITY ):
+    def __init__(self)-> None:
+        pass
+        
+    def create_item_manual (self, HP_BONUS, HEALTH_RESTORED, DAMAGE, NAME, TYPE, COST, WORTH, RARITY):
         self.hp_bonus = HP_BONUS
         self.health_restored = HEALTH_RESTORED
         self.damage = DAMAGE
@@ -183,14 +194,35 @@ class ChestSys():
         self.chest = None
     def chest_generate(self):
         """Generate a chest"""
-        rand_item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+        rand_item = Item_Creator_3000_V2()
         rand_item = rand_item.create_item_random()
-        self.chest = (rand_item)
+        self.chest = rand_item
         return self.chest
 
     def print_chest(self, chest):
-        print(f"""
-        This is in the chest: 
-        {chest.type}:
-        {chest.name}
-        """ )
+        if chest.type == "Weapon":
+            print(f""" 
+            Type: {chest.type}
+            Name: {chest.name}
+            Damage: {chest.damage}
+            Worth: {chest.worth}
+            Rarity: {chest.rarity}
+            """)
+        if chest.type == "Armor":
+            print(f""" 
+            Type: {chest.type}
+            Name: {chest.name}
+            Max HP Bonus: {chest.max_hp_bonus}
+            Worth: {chest.worth}
+            Rarity: {chest.rarity}
+            """)
+        if chest.type == "Heals":
+            print(f""" 
+            Type: {chest.type}
+            Name: {chest.name}
+            Health Restored: {chest.health_restored}
+            Worth: {chest.worth}
+            Rarity: {chest.rarity}
+            """)
+    def item_pickup(self):
+        return self.chest

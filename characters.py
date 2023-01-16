@@ -1,13 +1,13 @@
 #för spelaren
 from item_management import *
-# from main import *
+import random as rand
 # INTE LAGLIGT ATT IMPORTERA MAIN I EN ANNAN FIL AJABAJA
 class Player( ):
     """The player class"""
     def __init__(self, chosen_strength, chosen_health, chosen_name, chosen_subclass, chosen_speed):
         #subclass kan antingen vara human eller beast
         self.strength = chosen_strength
-        HP  = chosen_health
+        self.hp= chosen_health
         self.name = chosen_name
         self.subclass = chosen_subclass
         self.speed = chosen_speed
@@ -29,18 +29,25 @@ class Player( ):
     def enemy_attack(self, enemy):
         """Attack the player"""
         if self.armour == None or self.armour <= 0:
-            self.HP -= enemy.damage
+            self.hp -= enemy.damage
         if self.armour != None or self.armour > 0:
-            for i in range(enemy.damage):
+            for i in range(enemy.damage-1):
                 if self.armour <= 0:
-                    self.HP -= 1
+                    self.hp -= 1
                 else:
                     self.armour -= 1
-
     
-    def defend(self):
+    def defend(self, enemy):
         """Defend"""
-        pass
+        damage_decrease = rand.randint(0, 10)
+        if self.armour == None or self.armour <= 0:
+            self.hp -= (enemy.damage-damage_decrease)
+        if self.armour != None or self.armour > 0:
+            for i in range(enemy.damage-damage_decrease-1):
+                if self.armour <= 0:
+                    self.hp -= 1
+                else:
+                    self.armour -= 1
         
 
 class Human( ):

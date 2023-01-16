@@ -5,9 +5,9 @@ import subprocess as sp
 import os
 from platform import system
 import pkg_resources
+from itertools import chain
 import narration as narr
-# import AI
-# from AI import NPC_converse
+# from AI import *
 
 # Check if the user has the required packages installed
 if system() == "Windows":
@@ -34,17 +34,11 @@ if missing:
     time.sleep(0.5)
     clear_screen()
 
-# import tensorflow as tf
-# from tensorflow.keras.preprocessing.text import Tokenizer
-# from tensorflow.keras.preprocessing.sequence import pad_sequences
-# import numpy
-# import json
-# #model = tf.keras.models.load_model('chatbot_model.h5')
-
+import pygame
+from pygame.locals import *
 from pygame import mixer
 import pickle
-# import ui_elements as ui
-from ui_elements import * # For testing purposes
+from ui_elements import * # production materials
 import characters as ch
 
 if system() == "Windows":
@@ -113,7 +107,7 @@ fulcrum = ch.Enemy("Fulcrum", 250, 100, "Yodie Gang")
 bill = ch.Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
 player = None
 level = 0
-story_progress = narr.INTRO_TXT
+story_progress = 0
 tutorial_done = bool
 
 #-------------------------------------------------------------------------Selection System----------------------------------------------------------------#
@@ -246,18 +240,18 @@ def inv_show():
     """
     clear_screen()
     #small splash
-    print(f"{player.HP}")
-    print(f"{player.strength}")
-    print(f"{player.armour}")
-    print(f"{player.level}")
+    print(f"Player Health: {player.hp}")
+    print(f"Player Strenght: {player.strength}")
+    print(f"Player Armour: {player.armour}")
+    print(f"Player Awesome level: {player.level}")
 
     
     while True:
-        inv_expasion = input("------------------------------- \n Do you wish to expand to full overview? (y/n) \n------------------------------- \n-->")
+        inv_expasion = input("------------------------------- \n Do you wish to expand to full overview? (Y/n) \n------------------------------- \n-->")
         if inv_expasion.lower() == "y" or inv_expasion.lower() == "yes" or inv_expasion.lower() == "":
             clear_screen()
             
-            print(f"HP: {player.HP} stronks:{player.strength} armor:{player.armour} lvl{player.level}")
+            print(f"HP: {player.hp} stronks:{player.strength} armor:{player.armour} lvl{player.level}")
             print("---------------------------------------------")
             #expand to full inventory view
             if len(player.inventory.inv) == 0:
@@ -267,7 +261,7 @@ def inv_show():
             else:
                 print("Inventory: ")
                 for item in enumerate(player.inventory.inv):
-                    print(f"Item Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n")
+                    print(f"---------\nItem Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n---------")
                 input("Press enter to continue...")
                 break
         elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
@@ -410,13 +404,13 @@ def tutorial():
     '''
     This is the tutorial to make sure the player knows how to play the game
     '''
-    user_input = input("Wouldst thou like to see the tutorial, or art thou bold enough to continue without it? (y/n) --> ")
+    user_input = input("Wouldst thou like to see the tutorial, or art thou bold enough to continue without it? (y/N) --> ")
     try:
         if user_input.lower() == "y":
             animate_text("Loading tutorial...", "fast")
             print("Haha Silly, you thought there was a tutorial, but there is not.")
             time.sleep(1)
-        elif user_input.lower() == "n":
+        elif user_input.lower() == "n" or user_input.lower() == "":
             animate_text("Continuing without tutorial...", "fast")
         else:
             print("Invalid input")
@@ -430,11 +424,32 @@ def tutorial():
 
 
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
+def theme():
+    pygame.init()
+    WIDTH = 500
+    HEIGHT = 250
+    window = pygame.display.set_mode((WIDTH,HEIGHT))
+    bg_img = pygame.image.load('./theme_img.jpg')
+    bg_img = pygame.transform.scale(bg_img,(WIDTH,HEIGHT))
+
+    pygame.mixer.init()
+    pygame.mixer.music.load("./SoundEngine5000/theme_song.wav")
+    pygame.mixer.music.play(-1)
+
+    runing = True
+    while runing:
+        window.blit(bg_img,(0,0))
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                runing = False
+    pygame.display.update()
+    pygame.quit()
+
 
 def sound_engine(sound):
-    mixer.init()
-    mixer.Sound(sound)
-    return mixer.Sound(sound)
+    pygame.mixer.init()
+    pygame.mixer.Sound(sound)
+    return pygame.mixer.Sound(sound)
 
 chest_sound = sound_engine("./SoundEngine5000/Chest_sound.wav")
 
@@ -456,15 +471,18 @@ class FightLoopTM(DefaultActionMenu):
         print(f"Thou attacketh the foe and dealeth {self.player_weapon.damage} points of damage!")
 
     def run(self):
-        if random.randint(1, 100) <= 20:
+        if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
             self.fight_loop()
-        elif random.randint(1, 100) <= 5:
-            print("You try to run, but thau trips and falls, shattering every bone in your body.")
-            death()
-        else:
+        elif random.randint(1, 100) >= 10:
             print("Thau successfully run away from the fight!")
             print("Though it came with an item loss")
+        elif random.randint(1, 100) >= 1:
+            print("You try to run, but thau trips and falls, shattering every bone in your body.")
+            death()
+
+        else:
+            ending1()
 
     def defend(self, damage):
         if self.armour != None:
@@ -574,8 +592,6 @@ class FightLoopTM(DefaultActionMenu):
                 self.defend(self.damage)
             elif user_selection == "heal":
                 self.heal()
-            elif user_selection == "enemy stats":
-                enemy_stats()
 
             # Check if the enemy has been defeated
             if self.enemy_health <= 0:
@@ -596,7 +612,7 @@ class FightLoopTM(DefaultActionMenu):
 def death():
     print("You have died")
     # if player does something stupid and dies play ending 1
-    # if player dies in a boss fight play ending 2
+    # if player dies fighting Valma the Soulbroken play ending 2
     # if player dies in a normal fight play ending 3
     print(game_over)
     animate_text(credits_text, "fast")
@@ -606,13 +622,13 @@ def death():
     quit()
 
 def ending1():
-    pass
+    print(narr.COWARD_END)
 
 def ending2():
-    pass
+    print(narr.TRUE_END_DEATH)
 
 def ending3():
-    pass
+    print(narr.NORMAL_DEATH)
 
 #------------------------------------------------------------------------mini map-----------------------------------------------------------------------#
 # Initialize the player's current location
@@ -644,9 +660,11 @@ def game_loop():
     The main game loop of the game which is used to run the main mechanics of the game
     '''
     while True:
-        story()
+        level_right_now = story()
+        
     # level_choice() with narration and the story
     # default action menu
+    # If not find shop increase chance of finding shop
     # if there is enemy spawn enemy and enter fight loop
     # if there is chest spawn chest and enter chest loop and inventory loop
     # if there is trap spawn trap and enter trap loop
@@ -660,7 +678,7 @@ def save_game():
     """
     Save the game to the savegame.dat file
     """
-    save_game = input("Would you like to save your game? (y/n): ")
+    save_game = input("Would you like to save your game? (Y/n): ")
     
     if save_game.lower() == "y" or save_game == "":
         savefile_name = input("What is the name of the save file? (default: savegame {+ number})")
@@ -695,8 +713,8 @@ def load_game():
         doesSaveExist = True
     except FileNotFoundError:
         print("That save file does not exist")
-        choice = input("Would you like to try again? (y/n): ")
-        if choice.lower() == "y":
+        choice = input("Would you like to try again? (Y/n): ")
+        if choice.lower() == "y" and choice == "":
             load_game()
         else:
             doesSaveExist = False
@@ -710,6 +728,34 @@ def load_game():
         tutorial_done = user_data[2] # Not implemented yet
     elif doesSaveExist == False:
         intro_menu()
+
+def story(player_choice_route):
+    # Intro text for level
+    # Choose path and stick with it
+    # Enemy encounter, fight, loot, etc., trap encounter, or chest encounter.
+    global level
+    global story_progress
+    used_routes = []
+    PATH = [narr.INTRO_TXT]
+    for routes in len(narr.ROUTE):
+        ROUTE = random.choice(narr.ROUTE)
+        while ROUTE in used_routes:
+            ROUTE = random.choice(narr.ROUTE)
+        used_routes.append(ROUTE)
+        PATH.append(ROUTE)
+    PATH.append(ending)
+
+    for text in chain(PATH[story_progress]):
+        print(text + "\n")
+        user_input = input("Press enter to continue")
+        clear_screen()
+        
+        ending = narr.TRUE_END_WIN
+        story_progress += 1
+    
+
+    level += 1
+    return level
 
 def credits():
     print(credits_text)
