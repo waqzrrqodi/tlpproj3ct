@@ -434,6 +434,7 @@ def theme():
 
 
 def sound_engine(sound):
+    pygame.mixer.init()
     pygame.mixer.Sound(sound)
     return pygame.mixer.Sound(sound)
 
