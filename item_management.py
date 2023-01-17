@@ -100,10 +100,16 @@ class Item_Creator_3000_V2():
         self.damage = DAMAGE
 
         self.name = NAME
-        self.item_type = TYPE
+        self.type = TYPE
         self.cost = COST
         self.worth = WORTH
         self.rarity = RARITY
+
+        self.cost = rand.randint(30, 150)
+        self.worth = round(self.cost*0.9)
+        self.rarity = item_rarity(self)
+        #finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.hp_bonus, "Health_Restored": self.health_restored, "Damage": self.damage}
+        #return finished_item
 
     def create_item_random(self):
         WEAPONS = 1
@@ -158,25 +164,6 @@ class Item_Creator_3000_V2():
         item.rarity = item_rarity(item)
         finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Health_Restored": item.health_restored, "Damage": item.damage}
         return finished_item
-
-    def get_item_name(item):
-        return item.name
-
-    def get_item_type(item):
-        return item.type
-
-    def get_item_damage(item):
-        return item.damage
-
-    def get_item_max_hp_bonus(item):
-        return item.max_hp_bonus
-
-    def get_item_cost(item):
-        return item.cost
-
-    def get_item_health_restored(item):
-        return item.health_restored
-
 
 def item_rarity(item):
     if item.cost < 30:

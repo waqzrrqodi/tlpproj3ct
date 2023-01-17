@@ -305,11 +305,13 @@ class PlayerAndNameSelect(DefaultActionMenu):
         user_name_input = input("What is your name? --> ")
         self.name = random.choice(VIKING_NAMES)
         clear_screen()
-        print(f"{user_name_input} is a good name, though I think {self.name} is a stronger and more viking name.")
+        print(f"{user_name_input} is a good name, though I think {self.name} is a stronger and a more viking name.")
         time.sleep(1)
         input(f"Confirm {self.name}? yes/absolutly --> ")
+        print("Are you sure? You won't be able to change it later (yes/perhaps)")
+        input("Confirm --> ")
         print(f"{self.name} accepted")
-        time.sleep(2)
+        time.sleep(1)
         clear_screen()
 
         animate_text(f"Welcome {self.name} the {self.player_subclass.SUBCLASS}", "fast")
@@ -754,7 +756,7 @@ def play():
     '''
     The main function of the game which is used to run the main functions of the game
     '''
-    player.inventory.pickup_item("fjord", 1) # For testing purposes
+    #player.inventory.pickup_item("fjord", 1) # For testing purposes
     game_loop()
 
 intro()
