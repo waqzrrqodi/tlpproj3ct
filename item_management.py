@@ -233,8 +233,8 @@ class ChestSys():
         Worth: {(chest[1])["Worth"]}
         Rarity: {(chest[1])["Rarity"]}
         """)
-# Item management thingy testing
-#InvSYS = InventorySys()
-Chest = ChestSys()
-chest1 = Chest.chest_generate()
-Chest.print_chest(chest1)
+'''
+Chest = ChestSys()  # Create chest
+chest1 = Chest.chest_generate() # Generate a chest
+Chest.print_chest(chest1) # Print the chest
+'''

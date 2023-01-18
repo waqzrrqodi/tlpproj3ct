@@ -83,11 +83,14 @@ def intro():
 
     print(thx_disclaimer)
     time.sleep(1)
+
     clear_screen()
     print(intro_name)
+    background_theme("./SoundEngine5000/Intro_Music.wav")
+    time.sleep(1)
 
     wait_for_keypress()
-    theme()
+    
     intro_menu()
 
 def intro_splash_only():
@@ -239,6 +242,7 @@ def inv_show():
     """
     Shows the player's inventory
     """
+    
     clear_screen()
     #small splash
     print(f"Player Health: {player.hp}")
@@ -307,10 +311,12 @@ class PlayerAndNameSelect(DefaultActionMenu):
         clear_screen()
         print(f"{user_name_input} is a good name, though I think {self.name} is a stronger and a more viking name.")
         time.sleep(1)
+
         input(f"Confirm {self.name}? yes/absolutly --> ")
         print("Are you sure? You won't be able to change it later (yes/perhaps)")
         input("Confirm --> ")
         print(f"{self.name} accepted")
+
         time.sleep(1)
         clear_screen()
 
@@ -427,12 +433,16 @@ def tutorial():
 
 
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
-def theme():
-    pygame.init()
-    pygame.mixer.init()
-    pygame.mixer.music.load("./SoundEngine5000/theme_song.wav")
-    pygame.mixer.music.play(-1)
-    pygame.mixer.music.set_volume(0.5)
+def background_theme(music):
+    if pygame.mixer.get_busy() == False:
+        pygame.mixer.music.load(music)
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play(-1)
+    else:
+        pygame.mixer.music.fadeout(3)
+        pygame.mixer.music.load(music)
+        pygame.mixer.music.play()
+
 
 
 def sound_engine(sound):
@@ -441,6 +451,9 @@ def sound_engine(sound):
     return pygame.mixer.Sound(sound)
 
 chest_sound = sound_engine("./SoundEngine5000/Chest_sound.wav")
+item_sound = sound_engine("./SoundEngine5000/Item_Pickup.wav")
+enemy_grunt = sound_engine("./SoundEngine5000/Enemy_Grunt.wav")
+enemy_grunt2 = sound_engine("./SoundEngine5000/Enemy_Grunt2.wav")
 
 # chest_sound.play()
 
@@ -618,36 +631,13 @@ def ending2():
 
 def ending3():
     print(narr.NORMAL_DEATH)
-
-#------------------------------------------------------------------------mini map-----------------------------------------------------------------------#
-# Initialize the player's current location
-current_room = "rickety_bridge"
-
-# Game loop
-def mini_map():
-    print(mini_map[current_room]["description"])
-
-    print("Exits:", end=" ")
-
-    for direction in mini_map[current_room]["exits"]:
-        print(direction, end=" ")
-    print()
-
-    move = input("Where would you like to go? ")
-
-    if move in mini_map[current_room]["exits"]:
-        current_room = mini_map[current_room]["exits"][move]
-    else:
-        print("You can't go that way.")
-
-
-
 #-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
 def game_loop():
     '''
     The main game loop of the game which is used to run the main mechanics of the game
     '''
+    
     while True:
         level_right_now = story()
         
@@ -753,11 +743,13 @@ def credits():
 
 #-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
 def play():
+    background_theme("./SoundEngine5000/Theme_Song.wav")
     '''
     The main function of the game which is used to run the main functions of the game
     '''
     #player.inventory.pickup_item("fjord", 1) # For testing purposes
     game_loop()
 
+pygame.init()
 intro()
 play()
