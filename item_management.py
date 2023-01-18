@@ -75,9 +75,9 @@ class InventorySys():
                 ''')
 
 ITEM_LIST = {
-    "Weapons": {"Kaspers Roasts", "sword", "NUKE_MUSIC", "aliexpress shipping time", "dabbington", "DragonSlayer Greatsword", "Greatsword", "Big Wheel"},
+    "Weapons": {"Kaspers Roasts", "sword", "NUKE_MUSIC", "aliexpress shipping time", "dabbington", "DragonSlayer Greatsword", "Greatsword", "Big Wheel", "rolling pin"},
     "Armor": {"Cargo Pants", "stripper boots", "eldorados nudlar", "simpa_wardrobe", "mega_condom", "Steel Breastplate", "OsKars Jawline"},
-    "Heals": {"Crystal Meth", "Heroin", "Crack Cocaine", "Penjamin", "Ketamine", "LSD", "MDMA", "Rohypnol", "Täby AK steroider"},
+    "Heals": {"Crystal Meth", "Heroin", "Crack Cocaine", "Penjamin", "Ketamine", "LSD", "MDMA", "Rohypnol", "Täby AK steroider", "horse meat"},
 }
 
 
@@ -181,7 +181,7 @@ def item_rarity(item):
 
 # Chest system, verkligen inte klart
 
-SCRAP_LIST = ["Rock", "Trash", "Dirty Socks", "Dr Pepper", "Macbook", "Estet Linjen"]
+SCRAP_LIST = ["Rock", "Trash", "Dirty Socks", "Cock Cola", "Macbook", "Estet Linjen"]
 
 class ChestSys():
     """The chest system"""

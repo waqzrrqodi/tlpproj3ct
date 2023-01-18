@@ -125,6 +125,110 @@ You win and free all of the virgins. They run into the sunset and live to fuck a
 ROUTE10 = [R10_TXT1, R10_TXT2]
 
 
+#Route 11 - "temple"
+R11_TXT1 = '''
+You approach the ancient temple, the walls covered in mysterious hieroglyphs. You take a step forward 
+and suddenly the stone doors slam shut. The guards step forward, challenging you to a battle to see if 
+you are worthy to enter the temple. 
+'''
+# Battle - Guards
+R11_TXT2 = '''
+After a hard fought battle, you emerge victorious and the doors to the temple open, 
+revealing a secret path to untold mysteries. Upon further inspection you realise that you aren't in
+an ancient temple, you're in a bouncy castle. You should probably get your eyes checked.
+'''
+ROUTE11 = [R11_TXT1, R11_TXT2]
+
+
+#Route 12 - "Condemned Parking Lot"
+R12_TXT1 = '''
+You enter the parking lot and come across a most peculiar man. You attempt to speak to him but to no avail.
+The man is unresponsive. You wave your hand in front of his eyes but the man doesn't react. You look closer
+and realise that he's staring at something. A suspicious bottle of water. You pick up the bottle and the
+man instantly falls over and dies.
+'''
+#gives the player a rare item or something idk
+ROUTE12 = [R12_TXT1]
+
+
+
+#Route 13 - "The Concert"
+R13_TXT1 = '''
+You walk into the venue, only to find out that it's empty. The only exceptions are you and the performer.
+The man on the stage is a tattoo-covered, skinny, shirtless man. He looks at you for a few seconds before
+mumbling to himself and pulling out a rolling pin. A dramatic battle ensues.
+'''
+# Battle - Rap God
+R13_TXT2 = '''
+You beat the rap god and leave the venue, having stolen his rolling pin.
+'''
+# Gives player the rolling pin weapon
+
+
+#Route 14 - "Party"
+R14_TXT1 = '''
+You enter the party but hardly manage to enjoy yourself before a strange lady sticks a needle in your
+arm. You lose consiousness. 
+'''
+R14_TXT2 = '''
+You wake up in a pile of rubbish, covered in rats and filth. But that isn't your worst problem. You realise
+that somebody has stolen your lypsyl. You get sent into a delarious state of confusion as you try to make
+sense of the situation. You end up falling asleep because of the sensory overload.
+'''
+R14_TXT3 = '''
+You wake up once again, seeing the lady that stole your lypsyl in the distance. You approach her and demand
+her to return it. She refuses and a wild brawl breaks out between the two of you.
+'''
+# Battle - Strange Lady
+R14_TXT4 = '''
+You won, having beaten the harlot that stole your most prized possession. You decide to never go to a
+party ever again
+'''
+ROUTE14 = [R14_TXT1, R14_TXT2, R14_TXT3, R14_TXT4]
+
+
+# Route 15 - "Rimbo Graveyard"
+R15_TXT1 = '''
+You walk towards the graveyard, knowing the dead are restless. You quickly unsheathe your sword and 
+challenge the skeleton horde to a duel. A battle ensues.
+'''
+# Battle - skeletons
+R15_TXT2 = '''
+You narrowly survive, but you manage to slay the skeleton horde. The dead are now truly at rest...or at least until they rise again.
+'''
+ROUTE15 = [R15_TXT1, R15_TXT2]
+
+
+# Route 16 - "The Haunted Mansion"
+R16_TXT1 = '''
+You approach the mansion, feeling a chill down your spine. You take a deep breath and charge the door, ready to fight whatever lurks inside. Several ghosts appear out of nowhere and attack you.
+'''
+# Battle - ghosts
+R16_TXT2 = '''
+You take down the ghosts with a few well-placed strikes, but they seem to just keep coming. You eventually manage to put them to end their suffering.
+'''
+ROUTE16 = [R16_TXT1, R16_TXT2]
+
+
+# Route 17 - "used condom"
+R17_TXT1 = '''
+You pick up the used condom and find a rare item inside!
+'''
+# Gives the player a rare item
+ROUTE17 = [R17_TXT1]
+
+
+# Route 18 - "Witch's Tower"
+R18_TXT1 = '''
+You approach the entrance of the Witch's Tower, and say "damn shawty you live like this?". You ready your sword and shield, and begin to ascend the tower. The witch appears out of thin air and throws a pathetic excuse of a punch towards you, a battle begins.
+'''
+# Battle - Witch
+R18_TXT2 = '''
+You and the witch battle fiercely, but you eventually manage to outwit her. She is vanquished and you are victorious. As you leave the tower, you think to yourself: "what a dumb bitch"
+'''
+ROUTE18 = [R18_TXT1, R18_TXT2]
+
+
 # Coward Ending
 COWARD_END = '''
 You attempt to flee but get tracked down and captured by Rimbo advanced special forces. 
@@ -158,11 +262,11 @@ pawn, unable to make your own decisions or think for yourself. Your foolish ambi
 worse than death. You grasp the last piece of your conciousness as it fades away, leaving you as a mindless
 husk.
 '''
-FINAL_SCENE = '''
-
-'''
 # Choices:
 # 1 - Kill her
 # 2 - Let her live
+FINAL_SCENE = '''
+You walk into the sunset having escaped from Rimbo. 
+'''
 
 ROUTE = [ROUTE1, ROUTE2, ROUTE3, ROUTE4, ROUTE5, ROUTE6, ROUTE7, ROUTE8, ROUTE9, ROUTE10]
