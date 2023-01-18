@@ -195,14 +195,16 @@ intro_menu_choices = '''
 ============================-----
 '''
 
-ui_inventory = f'''
-         Inventory
-============================--
-|       gold: ***balance***
-============================--
-|1|{emojize(":smiling_face_with_sunglasses:")}|     ***inventory_items***
-============================--
-'''
+#blis ta bort?
+# ui_inventory = f'''
+#          Inventory
+# ============================--
+# |       gold: ***balance***
+# ============================--
+# |1|{emojize(":smiling_face_with_sunglasses:")}|     ***inventory_items***
+# ============================--
+# '''
+
 
 class_info = '''
 ================================================================
