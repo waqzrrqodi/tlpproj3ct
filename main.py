@@ -198,14 +198,15 @@ class DefaultActionMenu():
         return player_action
 
 
-    def subclass_selection(self, subclass_1, subclass_2):
+    def subclass_selection(self, subclass_1, subclass_2, subclass_3):
         """
-        The menu of the choices of the subclasses (Human or Beast) of the player and the name of the player.
+        The menu of the choices of the subclasses (Human or Beast (or gnoblin)) of the player and the name of the player.
         """
         clear_screen()
         print(characterselect)
         HUMAN = "1"
         BEAST = "2"
+        GNOBLIN = "g"
         MORE_INFO = "i"
         player_subclass = None
         choice = input("What is your choice? --> ")
@@ -216,6 +217,9 @@ class DefaultActionMenu():
             elif choice == BEAST:
                 print(f"{subclass_2} selected")
                 player_subclass = ch.Beast()
+            elif choice == GNOBLIN:
+                print(f"{subclass_3} selected")
+                player_subclass = ch.Gnoblin() 
             elif choice == MORE_INFO:
                 clear_screen()
                 print(f"{class_info}")
@@ -297,7 +301,7 @@ class PlayerAndNameSelect(DefaultActionMenu):
         """
         player selection menu
         """
-        self.player_subclass = self.subclass_selection("Human", "Beast")
+        self.player_subclass = self.subclass_selection("Human", "Beast", "Gnoblin")
     def name_select(self):
         """
         name selection menu

@@ -5,7 +5,7 @@ import random as rand
 class Player( ):
     """The player class"""
     def __init__(self, chosen_strength, chosen_health, chosen_name, chosen_subclass, chosen_speed):
-        #subclass kan antingen vara human eller beast
+        #subclass kan antingen vara human eller beast (eller secret gnoblin som jag precis hittade på)
         self.strength = chosen_strength
         self.hp= chosen_health
         self.name = chosen_name
@@ -57,6 +57,14 @@ class Human( ):
         self.SPEED = 5
         self.STRENGTH = 100
         self.SUBCLASS = "Human"
+
+class Gnoblin( ):
+    """The secret gnoblin subclass, AKA ultra nightmare mode"""
+    def __init__(self) -> None:
+        self.HP = 1
+        self.SPEED = 1
+        self.STRENGTH = 1
+        self.SUBCLASS = "Gnoblin"
 
 class Beast( ):
     """The beast subclass"""
