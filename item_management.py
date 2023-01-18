@@ -1,5 +1,4 @@
 import random as rand
-# INTE LAGLIGT ATT IMPORTERA MAIN I EN ANNAN FIL AJABAJA
 
 # För alla inventory system inklusive
 MAX_INV_CAP = 5
@@ -75,17 +74,6 @@ class InventorySys():
                 ----------==================----------
                 ''')
 
-
-HP_BONUS = 0
-DAMAGE = 0
-HEALTH_RESTORED = 0
-
-NAME = ""
-TYPE = ""
-COST = 0
-WORTH = 0
-RARITY = ""
-
 ITEM_LIST = {
     "Weapons": {"Kaspers Roasts", "sword", "NUKE_MUSIC", "aliexpress shipping time", "dabbington", "DragonSlayer Greatsword", "Greatsword", "Big Wheel"},
     "Armor": {"Cargo Pants", "stripper boots", "eldorados nudlar", "simpa_wardrobe", "mega_condom", "Steel Breastplate", "OsKars Jawline"},
@@ -94,9 +82,20 @@ ITEM_LIST = {
 
 
 class Item_Creator_3000_V2():
-    def __init__(self, HP_BONUS, HEALTH_RESTORED, DAMAGE, NAME, TYPE, COST, WORTH, RARITY):
+    def __init__(self):
+        self.hp_bonus = None
+        self.healing = None
+        self.damage = None
+
+        self.name = None
+        self.type = None
+        self.cost = None
+        self.worth = None
+        self.rarity = None
+
+    def create_item_DIY(self, HP_BONUS, HEALING, DAMAGE, NAME, TYPE, COST, WORTH, RARITY):
         self.hp_bonus = HP_BONUS
-        self.health_restored = HEALTH_RESTORED
+        self.healing = HEALING
         self.damage = DAMAGE
 
         self.name = NAME
@@ -108,9 +107,9 @@ class Item_Creator_3000_V2():
         self.cost = rand.randint(30, 150)
         self.worth = round(self.cost*0.9)
         self.rarity = item_rarity(self)
-        #finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.hp_bonus, "Health_Restored": self.health_restored, "Damage": self.damage}
-        #return finished_item
-
+        finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.hp_bonus, "Healing Capability": self.healing, "Damage": self.damage}
+        return finished_item
+            
     def create_item_random(self):
         WEAPONS = 1
         ARMOR = 2
@@ -118,51 +117,51 @@ class Item_Creator_3000_V2():
         rand_item_choice = rand.randint(1,3)
         if rand_item_choice == WEAPONS:
             item_iteration_weapon_list = list(ITEM_LIST.get("Weapons"))
-            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+            item = Item_Creator_3000_V2()
             item.type = "Weapon"
             item.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
             item.damage = rand.randint(3, 5)
         if rand_item_choice == ARMOR:
             item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
-            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+            item = Item_Creator_3000_V2()
             item.type = "Armor"
             item.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
-            item.max_hp_bonus = rand.randint(50, 70)
+            item.hp_bonus = rand.randint(50, 70)
         if rand_item_choice == HEALS:
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
-            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+            item = Item_Creator_3000_V2()
             item.type = "Heals"
             item.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
-            item.health_restored = rand.randint(30, 50)
+            item.healing = rand.randint(30, 50)
         item.cost = rand.randint(30, 150)
         item.worth = round(item.cost*0.9)
         item.rarity = item_rarity(item)
-        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Health_Restored": item.health_restored, "Damage": item.damage}
+        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Healing Capability": item.healing, "Damage": item.damage}
         return finished_item
 
     def create_item_purchaseable(self, choice):
         if choice in ITEM_LIST.get("Weapons") == True:
             item_iteration_weapon_list = list(ITEM_LIST.get("Weapons"))
-            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+            item = Item_Creator_3000_V2()
             item.type = "Weapon"
             item.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
             item.damage = rand.randint(3, 5)
         if choice in ITEM_LIST.get("Armor") == True:
             item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
-            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+            item = Item_Creator_3000_V2()
             item.type = "Armor"
             item.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
-            item.max_hp_bonus = rand.randint(50, 70)
+            item.hp_bonus = rand.randint(50, 70)
         if choice in ITEM_LIST.get("Heals") == True:
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
-            item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+            item = Item_Creator_3000_V2()
             item.type = "Geals"
             item.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
-            item.health_restored = rand.randint(30, 50)
+            item.healing = rand.randint(30, 50)
         item.cost = rand.randint(30, 150)
         item.worth = round(item.cost*0.9)
         item.rarity = item_rarity(item)
-        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Health_Restored": item.health_restored, "Damage": item.damage}
+        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Healing Capability": item.healing, "Damage": item.damage}
         return finished_item
 
 def item_rarity(item):
@@ -192,15 +191,14 @@ class ChestSys():
 
     def chest_generate(self):
         """Generate a chest"""
-        rand_item = Item_Creator_3000_V2(0, 0, 0, 0, 0, 0, 0, 0)
+        rand_item = Item_Creator_3000_V2()
         rand_item = rand_item.create_item_random()
         self.chest.append(rand_item)
 
         for i in range(rand.randint(0, 1)):
-            trash = Item_Creator_3000_V2(0, 0, 0, rand.choice(SCRAP_LIST), "Trash", 0, 0, 0)
-            self.chest.append(trash)
-
-        
+            trash = Item_Creator_3000_V2()
+            trash_created = trash.create_item_DIY(0, 0, 0, rand.choice(SCRAP_LIST), "Trash", 0, 0, 0)
+            self.chest.append(trash_created)
         return self.chest
 
     def print_chest(self, chest):
@@ -224,10 +222,17 @@ class ChestSys():
             print(f""" 
             Name: {(chest[0])["Name"]}
             Type: {(chest[0])["Type"]}
-            Health Restored: {(chest[0])["Health_Restored"]}
+            Health Restored: {(chest[0])["Healing Capability"]}
             Worth: {(chest[0])["Worth"]}
             Rarity: {(chest[0])["Rarity"]}
             """)
+        print(f"And...")
+        print(f"""
+        Name: {(chest[1])["Name"]}
+        Type: {(chest[1])["Type"]}
+        Worth: {(chest[1])["Worth"]}
+        Rarity: {(chest[1])["Rarity"]}
+        """)
 # Item management thingy testing
 #InvSYS = InventorySys()
 Chest = ChestSys()
