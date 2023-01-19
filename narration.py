@@ -36,8 +36,7 @@ ROUTE2 = [R2_TXT]
 
 #Route 3 - "Go Beyond the Rickety Bridge"
 R3_TXT = '''You go towards the rickety bridge and get approached by a massive muscular testosterone-
-fueled man. He presents himself as Martin Loman. He gets extremely close 
-to you and whispers in your ear "don't go beyond the rickety bridge" before disappearing without a trace. 
+fueled man. He gets extremely close to you and whispers in your ear "don't go beyond the rickety bridge" before disappearing without a trace. 
 You ignore his warning and go beyond the bridge only to see a strange man running in your direction. You realize that it isn't 
 an ordinary man, it's Pangloss from the hit new york time's best seller candide, written by Voltaire. 
 He swings his arms towards you in a wild manner, and a fight breaks out.
@@ -266,7 +265,9 @@ husk.
 # 1 - Kill her
 # 2 - Let her live
 FINAL_SCENE = '''
-You walk into the sunset having escaped from Rimbo. 
+You walk away having escaped from Rimbo. A muscular testosterone-fueled man approaches you and gives his congratulations.
+He introduces himself as Martin Loman and offers to drive you to the free state of Norrtälje. You hop into
+his martinmobile and powerdrift into the sunset.
 '''
 
-ROUTE = [ROUTE1, ROUTE2, ROUTE3, ROUTE4, ROUTE5, ROUTE6, ROUTE7, ROUTE8, ROUTE9, ROUTE10]
+ROUTE = [ROUTE1, ROUTE2, ROUTE3, ROUTE4, ROUTE5, ROUTE6, ROUTE7, ROUTE8, ROUTE9, ROUTE10, ROUTE11, ROUTE12, ROUTE13, ROUTE14, ROUTE15, ROUTE16, ROUTE17]
