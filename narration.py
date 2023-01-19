@@ -1,5 +1,5 @@
 #introduction
-INTRO_TXT = '''
+INTRO_TXT1 = '''
 You wake up in the middle of a street, surrounded by dilapidated buildings and rubbish. 
 After looking around you realize that the area is completely empty. 
 The rain weighs down on your shoulders and it grows heavier with every second that passes. 
@@ -7,7 +7,7 @@ You take a few steps forward and notice a sign that reads "Rimbo Bus Station".
 The words make you fall to your knees, and you realize that you are in the middle of Sweden's 
 most dangerous city. You build up the courage to stand back up. The only path is forward.
 '''
-INTRO_TXT = [INTRO_TXT]
+INTRO_TXT = [INTRO_TXT1]
 
 
 #Route 1 - "Bus Stop"
@@ -304,9 +304,9 @@ husk.
 # 1 - Kill her
 # 2 - Let her live
 FINAL_SCENE = '''
-You walk away having escaped from Rimbo. A muscular testosterone-fueled man approaches you and gives his congratulations.
-He introduces himself as Martin Loman and offers to drive you to the free state of Norrtälje. You hop into
-his martinmobile and powerdrift into the sunset.
+You walk away having escaped from Rimbo. A muscular testosterone-fueled man approaches you and gives his 
+congratulations. He introduces himself as Martin Loman and offers to drive you to the free regime of 
+Norrtälje. You hop into the martinmobile and powerdrift into the sunset.
 '''
 
-ROUTE = [ROUTE1, ROUTE2, ROUTE3, ROUTE4, ROUTE5, ROUTE6, ROUTE7, ROUTE8, ROUTE9, ROUTE10, ROUTE11, ROUTE12, ROUTE13, ROUTE14, ROUTE15, ROUTE16, ROUTE17]
+ROUTE = [ROUTE1, ROUTE2, ROUTE3, ROUTE4, ROUTE5, ROUTE6, ROUTE7, ROUTE8, ROUTE9, ROUTE10, ROUTE11, ROUTE12, ROUTE13, ROUTE14, ROUTE15, ROUTE16, ROUTE17, ROUTE18, ROUTE19]

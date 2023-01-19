@@ -83,8 +83,12 @@ def intro():
 
     print(thx_disclaimer)
     time.sleep(1)
-
     clear_screen()
+
+    print(ilovetaxfraud)
+    time.sleep(1)
+    clear_screen()
+
     print(intro_name)
     background_theme("./SoundEngine5000/Theme_Song.wav")
     time.sleep(1)
@@ -239,7 +243,7 @@ class DefaultActionMenu():
                 player_subclass = ch.Gnoblin() 
             elif choice == MORE_INFO:
                 clear_screen()
-                print(f"{class_info}")
+                print(f"{<}")
                 user_choice = input("Please type b to go back (or y?)--> ")
                 if user_choice.lower() == "b":
                     PlayerAndNameSelect()
@@ -385,6 +389,7 @@ def intro_menu():
         tutorial()
         intro_menu()
     elif menu_choice == CREDITS:
+        animate_text("\ninitiating Credits Sequence\n", "slow")
         credits()
         intro_menu()
     elif menu_choice == EXIT:
@@ -762,7 +767,7 @@ def story():
     return level
 
 def credits():
-    print(credits_text)
+    animate_text(credits_text, "fast")
     user_input = input("Press enter to return to the main menu")
     return
 

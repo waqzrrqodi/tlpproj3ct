@@ -54,6 +54,13 @@ thx_disclaimer = '''
                                                                                                        
 '''
 
+ilovetaxfraud = '''
+ ___           ___                  _   ___   _          _  _          
+|_ _|___ __   | __>_ _  ___  _ _  _| | / __>_| |_ _ _  _| |<_> ___  ___
+ | |<_> |\ \/ | _>| '_><_> || | |/ . | \__ \ | | | | |/ . || |/ . \<_-<
+ |_|<___|/\_\ |_| |_|  <___|`___|\___| <___/ |_| `___|\___||_|\___//__/
+'''
+
 #DrPepperStyle
 game_over=""" ___                     ___                
 /  _>  ___ ._ _ _  ___  | . | _ _  ___  _ _ 
@@ -198,26 +205,30 @@ class_info = '''
 ================================================================
 '''
 credits_text = '''
-
-Tom Hardy as "The Protagonist"
-Ana De Armas as Valma the Soulbroken
-Keanu Reeves as Fulcrum
-Scarlett Johansson as "Lypsyl Lady"
-John Doe as Jack
-Jane Smith as Jill
-Mike Brown as Mike Brown
-
 Directed by: Steven Spielberg
 Written by: Oskis :(
 Produced by: George Lucas
-Music by: Hans Zimmer
-Special Thanks to: The cast and crew for their hard work and dedication"""
 
-Programmed by: Literally only Kasper
+Cast:
+Tom Hardy as The Protagonist
+Ana De Armas as Valma the Soulbroken
+Keanu Reeves as Fulcrum
+Scarlett Johansson as Lypsyl Lady
+John Doe as Jack
+Jane Smith as Jill
+Mike Brown as Mike Brown
+Qlex as Steroid Beast
+
+Music:
+Hans Zimmer
+Lil West & Polyphia
+Andromida
+
+Programmed by: Literally only Kasper and Sebbe
 
 ----------==================----------
        Made by: Tax Fraud Studios
-----------==================----------
+----------==================----------\n
 '''
 
 #-------------------------------------------------------------------------Voice Lines Section-----------------------------------------------------------------
