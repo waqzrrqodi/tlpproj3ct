@@ -86,7 +86,7 @@ def intro():
 
     clear_screen()
     print(intro_name)
-    background_theme("./SoundEngine5000/Intro_Music.wav")
+    background_theme("./SoundEngine5000/Theme_Song.wav")
     time.sleep(1)
 
     wait_for_keypress()
@@ -296,9 +296,9 @@ def inv_show():
 #-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
 VIKING_NAMES=[
     #Viking names
-    "Arne", "Birger","Bjorn","Bjornulf","Bo", "Frode", "Knud", "Odger", "Trygve", "Troels"
+    "Arne", "Birger","Bjorn","Bjornulf","Bo", "Frode", "Knud", "Odger", "Trygve", "Troels" #Man
     
-    "Astrid","Bodil","Frida","Gertrud", "Gudrun","Gunnhild","Gunnvor","Halla","Hedvig","Helga",
+    "Astrid","Bodil","Frida","Gertrud", "Gudrun","Gunnhild","Gunnvor","Halla","Hedvig","Helga", #Kvinna
     ]
 class PlayerAndNameSelect(DefaultActionMenu):
     """for selecting the player and the name of the player"""
@@ -631,7 +631,6 @@ class FightLoopTM(DefaultActionMenu):
 
 
 def death():
-    background_theme("./SoundEngine5000/deathsound.wav")
     print("YOU DIED")
     # if player does something stupid and dies play ending 1
     # if player dies fighting Valma the Soulbroken play ending 2
@@ -768,7 +767,7 @@ def credits():
 
 #-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
 def play():
-    background_theme("./SoundEngine5000/Theme_Song.wav")
+    
     '''
     The main function of the game which is used to run the main functions of the game
     '''
