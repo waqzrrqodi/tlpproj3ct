@@ -11,9 +11,9 @@ import narration as narr
 
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'emoji', 'pygame', 'wit', 'webp'}
+    required = {'progressbar', 'pygame', 'wit', 'webp'}
 else:
-    required = {'progressbar', 'emoji', 'pygame', 'getch', 'wit', 'webp'}
+    required = {'progressbar', 'pygame', 'getch', 'wit', 'webp'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
@@ -125,6 +125,7 @@ player = None
 level = 0
 story_progress = 0
 tutorial_done = bool
+used_routes = []
 
 
 #-------------------------------------------------------------------------Selection System----------------------------------------------------------------#
@@ -243,7 +244,7 @@ class DefaultActionMenu():
                 player_subclass = ch.Gnoblin() 
             elif choice == MORE_INFO:
                 clear_screen()
-                print(f"{<}")
+                # print(f"{<}")
                 user_choice = input("Please type b to go back (or y?)--> ")
                 if user_choice.lower() == "b":
                     PlayerAndNameSelect()
@@ -739,29 +740,60 @@ def story():
     # Enemy encounter, fight, loot, etc., trap encounter, or chest encounter.
     global level
     global story_progress
-    used_routes = []
-    POSSIBLE_PATHS = [narr.INTRO_TXT]
+    global used_routes
+    possible_routes = [narr.ROUTE]
     PATH = [narr.PLACE_NAMES]
-    for routes in len(narr.ROUTE):
-        ROUTE = random.choice(narr.ROUTE)
-        while ROUTE in used_routes:
-            ROUTE = random.choice(narr.ROUTE)
-        used_routes.append(ROUTE)
-        PATH.append(ROUTE)
-    PATH.append(ending)
-    random_path1 = random.choice(PATH)
-    random_path2 = random.choice(PATH)
-    random_path3 = random.choice(PATH)
-    choice = DefaultActionMenu.action_menu(random_path1, random_path2, random_path3)
-    used_routes.append(choice)
-    for text in chain(PATH[story_progress]):
-        print(text + "\n")
+    
+    if story_progress == 0:
+        print(narr.INTRO_TXT)
         user_input = input("Press enter to continue")
         clear_screen()
-        
-        ending = narr.TRUE_END_WIN
+        # randomize number between 0 and lenght of path
+        random_path = random.randint(0, len(PATH) - 1)
+        # add the random number to the used routes list
+        used_routes.append(random_path)
+        # print the text of the path
+        print(possible_routes[random_path] + "\n")
+        user_input = input("Press enter to continue")
+        clear_screen()
+        # add 1 to the story progress
         story_progress += 1
+        
+        
+    if story_progress != 0:
+        random_path1 = random.choice(PATH)
+        random_path2 = random.choice(PATH)
+        random_path3 = random.choice(PATH)
+        choice = DefaultActionMenu.action_menu(random_path1, random_path2, random_path3)
+        used_routes.append(choice)
+        for text in chain(PATH[story_progress]):
+            print(text + "\n")
+            user_input = input("Press enter to continue")
+            clear_screen()
+            story_progress += 1
+            
+    if story_progress == len(PATH):
+        ending = narr.TRUE_END_WIN
+        print(ending)
+        user_input = input("Press enter to continue")
+        clear_screen()
+        credits()
+        quit()
     
+    # Not properly implemented yet
+    # if val == ROUTE17:
+    #     player.inventory.pickup_item("Placeholder Item", 1)
+    # elif val == ROUTE13:
+    #     player.inventory.pickup_item("Rollin pin", 1)
+    # elif val == ROUTE9:
+    #     player.inventory.pickup_item("Bag of cocaine", 1)
+    # elif val == ROUTE8:
+    #     player.inventory.pickup_item("Fjord", 1, "rare")
+    # elif val == ROUTE7:
+    #     open_shop()
+    # else:
+    #   pass
+
 
     level += 1
     return level
