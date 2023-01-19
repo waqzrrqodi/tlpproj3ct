@@ -631,7 +631,8 @@ class FightLoopTM(DefaultActionMenu):
 
 
 def death():
-    print("You have died")
+    background_theme("./SoundEngine5000/deathsound.wav")
+    print("YOU DIED")
     # if player does something stupid and dies play ending 1
     # if player dies fighting Valma the Soulbroken play ending 2
     # if player dies in a normal fight play ending 3
@@ -650,6 +651,7 @@ def ending2():
 
 def ending3():
     print(narr.NORMAL_DEATH)
+    
 #-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
 def game_loop():

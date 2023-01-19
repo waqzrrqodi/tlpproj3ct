@@ -33,16 +33,7 @@ The developer and publisher of the game will not be held liable for any damages 
 By playing 'Escape from Rimbo,' you agree to these terms and conditions.
 """
 
-credits_text = """
-"Starring:
-John Doe as Jack
-Jane Smith as Jill
-Mike Brown as Mike
-Directed by: Steven Spielberg
-Written by: Jane Austen
-Produced by: George Lucas
-Music by: Hans Zimmer
-Special Thanks to: The cast and crew for their hard work and dedication"""
+
 
 thx_disclaimer = '''
         ,----,                                                                                         
@@ -207,10 +198,27 @@ class_info = '''
 ================================================================
 '''
 credits_text = '''
+
+Tom Hardy as "The Protagonist"
+Ana De Armas as Valma the Soulbroken
+Keanu Reeves as Fulcrum
+Scarlett Johansson as "Lypsyl Lady"
+John Doe as Jack
+Jane Smith as Jill
+Mike Brown as Mike Brown
+
+Directed by: Steven Spielberg
+Written by: Oskis :(
+Produced by: George Lucas
+Music by: Hans Zimmer
+Special Thanks to: The cast and crew for their hard work and dedication"""
+
+Programmed by: Literally only Kasper
+
 ----------==================----------
        Made by: Tax Fraud Studios
 ----------==================----------
-''' # add more credits eller ngt
+'''
 
 #-------------------------------------------------------------------------Voice Lines Section-----------------------------------------------------------------
 BossFight_Voice1 = """
