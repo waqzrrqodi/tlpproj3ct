@@ -162,6 +162,7 @@ R13_TXT2 = '''
 You beat the rap god and leave the venue, having stolen his rolling pin.
 '''
 # Gives player the rolling pin weapon
+ROUTE13 = [R13_TXT1, R13_TXT2]
 
 
 #Route 14 - "Party"
@@ -226,6 +227,44 @@ R18_TXT2 = '''
 You and the witch battle fiercely, but you eventually manage to outwit her. She is vanquished and you are victorious. As you leave the tower, you think to yourself: "what a dumb bitch"
 '''
 ROUTE18 = [R18_TXT1, R18_TXT2]
+
+
+# Route 18 - "Cursed Cave"
+R19_TXT1 = '''
+You enter the cursed cave and immediately feel a chill run down your spine. You hear a loud cackling and turn to see a horde of goblins laughing at you. You brace yourself for battle. 
+'''
+# Battle - Goblins
+R19_TXT2 = '''
+You and the goblins brawl, trading blows. The fight is grueling and you eventually manage to outwit the goblins. You walk towards the exit but the goblins are literally too angry to die. Another fight breaks out.
+'''
+#Battle - Goblins
+R19_TXT3 = '''
+You finally win and leave.
+'''
+ROUTE19 = [R19_TXT1, R19_TXT2]
+
+
+PLACE_NAMES = [
+{"name": "Bus Stop", "ROUTE": ROUTE1},
+{"name": "Dark Alley", "ROUTE": ROUTE2},
+{"name": "Rickety Bridge", "ROUTE": ROUTE3},
+{"name": "Missile Silo", "ROUTE": ROUTE4},
+{"name": "Penjamin City", "ROUTE": ROUTE5},
+{"name": "Dark Forest", "ROUTE": ROUTE6},
+{"name": "Shop", "ROUTE": ROUTE7},
+{"name": "Landfill", "ROUTE": ROUTE8},
+{"name": "Shabby Game Studio", "ROUTE": ROUTE9},
+{"name": "Concentration Camp for Virgins", "ROUTE": ROUTE10},
+{"name": "Temple", "ROUTE": ROUTE11},
+{"name": "Condemned Parking Lot", "ROUTE": ROUTE12},
+{"name": "Concert", "ROUTE": ROUTE13},
+{"name": "Lit Party", "ROUTE": ROUTE14},
+{"name": "Rimbo Graveyard", "ROUTE": ROUTE15},
+{"name": "Haunted Mansion", "ROUTE": ROUTE16},
+{"name": "Used Condom", "ROUTE": ROUTE17},
+{"name": "Witch's Tower", "ROUTE": ROUTE18},
+{"name": "Cursed Cave", "ROUTE": ROUTE19},
+]
 
 
 # Coward Ending

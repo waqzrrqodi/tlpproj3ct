@@ -7,9 +7,10 @@ MAX_INV_CAP = 5
 class InventorySys():
     """The inventory system"""
 
-    def __init__(self, inv_max_space):
+    def __init__(self, inv_starter_space):
         self.inv = list()
-        self.inv_cap = inv_max_space
+        self.inv_cap = inv_starter_space
+        self.inv.appen()
 
     def inv_max_space_upgrade(self, upgrade_range):
         """Upgrade the inventory max space"""
@@ -73,6 +74,12 @@ class InventorySys():
                     You picked up ___{item_name}!___
                 ----------==================----------
                 ''')
+    def equip_item(self, item_name):
+        for i in range(self.inv - 1):
+            if (self.inv[i])["Name"]  == item_name:
+                self.equipped_weapon = item_name
+                print(f"You have equipped {item_name}")
+
 
 ITEM_LIST = {
     "Weapons": {"Kaspers Roasts", "sword", "NUKE_MUSIC", "aliexpress shipping time", "dabbington", "DragonSlayer Greatsword", "Greatsword", "Big Wheel", "rolling pin"},
@@ -93,20 +100,18 @@ class Item_Creator_3000_V2():
         self.worth = None
         self.rarity = None
 
-    def create_item_DIY(self, HP_BONUS, HEALING, DAMAGE, NAME, TYPE, COST, WORTH, RARITY):
-        self.hp_bonus = HP_BONUS
-        self.healing = HEALING
-        self.damage = DAMAGE
+    def create_item_DIY(self, armor, healing, damage, name, item_type, cost):
+        self.hp_bonus = armor
+        self.healing = healing
+        self.damage = damage
 
-        self.name = NAME
-        self.type = TYPE
-        self.cost = COST
-        self.worth = WORTH
-        self.rarity = RARITY
+        self.name = name
+        self.type = item_type
+        self.cost = cost
+        self.rarity = rarity
 
-        self.cost = rand.randint(30, 150)
         self.worth = round(self.cost*0.9)
-        self.rarity = item_rarity(self)
+        self.rarity = self.item_rarity(self)
         finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.hp_bonus, "Healing Capability": self.healing, "Damage": self.damage}
         return finished_item
             
@@ -126,7 +131,7 @@ class Item_Creator_3000_V2():
             item = Item_Creator_3000_V2()
             item.type = "Armor"
             item.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
-            item.hp_bonus = rand.randint(50, 70)
+            item.armor = rand.randint(50, 70)
         if rand_item_choice == HEALS:
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
             item = Item_Creator_3000_V2()
@@ -135,47 +140,73 @@ class Item_Creator_3000_V2():
             item.healing = rand.randint(30, 50)
         item.cost = rand.randint(30, 150)
         item.worth = round(item.cost*0.9)
-        item.rarity = item_rarity(item)
-        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Healing Capability": item.healing, "Damage": item.damage}
+        item.rarity = self.item_rarity(item)
+        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.armor, "Healing Capability": item.healing, "Damage": item.damage}
         return finished_item
 
-    # Creates an item that is purchasable
-    # def create_item_purchaseable(self, choice):
-    #     item_shop_list = []
-    #     for i in range(5):
-    #         item_shop_list.append(self.create_item_random())
+    # Item rarity system based on cost
+    def item_rarity(self, item):
+        if item.cost < 30:
+            rarity = "poop"
+        if item.cost >= 30:
+            rarity = "Common"
+        if item.cost >= 70:
+            rarity = "Rare"
+        if item.cost >= 80:
+            rarity = "Epic"
+        if item.cost >= 100:
+            rarity = "Legendary"
+        if item.cost >= 140:
+            rarity = "Mythic"
+        return rarity
 
-    #     if choice in ITEM_LIST.get("Weapons") == True:
-    #         print()
-    
-    #     if choice in ITEM_LIST.get("Armor") == True:
-            
-    #     if choice in ITEM_LIST.get("Heals") == True:
+#Creates an item that is purchasable
+def item_shop(player):
+        item_shop_list = []
+        for i in range(5):
+            item_shop_list.append(Item_Creator_3000_V2.create_item_random())
+
+        print("Would you like to buy or sell an item?")
+        buy_sell_item = input("buy/sell/quit--> ").lower()
         
-    #     elif choice == "random" or choice == "Random":
-    #         finished_item = self.create_item_random()
+        
+        if buy_sell_item == "buy" or buy_sell_item == "b" or buy_sell_item == "":
+            print("List of purchasable items:")
+            for i in range(len(item_shop_list)):
+                print(f"{i+1}. {item_shop_list[i].get('Name')} - {item_shop_list[i].get('Cost')} gold")
+        
+            print("Which item would you like to buy?")
+            item_choice = int(input("--> ")) - 1
+            if item_choice <= len(item_shop_list):
+                if item_shop_list[item_choice].get("Cost") <= player.gold:
+                    player.gold = player.gold - item_shop_list[item_choice].get("Cost")
+                    player.inventory.inv.append(item_shop_list[item_choice])
+                    print(f"You bought {item_shop_list[item_choice].get('Name')} for {item_shop_list[item_choice].get('Cost')} gold")
+                else:
+                    print("You do not have enough gold")
+            else:
+                print("Please provide a valid item number")
+
+        elif buy_sell_item == "sell":
+            print("Which item would you like to sell?")
+            inv_show()
+            item_choice = int(input("--> ")) - 1
+            if item_choice <= len(player.inventory.inv):
+                player.gold = player.gold + player.inventory.inv[item_choice].get("Worth")
+                player.inventory.inv.pop(item_choice)
+                print(f"You sold an item for {player.inventory.inv[item_choice].get('Worth')} gold")
+            else:
+                print("Please provide a valid item number")
+
+        elif buy_sell_item == "quit" or buy_sell_item == "q" or buy_sell_item == "exit" or buy_sell_item == "e" or buy_sell_item == "leave":
+            print("You quit the shop")
+            return
             
-    #     else:
-    #         print("Please provide a valid item name")
-    #     return finished_item
+        else:
+            print("Please provide a valid input")
 
-# Item rarity system based on cost
-def item_rarity(item):
-    if item.cost < 30:
-        rarity = "poop"
-    if item.cost >= 30:
-        rarity = "Common"
-    if item.cost >= 70:
-        rarity = "Rare"
-    if item.cost >= 80:
-        rarity = "Epic"
-    if item.cost >= 100:
-        rarity = "Legendary"
-    if item.cost >= 140:
-        rarity = "Mythic"
-    return rarity
 
-# Chest system, verkligen inte klart
+# Chest system
 
 SCRAP_LIST = ["Rock", "Trash", "Dirty Socks", "Cock Cola", "Macbook", "Estet Linjen"]
 

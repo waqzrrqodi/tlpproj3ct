@@ -109,6 +109,14 @@ bandits = ch.Enemy("Bandits", 100, 100, "Human")
 neo = ch.Enemy("Neo Järnmalm", 200, 200, "Human")
 fulcrum = ch.Enemy("Fulcrum", 250, 100, "Yodie Gang")
 bill = ch.Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
+antivirgin = ch.Enemy("The Anti-Virgin", 100, 150, "Human")
+homeless = ch.Enemy("Hobo", 120, 120, "Human")
+guard = ch.Enemy("Guards", 150, 120, "Human")
+rapgod = ch.Enemy("The Rap God", 90, 120, "Human")
+ladythatstolemylypsyl = ch.Enemy("Strange Lady", 90, 90, "Human")
+skeletons = ch.Enemy("Skeletons", 180, 120, "Monster")
+ghosts = ch.Enemy("Ghosts", 50, 150, "Monster")
+witch = ch.Enemy("Witch", 150, 150, "Monster")
 player = None
 level = 0
 story_progress = 0
@@ -119,7 +127,7 @@ class DefaultActionMenu():
     """
     Default player_action menu that is used in the game.
     """
-    def default_action_menu(self, action_1, action_2, action_3):
+    def action_menu(self, action_1, action_2, action_3):
         """
         This is the default player_action menu that is used in the game.
         It is used in the main game loop and in the menu system.
@@ -127,28 +135,33 @@ class DefaultActionMenu():
         while True:
             # Prompt the player to attack or defend
             # print(ui_actionmenu)
-            print ("Action Menu: \n 1. Action 1 \n 2. Action 2 \n 3. Action 3") # For testing purposes
+            GOTO_MENU = "4"
+            
+            print (f"Action Menu: \n 1. {action_1} \n 2. {action_2} \n 3. {action_3} \n 4. Go to menu") # For testing purposes
             selection = int(input("Your command -->"))
 
             # Handle the player's player_action
             try:
-                if selection == 1:
-                    print(f"{action_1} selected")
-                    return 1
-                if selection == 2:
+                if selection == "1":
+                    print(f"Going to {action_1} selected")
+                    return action_1
+                if selection == "2":
                     print(f"{action_2} selected")
-                    return 2
-                if selection == 3:
+                    return action_2
+                if selection == "3":
                     print(f"{action_3} selected")
-                    return 3
+                    return action_3
+                elif selection == GOTO_MENU:
+                    print("Going to menu")
+                    return 4
 
             except(IndexError,ValueError):
                 print("Invalid player_action. Please try again.")
-                continue
+                return "error"
 
             except:
                 print("Unknown error hath occured")
-                continue
+                return "error"
 
 
     def fight_menu(self):
@@ -464,6 +477,7 @@ enemy_grunt2 = sound_engine("./SoundEngine5000/Enemy_Grunt2.wav")
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
     def __init__(self, enemy):
+        background_theme("./SoundEngine5000/battle_theme.wav")
         self.player_health = player.health
         self.player_max_health = player.max_health
         self.player_weapon = player.weapon
@@ -479,6 +493,7 @@ class FightLoopTM(DefaultActionMenu):
     def run(self):
         if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
+            background_theme("./SoundEngine5000/battle_theme.wav")
             self.fight_loop()
         elif random.randint(1, 100) >= 10:
             print("Thau successfully run away from the fight!")
@@ -569,7 +584,7 @@ class FightLoopTM(DefaultActionMenu):
             attack = random.choice(YODIE_GANG_ATTACK_LIST)
             
 
-        # "Oh no, the enemy hath practiced jujutsu and maketh double damage."
+        # "Oh no, the enemy hath practiced the sacred art of sparring and maketh double damage."
         # damage = damage * 2
         # "Oh no, the enemy hath drunken a kong strong and maketh triple damage."
         # damage = damage * 3
@@ -643,8 +658,7 @@ def game_loop():
     '''
     
     while True:
-        level_right_now = story()
-        
+        story()
     # level_choice() with narration and the story
     # default action menu
     # If not find shop increase chance of finding shop
@@ -712,14 +726,15 @@ def load_game():
     elif doesSaveExist == False:
         intro_menu()
 
-def story(player_choice_route):
+def story():
     # Intro text for level
     # Choose path and stick with it
     # Enemy encounter, fight, loot, etc., trap encounter, or chest encounter.
     global level
     global story_progress
     used_routes = []
-    PATH = [narr.INTRO_TXT]
+    POSSIBLE_PATHS = [narr.INTRO_TXT]
+    PATH = [narr.PLACE_NAMES]
     for routes in len(narr.ROUTE):
         ROUTE = random.choice(narr.ROUTE)
         while ROUTE in used_routes:
@@ -727,7 +742,11 @@ def story(player_choice_route):
         used_routes.append(ROUTE)
         PATH.append(ROUTE)
     PATH.append(ending)
-
+    random_path1 = random.choice(PATH)
+    random_path2 = random.choice(PATH)
+    random_path3 = random.choice(PATH)
+    choice = DefaultActionMenu.action_menu(random_path1, random_path2, random_path3)
+    used_routes.append(choice)
     for text in chain(PATH[story_progress]):
         print(text + "\n")
         user_input = input("Press enter to continue")

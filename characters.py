@@ -18,6 +18,15 @@ class Player( ):
         self.level = 1  
         self.xp = 0
         self.level_max_xp = 100
+
+    #equip weapon from inventory
+    def player_equip_item(self, item):
+        print("What item do you want to equip?")
+        item_name = input("-->")
+        if item_name["Type"] == "Armour":
+            self.armour = self.inventory.equip_item(item_name)
+        if item_name["Type"] == "Weapon":
+            self.weapon = self.inventory.equip_item(item_name)
     
     def player_attack(self, enemy):
         """Attack an enemy"""
