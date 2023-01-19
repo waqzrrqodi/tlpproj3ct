@@ -10,7 +10,6 @@ class InventorySys():
     def __init__(self, inv_starter_space):
         self.inv = list()
         self.inv_cap = inv_starter_space
-        self.inv.appen()
 
     def inv_max_space_upgrade(self, upgrade_range):
         """Upgrade the inventory max space"""
