@@ -139,31 +139,27 @@ class Item_Creator_3000_V2():
         finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Healing Capability": item.healing, "Damage": item.damage}
         return finished_item
 
-    def create_item_purchaseable(self, choice):
-        if choice in ITEM_LIST.get("Weapons") == True:
-            item_iteration_weapon_list = list(ITEM_LIST.get("Weapons"))
-            item = Item_Creator_3000_V2()
-            item.type = "Weapon"
-            item.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
-            item.damage = rand.randint(3, 5)
-        if choice in ITEM_LIST.get("Armor") == True:
-            item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
-            item = Item_Creator_3000_V2()
-            item.type = "Armor"
-            item.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
-            item.hp_bonus = rand.randint(50, 70)
-        if choice in ITEM_LIST.get("Heals") == True:
-            item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
-            item = Item_Creator_3000_V2()
-            item.type = "Geals"
-            item.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
-            item.healing = rand.randint(30, 50)
-        item.cost = rand.randint(30, 150)
-        item.worth = round(item.cost*0.9)
-        item.rarity = item_rarity(item)
-        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.hp_bonus, "Healing Capability": item.healing, "Damage": item.damage}
-        return finished_item
+    # Creates an item that is purchasable
+    # def create_item_purchaseable(self, choice):
+    #     item_shop_list = []
+    #     for i in range(5):
+    #         item_shop_list.append(self.create_item_random())
 
+    #     if choice in ITEM_LIST.get("Weapons") == True:
+    #         print()
+    
+    #     if choice in ITEM_LIST.get("Armor") == True:
+            
+    #     if choice in ITEM_LIST.get("Heals") == True:
+        
+    #     elif choice == "random" or choice == "Random":
+    #         finished_item = self.create_item_random()
+            
+    #     else:
+    #         print("Please provide a valid item name")
+    #     return finished_item
+
+# Item rarity system based on cost
 def item_rarity(item):
     if item.cost < 30:
         rarity = "poop"
@@ -189,6 +185,7 @@ class ChestSys():
     def __init__(self):
         self.chest = []
 
+    #Generates the chest
     def chest_generate(self):
         """Generate a chest"""
         rand_item = Item_Creator_3000_V2()
@@ -201,6 +198,7 @@ class ChestSys():
             self.chest.append(trash_created)
         return self.chest
 
+    #Request chest content
     def print_chest(self, chest):
         if (chest[0])["Type"] == "Weapon":
             print(f""" 
