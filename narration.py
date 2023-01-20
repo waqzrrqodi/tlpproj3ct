@@ -243,28 +243,27 @@ You finally win and leave.
 '''
 ROUTE19 = [R19_TXT1, R19_TXT2]
 
-
-PLACE_NAMES = [
-{"name": "Bus Stop", "ROUTE": ROUTE1},
-{"name": "Dark Alley", "ROUTE": ROUTE2},
-{"name": "Rickety Bridge", "ROUTE": ROUTE3},
-{"name": "Missile Silo", "ROUTE": ROUTE4},
-{"name": "Penjamin City", "ROUTE": ROUTE5},
-{"name": "Dark Forest", "ROUTE": ROUTE6},
-{"name": "Shop", "ROUTE": ROUTE7},
-{"name": "Landfill", "ROUTE": ROUTE8},
-{"name": "Shabby Game Studio", "ROUTE": ROUTE9},
-{"name": "Concentration Camp for Virgins", "ROUTE": ROUTE10},
-{"name": "Temple", "ROUTE": ROUTE11},
-{"name": "Condemned Parking Lot", "ROUTE": ROUTE12},
-{"name": "Concert", "ROUTE": ROUTE13},
-{"name": "Lit Party", "ROUTE": ROUTE14},
-{"name": "Rimbo Graveyard", "ROUTE": ROUTE15},
-{"name": "Haunted Mansion", "ROUTE": ROUTE16},
-{"name": "Used Condom", "ROUTE": ROUTE17},
-{"name": "Witch's Tower", "ROUTE": ROUTE18},
-{"name": "Cursed Cave", "ROUTE": ROUTE19},
-]
+PLACE_NAMES = {
+    "Bus Stop": {"Enemy_name": "", "ROUTE": ROUTE1},
+    "Dark Alley": {"Enemy_name": "", "ROUTE": ROUTE2},
+    "Rickety Bridge": {"Enemy_name": "", "ROUTE": ROUTE3},
+    "Missile Silo": {"Enemy_name": "", "ROUTE": ROUTE4},
+    "Penjamin City": {"Enemy_name": "", "ROUTE": ROUTE5},
+    "Dark Forest": {"Enemy_name": "", "ROUTE": ROUTE6},
+    "Shop": {"Enemy_name": "", "ROUTE": ROUTE7},
+    "Landfill": {"Enemy_name": "", "ROUTE": ROUTE8},
+    "Shabby Game Studio": {"Enemy_name": "", "ROUTE": ROUTE9},
+    "Concentration Camp for Virgins": {"Enemy_name": "", "ROUTE": ROUTE10},
+    "Temple": {"Enemy_name": "", "ROUTE": ROUTE11},
+    "Condemned Parking Lot": {"Enemy_name": "", "ROUTE": ROUTE12},
+    "Concert": {"Enemy_name": "", "ROUTE": ROUTE13},
+    "Lit Party": {"Enemy_name": "", "ROUTE": ROUTE14},
+    "Rimbo Graveyard": {"Enemy_name": "", "ROUTE": ROUTE15},
+    "Haunted Mansion": {"Enemy_name": "", "ROUTE": ROUTE16},
+    "Used Condom": {"Enemy_name": "", "ROUTE": ROUTE17},
+    "Witch's Tower": {"Enemy_name": "", "ROUTE": ROUTE18},
+    "Cursed Cave": {"Enemy_name": "", "ROUTE": ROUTE19},
+}
 
 
 # Coward Ending

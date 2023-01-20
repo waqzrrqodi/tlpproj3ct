@@ -107,7 +107,6 @@ class Item_Creator_3000_V2():
         self.name = name
         self.type = item_type
         self.cost = cost
-        self.rarity = rarity
 
         self.worth = round(self.cost*0.9)
         self.rarity = self.item_rarity(self)
