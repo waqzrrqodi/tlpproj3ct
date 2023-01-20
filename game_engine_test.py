@@ -3,7 +3,7 @@ from pygame.locals import *
 
 
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((1920, 1080))
+screen = pygame.display.set_mode((600, 300))
 
 
 #background_image = pygame.image.load("rimbo.png")
@@ -32,14 +32,13 @@ def game_engine():
                         user_input = user_input[:-1]
                     else:
                         user_input += event.unicode
-        #screen.blit(background_image, (0, 0))
+
+        #text_surface = base_font.render(user_input,True,(255, 255, 255))
+        #screen.blit(text_surface, (0, 0))
         
-        text_surface = base_font.render(user_input,True,(255, 255, 255))
-        screen.blit(text_surface, (0, 0))
-        
-        #Display properties
-        pygame.display.flip()
-        pygame.display.update()
-        clock.tick(60)
+    #Display properties
+    pygame.display.flip()
+    pygame.display.update()
+    clock.tick(60)
 
 game_engine()
