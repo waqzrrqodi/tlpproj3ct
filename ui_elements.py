@@ -187,9 +187,10 @@ intro_menu_choices = '''
 ============================-----
 | Choose your action:
 | 1 - Begin Adventure
-| 2 - Tutorial
-| 3 - Credits
-| 4 - Exit
+| 2 - Options
+| 3 - Tutorial
+| 4 - Credits
+| 5 - Exit
 ============================-----
 '''
 
