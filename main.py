@@ -51,6 +51,7 @@ def animate_text(text, sleep_time):
     Makes text appear one letter at a time at a given speed
     fast, slow, or default
     '''
+    SUPERSPEED = 0.005
     FAST = 0.03
     SLOW = 0.1
     DEFAULT = 0.05
@@ -58,6 +59,8 @@ def animate_text(text, sleep_time):
         sleep_time = FAST
     elif sleep_time == "slow":
         sleep_time = SLOW
+    elif sleep_time == "superspeed":
+        sleep_time = SUPERSPEED
     else:
         sleep_time = DEFAULT
     for char in text:
@@ -133,41 +136,40 @@ class DefaultActionMenu():
     """
     Default player_action menu that is used in the game.
     """
-    def action_menu(self, action_1, action_2, action_3):
+    def action_menu(action_1, action_2, action_3):
         """
         This is the default player_action menu that is used in the game.
         It is used in the main game loop and in the menu system.
         """
-        while True:
-            # Prompt the player to attack or defend
-            # print(ui_actionmenu)
-            GOTO_MENU = "4"
-            
-            print (f"Action Menu: \n 1. {action_1} \n 2. {action_2} \n 3. {action_3} \n 4. Go to menu") # For testing purposes
-            selection = int(input("Your command -->"))
+        # Prompt the player to attack or defend
+        # print(ui_actionmenu)
+        GOTO_MENU = "4"
+        
+        print (f"Action Menu: \n 1. {action_1} \n 2. {action_2} \n 3. {action_3} \n 4. Go to menu") # For testing purposes
+        selection = int(input("Your command -->"))
+        
+        # Handle the player's player_action
+        try:
+            if selection == "1":
+                print(f"Going to {action_1} selected")
+                return action_1
+            if selection == "2":
+                print(f"{action_2} selected")
+                return action_2
+            if selection == "3":
+                print(f"{action_3} selected")
+                return action_3
+            elif selection == GOTO_MENU:
+                print("Going to menu")
+                return 4
 
-            # Handle the player's player_action
-            try:
-                if selection == "1":
-                    print(f"Going to {action_1} selected")
-                    return action_1
-                if selection == "2":
-                    print(f"{action_2} selected")
-                    return action_2
-                if selection == "3":
-                    print(f"{action_3} selected")
-                    return action_3
-                elif selection == GOTO_MENU:
-                    print("Going to menu")
-                    return 4
+        except(IndexError,ValueError):
+            print("Invalid player_action. Please try again.")
+            return "error"
 
-            except(IndexError,ValueError):
-                print("Invalid player_action. Please try again.")
-                return "error"
-
-            except:
-                print("Unknown error hath occured")
-                return "error"
+        except:
+            print("Unknown error hath occured")
+            return "error"
 
 
     def fight_menu(self):
@@ -254,7 +256,7 @@ class DefaultActionMenu():
             else:
                 print("Please enter a valid input...")
                 time.sleep(1)
-                input("Press enter to continue...")
+                input("\nPress enter to continue...")
                 return
             return player_subclass
         except ValueError:
@@ -284,13 +286,13 @@ def inv_show():
             #expand to full inventory view
             if len(player.inventory.inv) == 0:
                 print("Inventory is empty")
-                input("Press enter to continue...")
+                input("\nPress enter to continue...")
                 break
             else:
                 print("Inventory: ")
                 for item in enumerate(player.inventory.inv):
                     print(f"---------\nItem Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n---------")
-                input("Press enter to continue...")
+                input("\nPress enter to continue...")
                 break
         elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
             break
@@ -514,19 +516,19 @@ chest_sound = sound_engine("./SoundEngine5000/Chest_sound.wav")
 item_sound = sound_engine("./SoundEngine5000/Item_Pickup.wav")
 enemy_grunt = sound_engine("./SoundEngine5000/Enemy_Grunt.wav")
 enemy_grunt2 = sound_engine("./SoundEngine5000/Enemy_Grunt2.wav")
+# level_up = sound_engine("./SoundEngine5000/Level_Up.wav")
 
 # chest_sound.play()
 
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
-    def __init__(self, enemy):
+    def __init__(self, Enemy_name):
         background_theme("./SoundEngine5000/battle_theme.wav")
         self.player_health = player.health
         self.player_max_health = player.max_health
         self.player_weapon = player.weapon
         self.armour = player.armour
-        self.enemy_health = enemy.health
-        self.damage = enemy.damage
+        self.enemy_name = Enemy_name
         self.fight_loop()
 
     def attack(self):
@@ -660,6 +662,9 @@ class FightLoopTM(DefaultActionMenu):
             # Check if the enemy has been defeated
             if self.enemy_health <= 0:
                 print("Thou hast defeated the enemy!")
+                print("Thou hast leveled up!")
+                # sound_engine("level_up")
+                player.level += 1
                 break
 
             # Enemy attacks the player
@@ -778,40 +783,49 @@ def story():
     global story_progress
     global used_routes
     possible_routes = [narr.ROUTE]
-    PATH = [narr.PLACE_NAMES]
     
     if story_progress == 0:
-        print(narr.INTRO_TXT)
-        user_input = input("Press enter to continue")
+        clear_screen()
+        animate_text(narr.INTRO_TXT[0], "superspeed")
+        input("\nPress enter to continue")
         clear_screen()
         # randomize number between 0 and lenght of path
-        random_path = random.randint(0, len(PATH) - 1)
-        # add the random number to the used routes list
-        used_routes.append(random_path)
-        # print the text of the path
-        print(possible_routes[random_path] + "\n")
-        user_input = input("Press enter to continue")
+        place = random.choice(list(narr.PLACE_NAMES.keys()))
+        route = narr.PLACE_NAMES[place]["ROUTE"]
+        used_routes.append(place)
+                # print the text of the path
+        print(place + ":")
+        animate_text(route, "superspeed")
+        FightLoopTM(narr.PLACE_NAMES[place]["ENEMY"])
+        input("\nPress enter to continue")
         clear_screen()
         # add 1 to the story progress
         story_progress += 1
         
         
     if story_progress != 0:
-        random_path1 = random.choice(PATH)
-        random_path2 = random.choice(PATH)
-        random_path3 = random.choice(PATH)
-        choice = DefaultActionMenu.action_menu(random_path1, random_path2, random_path3)
+        place1 = random.choice(list(narr.PLACE_NAMES.keys()))
+        place2 = random.choice(list(narr.PLACE_NAMES.keys()))
+        place3 = random.choice(list(narr.PLACE_NAMES.keys()))
+        
+        if place1 == place2 or place1 == place3 or place2 == place3:
+            story()
+        elif place1 or place2 or place3 in used_routes:
+            story()
+        choice = DefaultActionMenu.action_menu(place1, place2, place3)
+        route = narr.PLACE_NAMES[choice]["ROUTE"]
         used_routes.append(choice)
-        for text in chain(PATH[story_progress]):
+        
+        for text in route:
             print(text + "\n")
-            user_input = input("Press enter to continue")
+            input("\nPress enter to continue")
             clear_screen()
-            story_progress += 1
+        story_progress += 1
             
     if story_progress == len(PATH):
         ending = narr.TRUE_END_WIN
         print(ending)
-        user_input = input("Press enter to continue")
+        input("\nPress enter to continue")
         clear_screen()
         credits()
         quit()
