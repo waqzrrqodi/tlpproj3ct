@@ -79,6 +79,9 @@ def wait_for_keypress():
         getkey_linux()
 
 def intro():
+    """
+    Runs the intro sequence and the disclaimer, as well as starts the intro music.
+    """
     clear_screen() # Clears the screen
     print(disclaimer)
     time.sleep(3)
@@ -106,7 +109,9 @@ def intro_splash_only():
     intro_menu()
 
 #----------------------------------------------------------------------Player, Enemy and Objects----------------------------------------------------------#
-valma = ch.Enemy("Waldy", 200, 1000, "God", 3)
+
+# Initialize all the enemies and add stats for story progression, level, and tutorial etc.
+alma = ch.Enemy("Waldy", 200, 1000, "God", 3)
 simon = ch.Enemy("Simpa", 50, 100, "Human", 2)
 goblin = ch.Enemy("Lwittle Gwoblin", 50, 100, "Monster", 1)
 bilo = ch.Enemy("Bilo, the Town Rapist", 100, 50, "Human", 4)
@@ -259,7 +264,7 @@ class DefaultActionMenu():
 
 def inv_show():
     """
-    Shows the player's inventory
+    Shows the player's inventory, in a small and a full view.
     """
     
     clear_screen()
@@ -557,6 +562,9 @@ SETTINGS = {
 
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
 def background_theme(music):
+    """
+    Plays background music
+    """
     if pygame.mixer.get_busy() == False:
         pygame.mixer.music.load(music)
         pygame.mixer.music.set_volume(0.5)
@@ -569,6 +577,9 @@ def background_theme(music):
 
 
 def sound_engine(sound):
+    """
+    Plays sound effects
+    """
     pygame.mixer.init()
     pygame.mixer.Sound(sound)
     return pygame.mixer.Sound(sound)
@@ -583,6 +594,9 @@ enemy_grunt2 = sound_engine("./SoundEngine5000/Enemy_Grunt2.wav")
 
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
+    """
+    The actual fight loop with all of the other fighting classes and loops
+    """
     def __init__(self, enemy_name):
         background_theme("./SoundEngine5000/battle_theme.wav")
         self.player_health = player.hp
@@ -652,10 +666,12 @@ class FightLoopTM(DefaultActionMenu):
         self.fight_loop()
 
     def attack(self):
+        """When the player selects the attack option in a fight"""
         self.enemy_health -= self.player_weapon.damage
         print(f"Thou attacketh the foe and dealeth {self.player_weapon.damage} points of damage!")
 
     def run(self):
+        """When the player selects the run option in a fight"""
         if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
             background_theme("./SoundEngine5000/battle_theme.wav")
@@ -671,6 +687,7 @@ class FightLoopTM(DefaultActionMenu):
             ending1()
 
     def defend(self, damage):
+        """When the player selects the defend option in a fight"""
         if self.armour != None:
             print(f"You defend against the enemy's attack and take {damage * self.armour.defense} points of damage.")
         else:
@@ -678,6 +695,7 @@ class FightLoopTM(DefaultActionMenu):
             print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
 
     def heal(self):
+        """When the player selects the heal option in a fight"""
         if self.player_health != self.player_max_health:
             print("Thou art not at full health!")
             inv_show()
@@ -690,6 +708,7 @@ class FightLoopTM(DefaultActionMenu):
 
     
     def enemy_attack(self, damage, type):
+        """When the enemy attacks the player in a fight and all the moves the enemy can do"""
         HUMAN_ATTACK_LIST = {
             "Punch": {"type": "Physical", "damage": 10},
             "Kick": {"type": "Physical", "damage": 15},
@@ -896,6 +915,7 @@ def load_game():
         intro_menu()
 
 def story():
+    """All the story of the game and the narration of the game, as well as when to play each story part. Also initiates the fight loop and the chest loop with the right enemies and items."""
     # Intro text for level
     # Choose path and stick with it
     # Enemy encounter, fight, loot, etc., trap encounter, or chest encounter.
@@ -972,19 +992,13 @@ def story():
     return level
 
 def credits():
+    """Play the credits of the game"""
     animate_text(credits_text, "fast")
     user_input = input("Press enter to return to the main menu")
     return
 
 #-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
-def play():
-    
-    '''
-    The main function of the game which is used to run the main functions of the game
-    '''
-    #player.inventory.pickup_item("fjord", 1) # For testing purposes
-    game_loop()
 
 pygame.init()
 intro()
-play()
+game_loop()

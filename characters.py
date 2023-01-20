@@ -21,6 +21,7 @@ class Player( ):
 
     #equip weapon from inventory
     def player_equip_item(self, item):
+        """Equip an item"""
         print("What item do you want to equip?")
         item_name = input("-->")
         if item_name["Type"] == "Armour":

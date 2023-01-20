@@ -100,6 +100,7 @@ class Item_Creator_3000_V2():
         self.rarity = None
 
     def create_item_DIY(self, armor, healing, damage, name, item_type, cost):
+        """When in development you want to create an item on the fly"""
         self.hp_bonus = armor
         self.healing = healing
         self.damage = damage
@@ -114,6 +115,7 @@ class Item_Creator_3000_V2():
         return finished_item
             
     def create_item_random(self):
+        """Function to create a random item"""
         WEAPONS = 1
         ARMOR = 2
         HEALS = 3
@@ -144,6 +146,7 @@ class Item_Creator_3000_V2():
 
     # Item rarity system based on cost
     def item_rarity(self, item):
+        """Function to determine the rarity of an item based on cost"""
         if item.cost < 30:
             rarity = "poop"
         if item.cost >= 30:
@@ -160,48 +163,49 @@ class Item_Creator_3000_V2():
 
 #Creates an item that is purchasable
 def item_shop(player):
-        item_shop_list = []
-        for i in range(5):
-            item_shop_list.append(Item_Creator_3000_V2.create_item_random())
+    """Function to create a shop where the player can buy and sell items"""
+    item_shop_list = []
+    for i in range(5):
+        item_shop_list.append(Item_Creator_3000_V2.create_item_random())
 
-        print("Would you like to buy or sell an item?")
-        buy_sell_item = input("buy/sell/quit--> ").lower()
-        
-        
-        if buy_sell_item == "buy" or buy_sell_item == "b" or buy_sell_item == "":
-            print("List of purchasable items:")
-            for i in range(len(item_shop_list)):
-                print(f"{i+1}. {item_shop_list[i].get('Name')} - {item_shop_list[i].get('Cost')} gold")
-        
-            print("Which item would you like to buy?")
-            item_choice = int(input("--> ")) - 1
-            if item_choice <= len(item_shop_list):
-                if item_shop_list[item_choice].get("Cost") <= player.gold:
-                    player.gold = player.gold - item_shop_list[item_choice].get("Cost")
-                    player.inventory.inv.append(item_shop_list[item_choice])
-                    print(f"You bought {item_shop_list[item_choice].get('Name')} for {item_shop_list[item_choice].get('Cost')} gold")
-                else:
-                    print("You do not have enough gold")
+    print("Would you like to buy or sell an item?")
+    buy_sell_item = input("buy/sell/quit--> ").lower()
+    
+    
+    if buy_sell_item == "buy" or buy_sell_item == "b" or buy_sell_item == "":
+        print("List of purchasable items:")
+        for i in range(len(item_shop_list)):
+            print(f"{i+1}. {item_shop_list[i].get('Name')} - {item_shop_list[i].get('Cost')} gold")
+    
+        print("Which item would you like to buy?")
+        item_choice = int(input("--> ")) - 1
+        if item_choice <= len(item_shop_list):
+            if item_shop_list[item_choice].get("Cost") <= player.gold:
+                player.gold = player.gold - item_shop_list[item_choice].get("Cost")
+                player.inventory.inv.append(item_shop_list[item_choice])
+                print(f"You bought {item_shop_list[item_choice].get('Name')} for {item_shop_list[item_choice].get('Cost')} gold")
             else:
-                print("Please provide a valid item number")
-
-        elif buy_sell_item == "sell":
-            print("Which item would you like to sell?")
-            inv_show()
-            item_choice = int(input("--> ")) - 1
-            if item_choice <= len(player.inventory.inv):
-                player.gold = player.gold + player.inventory.inv[item_choice].get("Worth")
-                player.inventory.inv.pop(item_choice)
-                print(f"You sold an item for {player.inventory.inv[item_choice].get('Worth')} gold")
-            else:
-                print("Please provide a valid item number")
-
-        elif buy_sell_item == "quit" or buy_sell_item == "q" or buy_sell_item == "exit" or buy_sell_item == "e" or buy_sell_item == "leave":
-            print("You quit the shop")
-            return
-            
+                print("You do not have enough gold")
         else:
-            print("Please provide a valid input")
+            print("Please provide a valid item number")
+
+    elif buy_sell_item == "sell":
+        print("Which item would you like to sell?")
+        inv_show()
+        item_choice = int(input("--> ")) - 1
+        if item_choice <= len(player.inventory.inv):
+            player.gold = player.gold + player.inventory.inv[item_choice].get("Worth")
+            player.inventory.inv.pop(item_choice)
+            print(f"You sold an item for {player.inventory.inv[item_choice].get('Worth')} gold")
+        else:
+            print("Please provide a valid item number")
+
+    elif buy_sell_item == "quit" or buy_sell_item == "q" or buy_sell_item == "exit" or buy_sell_item == "e" or buy_sell_item == "leave":
+        print("You quit the shop")
+        return
+        
+    else:
+        print("Please provide a valid input")
 
 
 # Chest system
@@ -229,6 +233,7 @@ class ChestSys():
 
     #Request chest content
     def print_chest(self, chest):
+        """Show the item in the chest"""
         if (chest[0])["Type"] == "Weapon":
             print(f""" 
             Name: {(chest[0])["Name"]}
