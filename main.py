@@ -302,7 +302,7 @@ def inv_show():
 #-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
 VIKING_NAMES=[
     #Viking names
-    "Arne", "Birger","Bjorn","Bjornulf","Bo", "Frode", "Knud", "Odger", "Trygve", "Troels" #Man
+    "Arne", "Birger","Bjorn","Bjornulf","Bo", "Frode", "Knud", "Odger", "Trygve", "Troels", "Loke" #Man
     
     "Astrid","Bodil","Frida","Gertrud", "Gudrun","Gunnhild","Gunnvor","Halla","Hedvig","Helga", #Kvinna
     ]
@@ -457,6 +457,13 @@ def tutorial():
         print("Unknown error hath occured")
         tutorial()
 
+
+#-----------------------------------------------------------------------------Options---------------------------------------------------------------
+
+SETTINGS = {
+    {"choice": "text_speed_input", "SETTING", TEXTSPEED},
+}
+
 def options_menu():
     '''
     So you can change text speed, mute music, etc
@@ -467,19 +474,21 @@ def options_menu():
         if user_input.lower() == "1":
             clear_screen()
             print("\nHow fast do you want the text to move?\n1. Fast\n 2. Medium\n 3. Slow\n")
+            text_speed_input = int(input("-->"))
         elif user_input.lower() == "2":
             clear_screen()
             print("\nAre you absolutely certain?(y/n)\n")
+            mute_input = int(input("-->"))
         elif user_input.lower() == "3":
             clear_screen()
             print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n")
+            colour_input = int(input("-->"))
         else:
             print("Invalid Input")
         input("Press enter to return to the main menu")
     except:
         print("Unknown error")
         options_menu() 
-
 
 
 
