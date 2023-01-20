@@ -391,6 +391,7 @@ def intro_menu():
         animate_text("Loading...", "fast")
     elif menu_choice == OPTIONS:
         animate_text("\nSummoning options menu...\n", "fast")
+        clear_screen()
         options_menu()
     elif menu_choice == TUTORIAL:
         tutorial()
@@ -462,36 +463,98 @@ def tutorial():
 
 #-----------------------------------------------------------------------------Options---------------------------------------------------------------
 
-SETTINGS = {
-    {"choice": "text_speed_input", "SETTING", TEXTSPEED},
-}
+
 
 def options_menu():
     '''
     So you can change text speed, mute music, etc
     (not even remotely close to being finished)
     '''
-    user_input = input("\nOptions:\n1. Text Speed\n2. Mute Sound\n3. Font Colour\n")
+    print("\nOptions:\n1. Text Speed\n2. Sound\n3. Font Colour\n4. Go back to main menu\n")
+    user_input = input("-->")
     try:
         if user_input.lower() == "1":
             clear_screen()
-            print("\nHow fast do you want the text to move?\n1. Fast\n 2. Medium\n 3. Slow\n")
-            text_speed_input = int(input("-->"))
+            print("\nHow fast do you want the text to move?\n1. Turbo\n2. Fast\n3. Medium\n4. Slow\n5. Go back\n")
+            text_speed_input = input("--> ")
+            if text_speed_input.lower() == "1":
+                 animate_text("Changed text speed", "superspeed")
+                 clear_screen()
+                 #insert code that changes text speed here
+            elif text_speed_input.lower() == "2":
+                 animate_text("Changed text speed", "fast")
+                 clear_screen()
+                 #insert code that changes text speed here
+            elif text_speed_input.lower() == "3":
+                animate_text("Changed text speed", "default")
+                clear_screen()
+                #insert code that changes text speed here
+            elif text_speed_input.lower() == "4":
+                animate_text("Changed text speed", "slow")
+                clear_screen()
+                #insert code that changes text speed here
+            elif text_speed_input.lower() == "5":
+                clear_screen()
+                options_menu()
+            else:
+                print("Invalid Input")
         elif user_input.lower() == "2":
             clear_screen()
-            print("\nAre you absolutely certain?(y/n)\n")
-            mute_input = int(input("-->"))
+            print("\nSound:\n1. On\n2. Off\n")
+            sound_input = input("--> ")
+            if sound_input.lower() == "1":
+                animate_text("Volume On", "fast")
+                clear_screen()
+                #insert code that turns on volume here
+            elif sound_input.lower() == "2":
+                animate_text("Game Muted", "fast")
+                clear_screen()
+                #insert code that mutes game here
+            else:
+                print("Invalid Input")
+                clear_screen()
+                options_menu()
         elif user_input.lower() == "3":
             clear_screen()
-            print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n")
-            colour_input = int(input("-->"))
+            print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n4. Go back\n")
+            colour_input = input("--> ")
+            if colour_input == "1":
+                animate_text("Colour changed to red", "fast")
+                clear_screen()
+                #insert code that changes colour here
+            elif colour_input == "2":
+                animate_text("Colour changed to green", "fast")
+                clear_screen()
+                #insert code that changes colour here
+            elif colour_input == "3":
+                animate_text("Colour changed to blue", "fast")
+                clear_screen()
+                #insert code that changes colour here
+            elif colour_input == "4":
+                clear_screen()
+                options_menu()
+            else:
+                print("Invalid Input")
+        elif user_input.lower() == "4":
+            clear_screen()
+            intro_menu()
         else:
             print("Invalid Input")
-        input("Press enter to return to the main menu")
+            clear_screen()
+        options_menu()
     except:
-        print("Unknown error")
+        print("Unknown Error")
         options_menu() 
 
+SETTING1 = 0
+SETTING2 = 0
+SETTING3 = 0
+
+SETTINGS = {
+    "text_speed_choice": {"input_choice": "", "SETTING": SETTING1},
+    "mute_choice": {"input_choice": "", "SETTING": SETTING2},
+    "colour_choice": {"input_choice": "", "SETTING": SETTING3},
+}
 
 
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
