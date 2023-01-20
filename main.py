@@ -106,24 +106,25 @@ def intro_splash_only():
     intro_menu()
 
 #----------------------------------------------------------------------Player, Enemy and Objects----------------------------------------------------------#
-valma = ch.Enemy("Waldy", 200, 1000, "God")
-simon = ch.Enemy("Simpa", 50, 100, "Human")
-goblin = ch.Enemy("Lwittle Gwoblin", 50, 100, "Monster")
-bilo = ch.Enemy("Bilo, the Town Rapist", 100, 50, "Human")
-qlex = ch.Enemy("Steroid Beast", 25, 400, "Monster")
-pangloss = ch.Enemy("Pangloss", 200, 50, "Human")
-bandits = ch.Enemy("Bandits", 100, 100, "Human")
-neo = ch.Enemy("Neo Järnmalm", 200, 200, "Human")
-fulcrum = ch.Enemy("Fulcrum", 250, 100, "Yodie Gang")
-bill = ch.Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human")
-antivirgin = ch.Enemy("The Anti-Virgin", 100, 150, "Human")
-homeless = ch.Enemy("Hobo", 120, 120, "Human")
-guard = ch.Enemy("Guards", 150, 120, "Human")
-rapgod = ch.Enemy("The Rap God", 90, 120, "Human")
-ladythatstolemylypsyl = ch.Enemy("Strange Lady", 90, 90, "Human")
-skeletons = ch.Enemy("Skeletons", 180, 120, "Monster")
-ghosts = ch.Enemy("Ghosts", 50, 150, "Monster")
-witch = ch.Enemy("Witch", 150, 150, "Monster")
+valma = ch.Enemy("Waldy", 200, 1000, "God", 3)
+simon = ch.Enemy("Simpa", 50, 100, "Human", 2)
+goblin = ch.Enemy("Lwittle Gwoblin", 50, 100, "Monster", 1)
+bilo = ch.Enemy("Bilo, the Town Rapist", 100, 50, "Human", 4)
+qlex = ch.Enemy("Steroid Beast", 25, 400, "Monster", 1)
+pangloss = ch.Enemy("Pangloss", 200, 50, "Human", 3)
+bandits = ch.Enemy("Bandits", 100, 100, "Human", 2)
+neo = ch.Enemy("Neo Järnmalm", 200, 200, "Human", 3)
+fulcrum = ch.Enemy("Fulcrum", 250, 100, "Yodie Gang", 3)
+bill = ch.Enemy("Retired Orthodox Rabbi Bill Clinton", 300, 40, "Human", 4)
+steroid_beast = ch.Enemy("Steroid Beast", 25, 400, "Monster", 1)
+anti_virgin = ch.Enemy("The Anti-Virgin", 100, 150, "Human", 2)
+homeless_man = ch.Enemy("Hobo", 120, 120, "Human", 3)
+guards = ch.Enemy("Guards", 150, 120, "Human", 2)
+rap_god = ch.Enemy("The Rap God", 90, 120, "Human", 4)
+ladythatstolemylypsyl = ch.Enemy("Strange Lady", 90, 90, "Human", 3)
+skeletons = ch.Enemy("Skeletons", 180, 120, "Monster", 1)
+ghosts = ch.Enemy("Ghosts", 50, 150, "Monster", 1)
+witch = ch.Enemy("Witch", 150, 150, "Monster", 1)
 player = None
 level = 0
 story_progress = 0
@@ -176,13 +177,6 @@ class DefaultActionMenu():
         """
         The menu of the choices of the player's attacks.
         """
-        # action_menu = ui_actionmenu
-        # action_1 = "Attack"
-        # action_2 = "Defend"
-        # action_3 = "Heal"
-        clear_screen()
-        # print(ui_actionmenu)
-        print("Action Menu: \n 1. Attack \n 2. Defend \n 3. Heal") # For testing purposes
         ATTACK = "a"
         DEFEND = "d"
         HEAL = "h"
@@ -462,8 +456,14 @@ def tutorial():
 
 #-----------------------------------------------------------------------------Options---------------------------------------------------------------
 
+SETTING1 = 0
+SETTING2 = 0
+SETTING3 = 0
+
 SETTINGS = {
-    {"choice": "text_speed_input", "SETTING", TEXTSPEED},
+    "text_speed_choice": {"input_choice": "", "SETTING": SETTING1},
+    "mute_choice": {"input_choice": "", "SETTING": SETTING2},
+    "colour_choice": {"input_choice": "", "SETTING": SETTING3},
 }
 
 def options_menu():
@@ -522,13 +522,72 @@ enemy_grunt2 = sound_engine("./SoundEngine5000/Enemy_Grunt2.wav")
 
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
-    def __init__(self, Enemy_name):
+    def __init__(self, enemy_name):
         background_theme("./SoundEngine5000/battle_theme.wav")
-        self.player_health = player.health
-        self.player_max_health = player.max_health
+        self.player_health = player.hp
         self.player_weapon = player.weapon
         self.armour = player.armour
-        self.enemy_name = Enemy_name
+        self.speed = player.speed
+        if enemy_name == "Goblin":
+            self.enemy_health = goblin.health
+            self.enemy_damage = goblin.damage
+            self.enemy_speed = goblin.speed
+        elif enemy_name == "Skeletons":
+            self.enemy_health = skeletons.health
+            self.enemy_damage = skeletons.damage
+            self.enemy_speed = skeletons.speed
+        elif enemy_name == "Simpa":
+            self.enemy_health = simpa.health
+            self.enemy_damage = simpa.damage
+            self.enemy_speed = simpa.speed
+        elif enemy_name == "Pangloss":
+            self.enemy_health = pangloss.health
+            self.enemy_damage = pangloss.damage
+            self.enemy_speed = pangloss.speed
+        elif enemy_name == "Bilo":
+            self.enemy_health = bilo.health
+            self.enemy_damage = bilo.damage
+            self.enemy_speed = bilo.speed
+        elif enemy_name == "Steroid Beast":
+            self.enemy_health = steroid_beast.health
+            self.enemy_damage = steroid_beast.damage
+            self.enemy_speed = steroid_beast.speed
+        elif enemy_name == "Homeless man":
+            self.enemy_health = homeless_man.health
+            self.enemy_damage = homeless_man.damage
+            self.enemy_speed = homeless_man.speed
+        elif enemy_name == "The Anti-Virgin":
+            self.enemy_health = anti_virgin.health
+            self.enemy_damage = anti_virgin.damage
+            self.enemy_speed = anti_virgin.speed
+        elif enemy_name == "Guards":
+            self.enemy_health = guards.health
+            self.enemy_damage = guards.damage
+            self.enemy_speed = guards.speed
+        elif enemy_name == "Rap God":
+            self.enemy_health = rap_god.health
+            self.enemy_damage = rap_god.damage
+            self.enemy_speed = rap_god.speed
+        elif enemy_name == "Strange Lady":
+            self.enemy_health = ladythatstolemylypsyl.health
+            self.enemy_damage = ladythatstolemylypsyl.damage
+            self.enemy_speed = ladythatstolemylypsyl.speed
+        elif enemy_name == "Ghosts":
+            self.enemy_health = ghosts.health
+            self.enemy_damage = ghosts.damage
+            self.enemy_speed = ghosts.speed
+        elif enemy_name == "Witch":
+            self.enemy_health = witch.health
+            self.enemy_damage = witch.damage
+            self.enemy_speed = witch.speed
+        else:
+            print("Unknown enemy")
+            death()
+        print(f"Thou hast encountered a {enemy_name}!")
+        print(f"The {enemy_name} hath {self.enemy_health} health")
+        print(f"Thou hast {self.player_health} health")
+        # print(f"Thou hast {self.player_weapon.name} which deals {self.player_weapon.damage} damage")
+        # print(f"Thou hast {self.armour.name} which reduces damage by 'placeholder' damage")
         self.fight_loop()
 
     def attack(self):
@@ -668,7 +727,7 @@ class FightLoopTM(DefaultActionMenu):
                 break
 
             # Enemy attacks the player
-            self.enemy_attack(self.damage)
+            self.enemy_attack(self.enemy_damage)
 
             # Check if the player has been a "has been"
             if self.player_health <= 0: death()
@@ -816,13 +875,16 @@ def story():
         route = narr.PLACE_NAMES[choice]["ROUTE"]
         used_routes.append(choice)
         
-        for text in route:
+        for text in len(route) -1:
             print(text + "\n")
             input("\nPress enter to continue")
             clear_screen()
+        FightLoopTM(narr.PLACE_NAMES[choice]["ENEMY"])
+        print(route[-1] + "\n")
+        input("\nPress enter to continue")
         story_progress += 1
             
-    if story_progress == len(PATH):
+    if story_progress == len(possible_routes):
         ending = narr.TRUE_END_WIN
         print(ending)
         input("\nPress enter to continue")

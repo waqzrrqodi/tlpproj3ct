@@ -93,11 +93,12 @@ class More_Info_Player( ):
 #för alla fiender
 class Enemy():
     """The enemy class"""
-    def __init__(self, enemy_name, enemy_damage, enemy_health, enemy_type):
+    def __init__(self, enemy_name, enemy_damage, enemy_health, enemy_type, enemy_speed):
         self.name = enemy_name
         self.damage = enemy_damage
         self.health = enemy_health
         self.type = enemy_type
+        self.speed = enemy_speed
     def enemy_stats(self):
         """Print the enemy stats"""
         print("Name: " + self.name)
