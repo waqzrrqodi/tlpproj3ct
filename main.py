@@ -357,9 +357,10 @@ def intro_menu():
     The menu that is used to start the game.
     """
     PLAY = "1"
-    TUTORIAL = "2"
-    CREDITS = "3"
-    EXIT = "4"
+    OPTIONS = "2"
+    TUTORIAL = "3"
+    CREDITS = "4"
+    EXIT = "5"
     clear_screen()
     print(intro_menu_choices)
     menu_choice = input("What doth thou wish to do? --> ")
@@ -386,11 +387,14 @@ def intro_menu():
             intro_menu()
         clear_screen()
         animate_text("Loading...", "fast")
+    elif menu_choice == OPTIONS:
+        animate_text("\nSummoning options menu...\n", "fast")
+        options_menu()
     elif menu_choice == TUTORIAL:
         tutorial()
         intro_menu()
     elif menu_choice == CREDITS:
-        animate_text("\ninitiating Credits Sequence\n", "slow")
+        animate_text("\ninitiating credits sequence\n", "fast")
         credits()
         intro_menu()
     elif menu_choice == EXIT:
@@ -452,6 +456,29 @@ def tutorial():
     except:
         print("Unknown error hath occured")
         tutorial()
+
+def options_menu():
+    '''
+    So you can change text speed, mute music, etc
+    (not even remotely close to being finished)
+    '''
+    user_input = input("\nOptions:\n1. Text Speed\n2. Mute Sound\n3. Font Colour\n")
+    try:
+        if user_input.lower() == "1":
+            clear_screen()
+            print("\nHow fast do you want the text to move?\n1. Fast\n 2. Medium\n 3. Slow\n")
+        elif user_input.lower() == "2":
+            clear_screen()
+            print("\nAre you absolutely certain?(y/n)\n")
+        elif user_input.lower() == "3":
+            clear_screen()
+            print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n")
+        else:
+            print("Invalid Input")
+        input("Press enter to return to the main menu")
+    except:
+        print("Unknown error")
+        options_menu() 
 
 
 
