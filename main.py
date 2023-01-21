@@ -507,10 +507,12 @@ def options_menu():
             sound_input = input("--> ")
             if sound_input.lower() == "1":
                 animate_text("Volume On", "fast")
+                pygame.mixer.music.set_volume(0.5)
                 clear_screen()
                 #insert code that turns on volume here
             elif sound_input.lower() == "2":
                 animate_text("Game Muted", "fast")
+                pygame.mixer.music.set_volume(0.0)
                 clear_screen()
                 #insert code that mutes game here
             else:
@@ -519,21 +521,28 @@ def options_menu():
                 options_menu()
         elif user_input.lower() == "3":
             clear_screen()
-            print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n4. Go back\n")
+            print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n4. Severe Lack of Sunlight White\n5. Go back\n")
             colour_input = input("--> ")
             if colour_input == "1":
+                os.system('color 4')
                 animate_text("Colour changed to red", "fast")
                 clear_screen()
                 #insert code that changes colour here
             elif colour_input == "2":
+                os.system('color 2')
                 animate_text("Colour changed to green", "fast")
                 clear_screen()
                 #insert code that changes colour here
             elif colour_input == "3":
+                os.system('color 1')
                 animate_text("Colour changed to blue", "fast")
                 clear_screen()
-                #insert code that changes colour here
             elif colour_input == "4":
+                os.system('color 7')
+                animate_text("Colour changed to white", "fast")
+                clear_screen()
+                #insert code that changes colour here
+            elif colour_input == "5":
                 clear_screen()
                 options_menu()
             else:
