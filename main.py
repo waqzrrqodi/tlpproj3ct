@@ -306,7 +306,7 @@ def inv_show():
             else:
                 print("Inventory: ")
                 for item in enumerate(player.inventory.inv):
-                    print(f"---------\nItem Name: {item[1]['name']} \nStrenght Bonus: {item[1]['strength_bonus']}\n---------")
+                    print(f"---------\nItem Name: {item[1]['name']} \nStrength Bonus: {item[1]['strength_bonus']}\n---------")
                 input("\nPress enter to continue...")
                 break
         elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
@@ -412,6 +412,7 @@ def intro_menu():
         tutorial()
         intro_menu()
     elif menu_choice == CREDITS:
+        clear_screen()
         animate_text("\ninitiating credits sequence\n", "fast")
         credits()
         intro_menu()
@@ -478,11 +479,11 @@ def tutorial():
 
 #-----------------------------------------------------------------------------Options---------------------------------------------------------------
 
-SETTING1 = 0
-SETTING2 = 0
-SETTING3 = 0
 
-
+text_slow = 0.1
+text_med = 0.05
+text_fast = 0.03
+text_superspeed = 0.005
 
 def options_menu():
     '''
@@ -494,25 +495,21 @@ def options_menu():
     try:
         if user_input.lower() == "1":
             clear_screen()
-            print("\nHow fast do you want the text to move?\n1. Turbo\n2. Fast\n3. Medium\n4. Slow\n5. Go back\n")
+            print("\nHow fast do you want the text to move?\n1. Fast\n2. Medium\n3. Slow\n4. Go back\n")
             text_speed_input = input("--> ")
             if text_speed_input.lower() == "1":
-                 animate_text("Changed text speed", "superspeed")
-                 clear_screen()
-                 #insert code that changes text speed here
-            elif text_speed_input.lower() == "2":
-                 animate_text("Changed text speed", "fast")
-                 clear_screen()
-                 #insert code that changes text speed here
-            elif text_speed_input.lower() == "3":
-                animate_text("Changed text speed", "default")
+                animate_text("Changed text speed", "fast")
                 clear_screen()
                 #insert code that changes text speed here
-            elif text_speed_input.lower() == "4":
+            elif text_speed_input.lower() == "2":
+                animate_text("Changed text speed", "medium")
+                clear_screen()
+                #insert code that changes text speed here
+            elif text_speed_input.lower() == "3":
                 animate_text("Changed text speed", "slow")
                 clear_screen()
                 #insert code that changes text speed here
-            elif text_speed_input.lower() == "5":
+            elif text_speed_input.lower() == "4":
                 clear_screen()
                 options_menu()
             else:
@@ -523,33 +520,37 @@ def options_menu():
             sound_input = input("--> ")
             if sound_input.lower() == "1":
                 animate_text("Volume On", "fast")
+                pygame.mixer.music.set_volume(0.5)
                 clear_screen()
-                #insert code that turns on volume here
             elif sound_input.lower() == "2":
                 animate_text("Game Muted", "fast")
+                pygame.mixer.music.set_volume(0.0)
                 clear_screen()
-                #insert code that mutes game here
             else:
                 print("Invalid Input")
                 clear_screen()
                 options_menu()
         elif user_input.lower() == "3":
             clear_screen()
-            print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n4. Go back\n")
+            print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n4. Severe Lack of Sunlight White\n5. Go back\n")
             colour_input = input("--> ")
             if colour_input == "1":
+                os.system('color 4')
                 animate_text("Colour changed to red", "fast")
                 clear_screen()
-                #insert code that changes colour here
             elif colour_input == "2":
+                os.system('color 2')
                 animate_text("Colour changed to green", "fast")
                 clear_screen()
-                #insert code that changes colour here
             elif colour_input == "3":
+                os.system('color 1')
                 animate_text("Colour changed to blue", "fast")
                 clear_screen()
-                #insert code that changes colour here
             elif colour_input == "4":
+                os.system('color 7')
+                animate_text("Colour changed to white", "fast")
+                clear_screen()
+            elif colour_input == "5":
                 clear_screen()
                 options_menu()
             else:
@@ -564,6 +565,7 @@ def options_menu():
     except:
         print("Unknown Error")
         options_menu() 
+
 
 SETTING1 = 0
 SETTING2 = 0

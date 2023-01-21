@@ -15,16 +15,25 @@ From the developers of "Anthem" and "Poker for grandma 2016" now comes "***Escap
 
 "I am gaming" - Holger
 
-"Most Innovative Game of the Year"
-"Best Surreal Game Experience"
-"Outstanding Achievement in Bizarre Gameplay"
-"Most Absurd Storyline of the Year"
-"Excellence in Unconventional Game Design"
-"Best Use of Quirky Characters"
-"Best Offbeat Soundtrack"
-"Innovative Use of Dreamlike Visuals"
-"Outstanding Achievement in Non-Linear Gameplay"
-"Most Unique Game World of the Year"
+"Most Innovative Game of the Year" - Game Awards 2023
+
+"Best Surreal Game Experience" - Game Awards 2023
+
+"Outstanding Achievement in Bizarre Gameplay" - Game Awards 2013
+
+"Most Absurd Storyline of the Year" - Anonymous
+
+"Excellence in Unconventional Game Design" - Game Awards 2023
+
+"Best Use of Quirky Characters" - Game Awards 2003
+
+"Best Offbeat Soundtrack" - Game Awards 2023
+
+"Innovative Use of Dreamlike Visuals" - Game Awards 2023
+
+"Outstanding Achievement in Non-Linear Gameplay" - Game Awards 1973
+
+"Most Unique Game World of the Year" - Neo
 
 and more to come...
 
