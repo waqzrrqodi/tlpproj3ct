@@ -51,6 +51,7 @@ def animate_text(text, sleep_time):
     Makes text appear one letter at a time at a given speed
     fast, slow, or default
     '''
+    user_text_speed = ""
     SUPERSPEED = 0.005
     FAST = 0.03
     SLOW = 0.1
@@ -62,6 +63,14 @@ def animate_text(text, sleep_time):
     elif sleep_time == "superspeed":
         sleep_time = SUPERSPEED
     else:
+        sleep_time = DEFAULT
+    if user_text_speed == "fast":
+        sleep_time = FAST
+    elif user_text_speed == "slow":
+        sleep_time = SLOW
+    elif user_text_speed == "superspeed":
+        sleep_time = SUPERSPEED
+    elif user_text_speed == "med":
         sleep_time = DEFAULT
     for char in text:
         sys.stdout.write(char)
@@ -96,7 +105,7 @@ def intro():
     clear_screen()
 
     print(intro_name)
-    background_theme("./SoundEngine5000/Theme_Song.wav")
+    background_theme("./SoundEngine5000/theme_song.wav")
     time.sleep(1)
 
     wait_for_keypress()
@@ -105,6 +114,13 @@ def intro():
 
 def intro_splash_only():
     clear_screen()
+    print(ilovetaxfraud)
+    time.sleep(1)
+    clear_screen()
+
+    print(intro_name)
+    background_theme("./SoundEngine5000/theme_song.wav")
+    time.sleep(1)
     wait_for_keypress()
     intro_menu()
 
@@ -112,7 +128,7 @@ def intro_splash_only():
 
 # Initialize all the enemies and add stats for story progression, level, and tutorial etc.
 alma = ch.Enemy("Waldy", 200, 1000, "God", 3)
-simon = ch.Enemy("Simpa", 50, 100, "Human", 2)
+simpa = ch.Enemy("Simpa", 50, 100, "Human", 2)
 goblin = ch.Enemy("Lwittle Gwoblin", 50, 100, "Monster", 1)
 bilo = ch.Enemy("Bilo, the Town Rapist", 100, 50, "Human", 4)
 qlex = ch.Enemy("Steroid Beast", 25, 400, "Monster", 1)
@@ -152,18 +168,18 @@ class DefaultActionMenu():
         GOTO_MENU = "4"
         
         print (f"Action Menu: \n 1. {action_1} \n 2. {action_2} \n 3. {action_3} \n 4. Go to menu") # For testing purposes
-        selection = int(input("Your command -->"))
+        selection = input("Your command -->")
         
         # Handle the player's player_action
         try:
             if selection == "1":
-                print(f"Going to {action_1} selected")
+                print(f"You choose to go to {action_1}!")
                 return action_1
             if selection == "2":
-                print(f"{action_2} selected")
+                print(f"You choose to go to {action_2}!")
                 return action_2
             if selection == "3":
-                print(f"{action_3} selected")
+                print(f"You choose to go to {action_3}!")
                 return action_3
             elif selection == GOTO_MENU:
                 print("Going to menu")
@@ -382,7 +398,7 @@ def intro_menu():
             elif choice == NEW_GAME:
                 PlayerAndNameSelect()
                 menu()
-                play()
+                game_loop()
         except ValueError:
             print("Invalid input")
             intro_menu()
@@ -599,11 +615,12 @@ class FightLoopTM(DefaultActionMenu):
     """
     def __init__(self, enemy_name):
         background_theme("./SoundEngine5000/battle_theme.wav")
+        self.instant_win = True # !todo for testing purposes. Set to False when done testing
         self.player_health = player.hp
         self.player_weapon = player.weapon
         self.armour = player.armour
         self.speed = player.speed
-        if enemy_name == "Goblin":
+        if enemy_name == "Goblins":
             self.enemy_health = goblin.health
             self.enemy_damage = goblin.damage
             self.enemy_speed = goblin.speed
@@ -655,14 +672,21 @@ class FightLoopTM(DefaultActionMenu):
             self.enemy_health = witch.health
             self.enemy_damage = witch.damage
             self.enemy_speed = witch.speed
+        elif enemy_name == "Shop":
+            self.instant_win = True
+        elif enemy_name == "Instant win":
+            self.instant_win = True
         else:
             print("Unknown enemy")
             death()
-        print(f"Thou hast encountered a {enemy_name}!")
-        print(f"The {enemy_name} hath {self.enemy_health} health")
-        print(f"Thou hast {self.player_health} health")
-        # print(f"Thou hast {self.player_weapon.name} which deals {self.player_weapon.damage} damage")
-        # print(f"Thou hast {self.armour.name} which reduces damage by 'placeholder' damage")
+        if self.instant_win == False:
+            print(f"Thou hast encountered {enemy_name}!")
+            print(f"The {enemy_name} hath {self.enemy_health} health")
+            print(f"Thou hast {self.player_health} health")
+            # print(f"Thou hast {self.player_weapon.name} which deals {self.player_weapon.damage} damage")
+            # print(f"Thou hast {self.armour.name} which reduces damage by 'placeholder' damage")
+            self.fight_loop()
+
         self.fight_loop()
 
     def attack(self):
@@ -782,6 +806,13 @@ class FightLoopTM(DefaultActionMenu):
         '''
         The proprieatary fighting loop of the game (no copying pls) which is used to fight enemies and makes the shots about what happens next
         '''
+        if self.instant_win == True:
+            print("Thou hast leveled up!")
+            # sound
+            # self.level_up()
+            self.instant_win = False
+            background_theme("./SoundEngine5000/theme_song.wav")
+            return
         while self.player_health > 0 or self.enemy_health > 0:
             # Display the current health of the player and the enemy
             print(f"Player health: {self.player_health}")
@@ -811,6 +842,7 @@ class FightLoopTM(DefaultActionMenu):
 
             # Check if the player has been a "has been"
             if self.player_health <= 0: death()
+        background_theme("./SoundEngine5000/theme_song.wav")
 
 #--------------------------------------------------------------Death and Endings-----------------------------------------------------------------------#
 
@@ -825,6 +857,11 @@ def death():
     print(game_over)
     animate_text(credits_text, "fast")
     # Prints the ending and stats of the player and their achievements.
+    print(f"Your level was {player.level}")
+    print(f"You had {player.gold} gold")
+    print(f"You killed player.kills enemies")
+    print("Thanks for playing!")
+    print("\nPress any key to exit")
     wait_for_keypress()
     time.sleep(2)
     quit()
@@ -847,16 +884,17 @@ def game_loop():
     
     while True:
         story()
-    # level_choice() with narration and the story
-    # default action menu
-    # If not find shop increase chance of finding shop
-    # if there is enemy spawn enemy and enter fight loop
-    # if there is chest spawn chest and enter chest loop and inventory loop
-    # if there is trap spawn trap and enter trap loop
-    # Continue story with different parts of the story depending on the level obsticles
-    # Go back to top of loop
-    # Give player option to go back to menu
-    # If player goes back to menu give them option to save and exit or continue
+        # if story_progress == len(possible_routes) - 3: # -3 because the we dont want to give the player less than 3 choices
+        if story_progress == 3:
+            ending = narr.TRUE_END_WIN
+            print(ending)
+            input("\nPress enter to continue")
+            clear_screen()
+            print(ending)
+            credits()
+            break
+    intro_splash_only()
+
 
 saveFileNumberTracker = 0 #for all the lazy mfs
 def save_game():
@@ -922,7 +960,7 @@ def story():
     global level
     global story_progress
     global used_routes
-    possible_routes = [narr.ROUTE]
+    possible_routes = narr.ROUTE
     
     if story_progress == 0:
         clear_screen()
@@ -932,47 +970,72 @@ def story():
         # randomize number between 0 and lenght of path
         place = random.choice(list(narr.PLACE_NAMES.keys()))
         route = narr.PLACE_NAMES[place]["ROUTE"]
+        while place == 'Shop':
+            place = random.choice(list(narr.PLACE_NAMES.keys()))
+            route = narr.PLACE_NAMES[place]["ROUTE"]
         used_routes.append(place)
-                # print the text of the path
+        # print the text of the path
         print(place + ":")
-        animate_text(route, "superspeed")
+        if len(route) == 1:
+            animate_text(route, "superspeed")
+            input("\nPress enter to continue")
+            clear_screen()
+        else:
+            for text in range(len(route) -1):
+                animate_text(route[text], "superspeed")
+                input("\nPress enter to continue")
+        # start the fight loop
         FightLoopTM(narr.PLACE_NAMES[place]["ENEMY"])
-        input("\nPress enter to continue")
-        clear_screen()
+        if len(route) != 1:
+            print(route[-1] + "\n")
+            input("\nPress enter to continue")
+            clear_screen()
         # add 1 to the story progress
         story_progress += 1
         
         
     if story_progress != 0:
-        place1 = random.choice(list(narr.PLACE_NAMES.keys()))
-        place2 = random.choice(list(narr.PLACE_NAMES.keys()))
-        place3 = random.choice(list(narr.PLACE_NAMES.keys()))
-        
-        if place1 == place2 or place1 == place3 or place2 == place3:
-            story()
-        elif place1 or place2 or place3 in used_routes:
-            story()
+        def get_random_places(used_routes):
+            places = list(narr.PLACE_NAMES.keys())
+            place1, place2, place3 = None, None, None
+            while place1 == place2 or place1 == place3 or place2 == place3 or (place1 in used_routes) or (place2 in used_routes) or (place3 in used_routes):
+                place1 = random.choice(places)
+                place2 = random.choice(places)
+                place3 = random.choice(places)
+            return place1, place2, place3
+
+        place1, place2, place3 = get_random_places(used_routes)
+
         choice = DefaultActionMenu.action_menu(place1, place2, place3)
         route = narr.PLACE_NAMES[choice]["ROUTE"]
+        random_trap_chest = random.choice(["trap", "chest", "nothing"])
+        if random_trap_chest == "trap":
+            # trap()
+            pass
+        elif random_trap_chest == "chest":
+            # chest()
+            pass
+
         used_routes.append(choice)
         
-        for text in len(route) -1:
-            print(text + "\n")
+        if len(route) == 1:
+            animate_text(route, "superspeed")
             input("\nPress enter to continue")
             clear_screen()
+        else:
+            for text in range(len(route) -1):
+                animate_text(route[text], "superspeed")
+                input("\nPress enter to continue")
+        
         FightLoopTM(narr.PLACE_NAMES[choice]["ENEMY"])
-        print(route[-1] + "\n")
-        input("\nPress enter to continue")
+        if len(route) != 1:
+            print(route[-1] + "\n")
+            input("\nPress enter to continue")
+            clear_screen()
         story_progress += 1
             
-    if story_progress == len(possible_routes):
-        ending = narr.TRUE_END_WIN
-        print(ending)
-        input("\nPress enter to continue")
-        clear_screen()
-        credits()
-        quit()
-    
+
+
     # Not properly implemented yet
     # if val == ROUTE17:
     #     player.inventory.pickup_item("Placeholder Item", 1)
@@ -994,11 +1057,20 @@ def story():
 def credits():
     """Play the credits of the game"""
     animate_text(credits_text, "fast")
-    user_input = input("Press enter to return to the main menu")
+    input("\nPress enter to return to the main menu")
     return
 
 #-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
 
 pygame.init()
-intro()
-game_loop()
+dev = input("Do you want to skip setup and go directly to story? (y/N): ")
+if dev.lower() == "y":
+    dev = True
+else:
+    dev = False
+if dev == True:
+    player = ch.Player(100, 100, "Bon", "Beast", 10)
+    game_loop()
+else:
+    intro()
+    game_loop()

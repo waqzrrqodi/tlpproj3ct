@@ -12,7 +12,7 @@ from emoji import emojize
 #--------------------------------------------------------------
 disclaimer = """
 Disclaimer for TLP
-If you require any more information or have any questions about our site's disclaimer, please feel free to contact us by email at hbcownjfrbsktikvky@tmmwj.net.
+If you require any more information or have any questions about our site's disclaimer, please feel free to contact us by email at candide-the-game@candide-productions.net.
 
 Disclaimers for Escape From Rimbo
 All the information on this website - escrimbo.com - is published in good faith and for general information purpose only. Escape From Rimbo does not make any warranties about the completeness, reliability and accuracy of this information. Any action you take upon the information you find on this website (Escape From Rimbo), is strictly at your own risk. Escape From Rimbo will not be liable for any losses and/or damages in connection with the use of our website.
@@ -83,7 +83,7 @@ name_select = '''
 ----------===============----------
 '''
 
-bilo = '''
+bilo_pic = '''
 ===========================================================
 |                                                         |  
 |                     .-'^'-.                             |  
@@ -101,7 +101,7 @@ bilo = '''
 |                 ".__  "-" __ \ \.                       |  
 ===========================================================
 '''
-simpa = '''
+simpa_pic = '''
 ===========================================================
 |                                                         |
 |              XXXXXXXXXXXXXXXXXXXX                       |

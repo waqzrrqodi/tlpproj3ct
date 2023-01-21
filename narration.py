@@ -24,14 +24,15 @@ ROUTE1 = [R1_TXT1, R1_TXT2]
 
 
 #Route 2 - "The Dark Alley"
-R2_TXT = '''
+R2_TXT1 = '''
 You enter the alley, and find a suspicious wardrobe. 
 Your curiosity makes you want to open it, but it might be dangerous. 
 You open it, only to find a strange man with glasses and a bowl cut. 
 He jumps out at you and a fight begins.
 '''
 # Battle - Simpa
-ROUTE2 = [R2_TXT]
+R2_TXT2 = '''You won the fight you bastard! You proceed to the next area.'''
+ROUTE2 = [R2_TXT1, R2_TXT2]
 
 
 #Route 3 - "Go Beyond the Rickety Bridge"
@@ -46,14 +47,15 @@ ROUTE3 = [R3_TXT]
 
 
 #Route 4 - "Missile silo"
-R4_TXT = '''
+R4_TXT1 = '''
 You enter the abandoned missile silo and see two people fighting over a protein shake. 
 One of the people is Neo Malmros, a local warlord. The other one is Bilo, an infamous sex-offender. 
 Neo asks you to help him take the protein shake, Bilo also asks you to steal the shake. You choose
 to help Neo, because nobody wants to help a sex offender.
 '''
 #Battle - Bilo
-ROUTE4 = [R4_TXT]
+R4_TXT2 = '''You beat Bilo and take the protein shake. Neo thanks you and gives you a bag of cocaine.'''
+ROUTE4 = [R4_TXT1, R4_TXT2]
 
 
 #Route 5 - "Penjamin City"
@@ -74,12 +76,13 @@ ROUTE5 = [R5_TXT1, R5_TXT2]
 
 
 #Route 6 - "Dark Forest"
-R6_TXT = '''
+R6_TXT1 = '''
 You enter the forest and find a giant man surrounded by steroid needles. He looks at you and starts
 speaking gibberish. He pulls out a rolling pin and a fight breaks out.
 '''
 #Battle - Steroid Beast
-ROUTE6 = [R6_TXT]
+R6_TXT2 = '''You beat the steroid beast and he gives you a bag of cocaine.'''
+ROUTE6 = [R6_TXT1, R6_TXT2]
 
 
 #Route 7 - "Shop"
@@ -250,17 +253,17 @@ PLACE_NAMES = {
     "Missile Silo": {"ENEMY": "Bilo", "ROUTE": ROUTE4},
     "Penjamin City": {"ENEMY": "Goblins", "ROUTE": ROUTE5},
     "Dark Forest": {"ENEMY": "Steroid Beast", "ROUTE": ROUTE6},
-    "Shop": {"ENEMY": None, "ROUTE": ROUTE7},
-    "Landfill": {"ENEMY": None, "ROUTE": ROUTE8},
+    "Shop": {"ENEMY": "Shop", "ROUTE": ROUTE7},
+    "Landfill": {"ENEMY": "Instant win", "ROUTE": ROUTE8},
     "Shabby Game Studio": {"ENEMY": "Homeless man", "ROUTE": ROUTE9},
     "Concentration Camp for Virgins": {"ENEMY": "The Anti-Virgin", "ROUTE": ROUTE10},
     "Temple": {"ENEMY": "Guards", "ROUTE": ROUTE11},
-    "Condemned Parking Lot": {"ENEMY": None, "ROUTE": ROUTE12},
+    "Condemned Parking Lot": {"ENEMY": "Instant win", "ROUTE": ROUTE12},
     "Concert": {"ENEMY": "Rap God", "ROUTE": ROUTE13},
     "Lit Party": {"ENEMY": "Strange Lady", "ROUTE": ROUTE14},
     "Rimbo Graveyard": {"ENEMY": "Skeletons", "ROUTE": ROUTE15},
     "Haunted Mansion": {"ENEMY": "Ghosts", "ROUTE": ROUTE16},
-    "Used Condom": {"ENEMY": None, "ROUTE": ROUTE17},
+    "Used Condom": {"ENEMY": "Instant win", "ROUTE": ROUTE17},
     "Witch's Tower": {"ENEMY": "Witch", "ROUTE": ROUTE18},
     "Cursed Cave": {"ENEMY": "Goblins", "ROUTE": ROUTE19},
 }

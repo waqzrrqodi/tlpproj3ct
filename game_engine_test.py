@@ -8,10 +8,9 @@ screen = pygame.display.set_mode((1920, 1080))
 
 #background_image = pygame.image.load("rimbo.png")
 
-#user_input = ''
+user_input = ''
 
 def game_engine():
-
     pygame.init()
     pygame.font.init()
 
@@ -20,7 +19,7 @@ def game_engine():
     screen.fill('Black')
     pygame.display.set_caption("Escape from Rimbo")
     
-    
+    user_input = ""
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
