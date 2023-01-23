@@ -502,7 +502,7 @@ def options_menu():
     global SETTING1
     global SETTING2
     global SETTING3
-    print("\nOptions:\n1. Text Speed\n2. Sound\n3. Font Colour\n4. Go back to main menu\n")
+    print("\nOptions:\n1. Text Speed\n2. Sound\n3. Font Colour\n4. Go back\n")
     user_input = input("-->")
     try:
         if user_input == "1":
@@ -608,7 +608,7 @@ def options_menu():
                 animate_text("The text is already set to blue you fucking twat", "superspeed")
                 return
             elif colour_input == "4" and SETTING3 == "white":
-                animate_text("The text is already white, disgusting wench", "superspeed")
+                animate_text("Are you daft?! The text is already white", "superspeed")
                 return
             else:
                 print("Invalid Input")
@@ -622,6 +622,7 @@ def options_menu():
     except:
         print("Unknown Error")
         options_menu() 
+        
 
 SETTINGS = {
     "text_speed_choice": {"input_choice": "", "SETTING": SETTING1},
@@ -917,7 +918,7 @@ def death():
     # if player dies fighting valma the Soulbroken play ending 2
     # if player dies in a normal fight play ending 3
     print(game_over)
-    animate_text(credits_text, "fast")
+    animate_text(credits_text, "slow")
     # Prints the ending and stats of the player and their achievements.
     print(f"Your level was {player.level}")
     print(f"You had {player.gold} gold")
