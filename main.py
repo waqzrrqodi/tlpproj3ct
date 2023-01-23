@@ -434,14 +434,16 @@ def menu():
     SAVE_AND_EXIT = "2"
     INVENTORY = "3"
     CONTINUE = "4"
+    OPTIONS = "5"
     # name = "Navigation Menu"
     # action_1 = "Tutorial"
     # action_2 = "Save and Exit"
     # action_3 = "Inventory"
     # action_4 = "Continue"
+    # action_5 = "Options"
     clear_screen()
     # print(ui_textbox)
-    print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory \n4. Continue") # For testing purposes
+    print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory \n4. Continue\n5. Options") # For testing purposes
     menu_choice = input("What do thau wish to do? ");
     if menu_choice == GOTO_TUTORIAL:
         print("tutorial")
@@ -458,6 +460,9 @@ def menu():
         menu()
     if menu_choice == CONTINUE or menu_choice == "":
         animate_text("Continuing with story...", "default")
+    if menu_choice == OPTIONS:
+        clear_screen()
+        options_menu()
 
 def tutorial():
     '''
@@ -482,11 +487,6 @@ def tutorial():
 
 #-----------------------------------------------------------------------------Options---------------------------------------------------------------
 
-
-text_slow = 0.1
-text_med = 0.05
-text_fast = 0.03
-text_superspeed = 0.005
 
 def options_menu():
     '''
