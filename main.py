@@ -352,13 +352,16 @@ class PlayerAndNameSelect(DefaultActionMenu):
         user_name_input = input("What is your name? --> ")
         self.name = random.choice(VIKING_NAMES)
         clear_screen()
-        print(f"{user_name_input} is a good name, though I think {self.name} is a stronger and a more viking name.")
+        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis":
+            print("That is an absolutely beautiful name mate")
+            self.name = user_name_input
+        else:
+            print(f"{user_name_input} is a good name, though I think {self.name} is a stronger and a more viking name.")
+            input(f"Confirm {self.name}? yes/absolutly --> ")
+            print("Are you sure? You won't be able to change it later (yes/perhaps)")
+            input("Confirm --> ")
+            print(f"{self.name} accepted")
         time.sleep(1)
-
-        input(f"Confirm {self.name}? yes/absolutly --> ")
-        print("Are you sure? You won't be able to change it later (yes/perhaps)")
-        input("Confirm --> ")
-        print(f"{self.name} accepted")
 
         time.sleep(1)
         clear_screen()
@@ -490,8 +493,7 @@ def tutorial():
 
 def options_menu():
     '''
-    So you can change text speed, mute music, etc
-    (not even remotely close to being finished)
+    So you can change text speed, mute music and alter font colour
     '''
     global SETTING1
     global SETTING2
@@ -524,16 +526,16 @@ def options_menu():
                 clear_screen()
                 options_menu()
             elif text_speed_input == "1" and SETTINGS["text_speed_choice"]["SETTING"] == "superspeed":
-                animate_text("The text is already set to turbo you absolute buffoon", "superspeed")
+                animate_text("The text speed is already set to turbo you absolute buffoon", "superspeed")
                 return
             elif text_speed_input == "2" and SETTINGS["text_speed_choice"]["SETTING"] == "fast":
-                animate_text("The text is already set to fast, you disgusting lowly moron", "superspeed")
+                animate_text("The text is already set to fast, you lowly peasant", "superspeed")
                 return
             elif text_speed_input == "3" and SETTINGS["text_speed_choice"]["SETTING"] == "medium":
                 animate_text("The text is already set to medium, cockhead", "superspeed")
                 return
             elif text_speed_input == "4" and SETTINGS["text_speed_choice"]["SETTING"] == "slow":
-                animate_text("The text is already set to slow you fucking nonce", "superspeed")
+                animate_text("Text speed is already set to slow you nonce", "superspeed")
                 return
             else:
                 print("Invalid Input")
@@ -552,7 +554,7 @@ def options_menu():
                 pygame.mixer.music.set_volume(0.0)
                 clear_screen()
             elif sound_input == "1" and SETTING2 == "on":
-                animate_text("Sound is already turned on, idiot.", "superspeed")
+                animate_text("Sound is already turned on, you lowborn craven.", "superspeed")
                 return
             elif sound_input == "2" and SETTING2 == "off":
                 animate_text("The game is already muted, fuckface", "superspeed")
@@ -589,16 +591,16 @@ def options_menu():
                 clear_screen()
                 options_menu()
             elif colour_input == "1" and SETTING3 == "red":
-                print("Text is already set to red you fucking incompetent moron")
+                animate_text("Text is already set to red you fucking incompetent moron", "superspeed")
                 return
             elif colour_input == "2" and SETTING3 == "green":
-                print("The text is already green you little prick")
+                animate_text("The text is already green you little prick", "superspeed")
                 return
             elif colour_input == "3" and SETTING3 == "blue":
-                print("The text is already set to blue you fucking twat")
+                animate_text("The text is already set to blue you fucking twat", "superspeed")
                 return
             elif colour_input == "4" and SETTING3 == "white":
-                print("The text is already white, disgusting wench")
+                animate_text("The text is already white, disgusting wench", "superspeed")
                 return
             else:
                 print("Invalid Input")
@@ -622,6 +624,8 @@ SETTINGS = {
 SETTINGS["text_speed_choice"]["SETTING"] = SETTING1
 SETTINGS["mute_choice"]["SETTING"] = SETTING2
 SETTINGS["colour_choice"]["SETTING"] = SETTING3
+
+
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
 def background_theme(music):
     """

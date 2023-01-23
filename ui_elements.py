@@ -230,11 +230,16 @@ Programmed by: Literally only Kasper and Sebbe
 ----------==================----------
        Made by: Tax Fraud Studios
 ----------==================----------
-(We are sorry if this game offended you
-in any way or hurt your feelings. It was
-not our intention. If this game gave you
-suicidal thoughts we would recommend that
-you contact a local suicide hotline.)\n
+
+(We are sorry if this game damaged your
+physical or mental health. It is not our
+intention to cause our players harm.
+If this game gave you suicidal thoughts 
+we would recommend that you contact a 
+suicide hotline and seek help. Tax Fraud 
+Studios is not responsible for any deaths 
+that may occur as a result of playing Escape 
+From Rimbo.)\n
 '''
 
 #-------------------------------------------------------------------------Voice Lines Section-----------------------------------------------------------------
