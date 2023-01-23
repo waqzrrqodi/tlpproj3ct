@@ -8,7 +8,7 @@ import pkg_resources
 from itertools import chain
 import narration as narr
 from item_management import *
-from game_engine import *
+from ad_screen import *
 
 # Check if the user has the required packages installed
 if system() == "Windows":
@@ -96,7 +96,7 @@ def intro():
     """
     Runs the intro sequence and the disclaimer, as well as starts the intro music.
     """
-    game_engine()
+    
     clear_screen() # Clears the screen
     print(disclaimer)
     time.sleep(3)
@@ -927,16 +927,20 @@ def death():
     print("\nPress any key to exit")
     wait_for_keypress()
     time.sleep(2)
+    screen_engine()
     quit()
 
 def ending1():
     print(narr.COWARD_END)
+    screen_engine()
 
 def ending2():
     print(narr.TRUE_END_DEATH)
+    screen_engine()
 
 def ending3():
     print(narr.NORMAL_DEATH)
+    screen_engine()
     
 #-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
