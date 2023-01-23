@@ -326,7 +326,7 @@ def inv_show():
 #-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
 VIKING_NAMES=[
     #Viking names
-    "Arne", "Birger","Bjorn","Bjornulf","Bo", "Frode", "Knud", "Odger", "Trygve", "Troels", "Loke" #Man
+    "Arne", "Birger","Bjorn","Bjornulf","Bo", "Frode", "Knud", "Odger", "Trygve", "Troels", #Man
     
     "Astrid","Bodil","Frida","Gertrud", "Gudrun","Gunnhild","Gunnvor","Halla","Hedvig","Helga", #Kvinna
     ]
