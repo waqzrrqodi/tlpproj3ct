@@ -8,6 +8,7 @@ import pkg_resources
 from itertools import chain
 import narration as narr
 from item_management import *
+from game_engine import *
 
 # Check if the user has the required packages installed
 if system() == "Windows":
@@ -45,13 +46,15 @@ if system() == "Windows":
     from msvcrt import getch as getkey
 else:
     from getch import getch as getkey_linux # For linux systems, getch is not included in the standard library on windows.
-
+SETTING1 = ""
+SETTING2 = ""
+SETTING3 = ""
 def animate_text(text, sleep_time):
     '''
     Makes text appear one letter at a time at a given speed
     fast, slow, or default
     '''
-    SETTING1 = ""
+    
     SUPERSPEED = 0.005
     FAST = 0.03
     SLOW = 0.1
@@ -93,6 +96,7 @@ def intro():
     """
     Runs the intro sequence and the disclaimer, as well as starts the intro music.
     """
+    game_engine()
     clear_screen() # Clears the screen
     print(disclaimer)
     time.sleep(3)
