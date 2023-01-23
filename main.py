@@ -510,22 +510,25 @@ def options_menu():
             print("\nHow fast do you want the text to move?\n1. Martin Mode (TURBO FAST)\n2. Fast\n3. Medium\n4. Slow\n5. Go back\n")
             text_speed_input = input("--> ")
             if text_speed_input == "1":
-                animate_text("Changed text speed", "superspeed")
+                animate_text("Changed text speed", "fast")
                 SETTING1 = "superspeed"
                 clear_screen()
-                return
+                options_menu()
             elif text_speed_input == "2":
                 animate_text("Changed text speed", "fast")
                 clear_screen()
                 SETTING1 = "fast"
+                options_menu()
             elif text_speed_input == "3":
-                animate_text("Changed text speed", "medium")
+                animate_text("Changed text speed", "fast")
                 clear_screen()
                 SETTING1 = "medium"
+                options_menu()
             elif text_speed_input == "4":
-                animate_text("Changed text speed", "slow")
+                animate_text("Changed text speed", "fast")
                 clear_screen()
                 SETTING1 = "slow"
+                options_menu()
             elif text_speed_input == "5":
                 clear_screen()
                 options_menu()
@@ -543,16 +546,17 @@ def options_menu():
                 return
             else:
                 print("Invalid Input")
+                return
         elif user_input.lower() == "2":
             clear_screen()
             print("\nSound:\n1. On\n2. Off\n")
             sound_input = input("--> ")
-            if sound_input.lower() == "1":
+            if sound_input == "1":
                 animate_text("Volume On", "fast")
                 SETTING2 = "on"
                 pygame.mixer.music.set_volume(0.5)
                 clear_screen()
-            elif sound_input.lower() == "2":
+            elif sound_input == "2":
                 animate_text("Game Muted", "fast")
                 SETTING2 = "off"
                 pygame.mixer.music.set_volume(0.0)
