@@ -7,7 +7,7 @@ from platform import system
 import pkg_resources
 from itertools import chain
 import narration as narr
-# from AI import *
+from item_management import *
 
 # Check if the user has the required packages installed
 if system() == "Windows":
@@ -51,27 +51,29 @@ def animate_text(text, sleep_time):
     Makes text appear one letter at a time at a given speed
     fast, slow, or default
     '''
-    user_text_speed = ""
+    SETTING1 = ""
     SUPERSPEED = 0.005
     FAST = 0.03
     SLOW = 0.1
     DEFAULT = 0.05
-    if sleep_time == "fast":
+    
+    if SETTING1 == "fast":
         sleep_time = FAST
-    elif sleep_time == "slow":
+    elif SETTING1 == "slow":
         sleep_time = SLOW
-    elif sleep_time == "superspeed":
+    elif SETTING1 == "superspeed":
         sleep_time = SUPERSPEED
-    else:
+    elif SETTING1 == "med":
         sleep_time = DEFAULT
-    if user_text_speed == "fast":
-        sleep_time = FAST
-    elif user_text_speed == "slow":
-        sleep_time = SLOW
-    elif user_text_speed == "superspeed":
-        sleep_time = SUPERSPEED
-    elif user_text_speed == "med":
-        sleep_time = DEFAULT
+    else: 
+        if sleep_time == "fast":
+            sleep_time = FAST
+        elif sleep_time == "slow":
+            sleep_time = SLOW
+        elif sleep_time == "superspeed":
+            sleep_time = SUPERSPEED
+        else:
+            sleep_time = DEFAULT
     for char in text:
         sys.stdout.write(char)
         sys.stdout.flush()
@@ -127,7 +129,7 @@ def intro_splash_only():
 #----------------------------------------------------------------------Player, Enemy and Objects----------------------------------------------------------#
 
 # Initialize all the enemies and add stats for story progression, level, and tutorial etc.
-alma = ch.Enemy("Waldy", 200, 1000, "God", 3)
+valma = ch.Enemy("Valma the Soulbroken", 200, 1000, "God", 3)
 simpa = ch.Enemy("Simpa", 50, 100, "Human", 2)
 goblin = ch.Enemy("Lwittle Gwoblin", 50, 100, "Monster", 1)
 bilo = ch.Enemy("Bilo, the Town Rapist", 100, 50, "Human", 4)
@@ -146,6 +148,7 @@ ladythatstolemylypsyl = ch.Enemy("Strange Lady", 90, 90, "Human", 3)
 skeletons = ch.Enemy("Skeletons", 180, 120, "Monster", 1)
 ghosts = ch.Enemy("Ghosts", 50, 150, "Monster", 1)
 witch = ch.Enemy("Witch", 150, 150, "Monster", 1)
+strongman = ch.Enemy("Russian Muscle Man", 200, 200, "Human", 5)
 player = None
 level = 0
 story_progress = 0
@@ -490,28 +493,48 @@ def options_menu():
     So you can change text speed, mute music, etc
     (not even remotely close to being finished)
     '''
+    global SETTING1
+    global SETTING2
+    global SETTING3
     print("\nOptions:\n1. Text Speed\n2. Sound\n3. Font Colour\n4. Go back to main menu\n")
     user_input = input("-->")
     try:
-        if user_input.lower() == "1":
+        if user_input == "1":
             clear_screen()
-            print("\nHow fast do you want the text to move?\n1. Fast\n2. Medium\n3. Slow\n4. Go back\n")
+            print("\nHow fast do you want the text to move?\n1. Martin Mode (TURBO FAST)\n2. Fast\n3. Medium\n4. Slow\n5. Go back\n")
             text_speed_input = input("--> ")
-            if text_speed_input.lower() == "1":
+            if text_speed_input == "1":
+                animate_text("Changed text speed", "superspeed")
+                SETTING1 = "superspeed"
+                clear_screen()
+                return
+            elif text_speed_input == "2":
                 animate_text("Changed text speed", "fast")
                 clear_screen()
-                #insert code that changes text speed here
-            elif text_speed_input.lower() == "2":
+                SETTING1 = "fast"
+            elif text_speed_input == "3":
                 animate_text("Changed text speed", "medium")
                 clear_screen()
-                #insert code that changes text speed here
-            elif text_speed_input.lower() == "3":
+                SETTING1 = "medium"
+            elif text_speed_input == "4":
                 animate_text("Changed text speed", "slow")
                 clear_screen()
-                #insert code that changes text speed here
-            elif text_speed_input.lower() == "4":
+                SETTING1 = "slow"
+            elif text_speed_input == "5":
                 clear_screen()
                 options_menu()
+            elif text_speed_input == "1" and SETTINGS["text_speed_choice"]["SETTING"] == "superspeed":
+                animate_text("The text is already set to turbo you absolute buffoon", "superspeed")
+                return
+            elif text_speed_input == "2" and SETTINGS["text_speed_choice"]["SETTING"] == "fast":
+                animate_text("The text is already set to fast, you disgusting lowly moron", "superspeed")
+                return
+            elif text_speed_input == "3" and SETTINGS["text_speed_choice"]["SETTING"] == "medium":
+                animate_text("The text is already set to medium, cockhead", "superspeed")
+                return
+            elif text_speed_input == "4" and SETTINGS["text_speed_choice"]["SETTING"] == "slow":
+                animate_text("The text is already set to slow you fucking nonce", "superspeed")
+                return
             else:
                 print("Invalid Input")
         elif user_input.lower() == "2":
@@ -520,44 +543,68 @@ def options_menu():
             sound_input = input("--> ")
             if sound_input.lower() == "1":
                 animate_text("Volume On", "fast")
+                SETTING2 = "on"
                 pygame.mixer.music.set_volume(0.5)
                 clear_screen()
             elif sound_input.lower() == "2":
                 animate_text("Game Muted", "fast")
+                SETTING2 = "off"
                 pygame.mixer.music.set_volume(0.0)
                 clear_screen()
+            elif sound_input == "1" and SETTING2 == "on":
+                animate_text("Sound is already turned on, idiot.", "superspeed")
+                return
+            elif sound_input == "2" and SETTING2 == "off":
+                animate_text("The game is already muted, fuckface", "superspeed")
+                return
             else:
                 print("Invalid Input")
                 clear_screen()
                 options_menu()
-        elif user_input.lower() == "3":
+        elif user_input == "3":
             clear_screen()
             print("\nSelect a colour:\n1. Crimson Red\n2. Goblin Green\n3. Blueballs Blue\n4. Severe Lack of Sunlight White\n5. Go back\n")
             colour_input = input("--> ")
             if colour_input == "1":
                 os.system('color 4')
+                SETTING3 = "red"
                 animate_text("Colour changed to red", "fast")
                 clear_screen()
             elif colour_input == "2":
                 os.system('color 2')
+                SETTING3 = "green"
                 animate_text("Colour changed to green", "fast")
                 clear_screen()
             elif colour_input == "3":
                 os.system('color 1')
+                SETTING3 = "blue"
                 animate_text("Colour changed to blue", "fast")
                 clear_screen()
             elif colour_input == "4":
                 os.system('color 7')
+                SETTING3 = "white"
                 animate_text("Colour changed to white", "fast")
                 clear_screen()
             elif colour_input == "5":
                 clear_screen()
                 options_menu()
+            elif colour_input == "1" and SETTING3 == "red":
+                print("Text is already set to red you fucking incompetent moron")
+                return
+            elif colour_input == "2" and SETTING3 == "green":
+                print("The text is already green you little prick")
+                return
+            elif colour_input == "3" and SETTING3 == "blue":
+                print("The text is already set to blue you fucking twat")
+                return
+            elif colour_input == "4" and SETTING3 == "white":
+                print("The text is already white, disgusting wench")
+                return
             else:
                 print("Invalid Input")
         elif user_input.lower() == "4":
             clear_screen()
-            intro_menu()
+            return
         else:
             print("Invalid Input")
             clear_screen()
@@ -566,18 +613,15 @@ def options_menu():
         print("Unknown Error")
         options_menu() 
 
-
-SETTING1 = 0
-SETTING2 = 0
-SETTING3 = 0
-
 SETTINGS = {
     "text_speed_choice": {"input_choice": "", "SETTING": SETTING1},
     "mute_choice": {"input_choice": "", "SETTING": SETTING2},
     "colour_choice": {"input_choice": "", "SETTING": SETTING3},
 }
 
-
+SETTINGS["text_speed_choice"]["SETTING"] = SETTING1
+SETTINGS["mute_choice"]["SETTING"] = SETTING2
+SETTINGS["colour_choice"]["SETTING"] = SETTING3
 #-----------------------------------------------------------------------------------Sounds and whatnot------------------------------------------------------------------------#
 def background_theme(music):
     """
@@ -674,6 +718,10 @@ class FightLoopTM(DefaultActionMenu):
             self.enemy_health = witch.health
             self.enemy_damage = witch.damage
             self.enemy_speed = witch.speed
+        elif enemy_name == "Russian Muscle Man":
+            self.enemy_health = strongman.health
+            self.enemy_damage = strongman.damage
+            self.enemy_speed = strongman.speed
         elif enemy_name == "Shop":
             self.instant_win = True
         elif enemy_name == "Instant win":
@@ -854,7 +902,7 @@ class FightLoopTM(DefaultActionMenu):
 def death():
     print("YOU DIED")
     # if player does something stupid and dies play ending 1
-    # if player dies fighting Valma the Soulbroken play ending 2
+    # if player dies fighting valma the Soulbroken play ending 2
     # if player dies in a normal fight play ending 3
     print(game_over)
     animate_text(credits_text, "fast")
@@ -886,7 +934,7 @@ def game_loop():
     
     while True:
         story()
-        # if story_progress == len(possible_routes) - 3: # -3 because the we dont want to give the player less than 3 choices
+        # if story_progress == len(possible_routes) - 3: # -3 because the we dont want to give the player less than 3 routes
         if story_progress == 3:
             ending = narr.TRUE_END_WIN
             print(ending)
@@ -911,7 +959,7 @@ def save_game():
         if savefile_name == "":
             savefile_name = f"savegame_save_{saveFileNumberTracker}"
     
-        user_data = [player, story_progress, tutorial_done]
+        user_data = [player, story_progress, tutorial_done, used_routes, SETTINGS]
         
         with open(savefile_name + ".dat", 'wb') as file:
             pickle.dump(user_data, file)
@@ -919,7 +967,7 @@ def save_game():
     if save_game.lower() == "n":
         return
     else:
-        print("Not a valid choice")
+        print("Not a valid route")
 
 def load_game():
     """
@@ -929,6 +977,7 @@ def load_game():
     global player
     global story_progress
     global tutorial_done
+    global SETTINGS
     savefile_name = input("What is the name of the save file? (default: savegame)")
     if savefile_name == "":
         savefile_name = f"savegame_save_{saveFileNumberTracker}"
@@ -939,10 +988,10 @@ def load_game():
     except FileNotFoundError:
         print("That save file does not exist")
         choice = input("Would you like to try again? (Y/n): ")
-        if choice.lower() == "y" and choice == "":
-            load_game()
-        else:
+        if choice.lower() == "n":
             doesSaveExist = False
+        else:
+            load_game()
 
     if doesSaveExist == True:
         with open(savefile_name, 'rb') as file:
@@ -951,14 +1000,12 @@ def load_game():
         player = user_data[0] # Not implemented yet
         story_progress = user_data[1] # Not implemented yet
         tutorial_done = user_data[2] # Not implemented yet
+        SETTINGS = user_data[3] # Not implemented yet
     elif doesSaveExist == False:
         intro_menu()
 
 def story():
     """All the story of the game and the narration of the game, as well as when to play each story part. Also initiates the fight loop and the chest loop with the right enemies and items."""
-    # Intro text for level
-    # Choose path and stick with it
-    # Enemy encounter, fight, loot, etc., trap encounter, or chest encounter.
     global level
     global story_progress
     global used_routes
@@ -988,6 +1035,7 @@ def story():
                 input("\nPress enter to continue")
         # start the fight loop
         FightLoopTM(narr.PLACE_NAMES[place]["ENEMY"])
+        # Prints the win text after the fight loop
         if len(route) != 1:
             print(route[-1] + "\n")
             input("\nPress enter to continue")
@@ -1008,17 +1056,15 @@ def story():
 
         place1, place2, place3 = get_random_places(used_routes)
 
-        choice = DefaultActionMenu.action_menu(place1, place2, place3)
-        route = narr.PLACE_NAMES[choice]["ROUTE"]
+        route = DefaultActionMenu.action_menu(place1, place2, place3)
+        route = narr.PLACE_NAMES[route]["ROUTE"]
         random_trap_chest = random.choice(["trap", "chest", "nothing"])
         if random_trap_chest == "trap":
-            # trap()
-            pass
+            trap()
         elif random_trap_chest == "chest":
-            # chest()
-            pass
+            chest()
 
-        used_routes.append(choice)
+        used_routes.append(route)
         
         if len(route) == 1:
             animate_text(route, "superspeed")
@@ -1029,32 +1075,52 @@ def story():
                 animate_text(route[text], "superspeed")
                 input("\nPress enter to continue")
         
-        FightLoopTM(narr.PLACE_NAMES[choice]["ENEMY"])
+        if route == narr.ROUTE17:
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY(None, "Rare"))
+        elif route == narr.ROUTE6:
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Used Rollin pin", "Legendary"))
+        elif route == narr.ROUTE9:
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Bag of cocaine", "Mythic"))
+        elif route == narr.ROUTE8:
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY(None, "Poop"))
+        elif route == narr.ROUTE7:
+            item_shop(player)
+        else:
+            FightLoopTM(narr.PLACE_NAMES[route]["ENEMY"])
+        
         if len(route) != 1:
             print(route[-1] + "\n")
             input("\nPress enter to continue")
             clear_screen()
         story_progress += 1
-            
-
-
-    # Not properly implemented yet
-    # if val == ROUTE17:
-    #     player.inventory.pickup_item("Placeholder Item", 1)
-    # elif val == ROUTE13:
-    #     player.inventory.pickup_item("Rollin pin", 1)
-    # elif val == ROUTE9:
-    #     player.inventory.pickup_item("Bag of cocaine", 1)
-    # elif val == ROUTE8:
-    #     player.inventory.pickup_item("Fjord", 1, "rare")
-    # elif val == ROUTE7:
-    #     open_shop()
-    # else:
-    #   pass
+    """       
+     """
 
 
     level += 1
     return level
+"""Speed trap that damages the player if they are too slow"""
+def trap():
+    """A trap that damages the player"""
+    if player.speed >= 10:
+        player.hp -= range(1, 5)
+        print("You managed to avoid the trap")
+        input("\nPress enter to continue")
+
+    if player.speed <= 5:
+        player.hp -= range(1, 10)
+        print("You got caught in the trap")
+        input("\nPress enter to continue")
+        
+    elif player.speed < 10:
+        player.hp -= range(1, 10)
+        print("You got caught in the trap")
+        input("\nPress enter to continue")
+
+def chest():
+    chest = ChestSys()
+    chest.chest_generate()
+    chest.print_chest()
 
 def credits():
     """Play the credits of the game"""

@@ -95,7 +95,7 @@ ROUTE7 = [R7_TXT1]
 
 #Route 8 - "Landfill"
 R8_TXT1 = '''
-You dig around in the landfill and find a rare item!
+You dig around in the landfill and find a poop item!
 '''
 #Gives the player an item.
 ROUTE8 = [R8_TXT1]
@@ -232,7 +232,7 @@ You and the witch battle fiercely, but you eventually manage to outwit her. She 
 ROUTE18 = [R18_TXT1, R18_TXT2]
 
 
-# Route 18 - "Cursed Cave"
+# Route 19 - "Cursed Cave"
 R19_TXT1 = '''
 You enter the cursed cave and immediately feel a chill run down your spine. You hear a loud cackling and turn to see a horde of goblins laughing at you. You brace yourself for battle. 
 '''
@@ -245,6 +245,15 @@ R19_TXT3 = '''
 You finally win and leave.
 '''
 ROUTE19 = [R19_TXT1, R19_TXT2]
+
+
+# Route 20 - "Brothel"
+R20_TXT1 = '''
+You enter the brothel but step right into a bear trap. A massive russian man approaches you and asks "are you bear?". You don't know how to respond and squeal nervously. The man shoots you in the chest with a shotgun and leaves. You survive and continue your adventure, wounded and with a bear trap attached to your foot.
+'''
+# Hurts the player
+ROUTE20 = [R20_TXT1]
+
 
 PLACE_NAMES = {
     "Bus Stop": {"ENEMY": "Goblins", "ROUTE": ROUTE1},
@@ -266,6 +275,7 @@ PLACE_NAMES = {
     "Used Condom": {"ENEMY": "Instant win", "ROUTE": ROUTE17},
     "Witch's Tower": {"ENEMY": "Witch", "ROUTE": ROUTE18},
     "Cursed Cave": {"ENEMY": "Goblins", "ROUTE": ROUTE19},
+    "Brothel": {"ENEMY": "Russian Muscle Man", "ROUTE": ROUTE20}
 }
 
 

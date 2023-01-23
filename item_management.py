@@ -24,6 +24,12 @@ class InventorySys():
         self.strength_bonus = item_strength_bonus
         item = {'name': self.name, 'strength_bonus': self.strength_bonus}
         return item
+    def equip_item(self, item_name):
+        for i in range(self.inv - 1):
+            if (self.inv[i])["Name"]  == item_name:
+                self.equipped_weapon = item_name
+                print(f"You have equipped {item_name}")
+
 
     def drop(self):
         """Drop an item"""
@@ -34,7 +40,7 @@ class InventorySys():
             for a in range(self.inv):
                 print(f"Example. {self.inv[a]} is number {a}")
 
-    def pickup_item(self, item_name, item_strength_bonus):
+    def pickup_item(self, item):
         """Pickup an item"""
         if len(self.inv) >= self.inv_cap:
             try:
@@ -54,10 +60,10 @@ class InventorySys():
                 the_item_dilemma_final_choice = int(
                     input("Choose numbah----->"))
                 self.inv.pop(the_item_dilemma_final_choice-1)
-                self.inv.append(self.item(item_name, item_strength_bonus))
+                self.inv.append(self.item(item))
                 print(f'''
                 ----------==================----------
-                    You picked up ___{item_name}!___
+                    You picked up ___{item}!___
                 ----------==================----------
                 ''')
                 # Not working fully yet dingus
@@ -67,25 +73,19 @@ class InventorySys():
             else:
                 print("Please provide a Y/n answer")
         else:
-            self.inv.append(self.item(item_name, item_strength_bonus))
+            self.inv.append(self.item(item))
             print(f'''
                 ----------==================----------
-                    You picked up ___{item_name}!___
+                    You picked up ___{item}!___
                 ----------==================----------
                 ''')
-    def equip_item(self, item_name):
-        for i in range(self.inv - 1):
-            if (self.inv[i])["Name"]  == item_name:
-                self.equipped_weapon = item_name
-                print(f"You have equipped {item_name}")
-
+    
 
 ITEM_LIST = {
     "Weapons": {"Kaspers Roasts", "sword", "NUKE_MUSIC", "aliexpress shipping time", "dabbington", "DragonSlayer Greatsword", "Greatsword", "Big Wheel", "rolling pin"},
     "Armor": {"Cargo Pants", "stripper boots", "eldorados nudlar", "simpa_wardrobe", "mega_condom", "Steel Breastplate", "OsKars Jawline"},
     "Heals": {"Crystal Meth", "Heroin", "Crack Cocaine", "Penjamin", "Ketamine", "LSD", "MDMA", "Rohypnol", "Täby AK steroider", "horse meat"},
 }
-
 
 class Item_Creator_3000_V2():
     def __init__(self):
@@ -99,18 +99,15 @@ class Item_Creator_3000_V2():
         self.worth = None
         self.rarity = None
 
-    def create_item_DIY(self, armor, healing, damage, name, item_type, cost):
+    def create_item_DIY(self, name, rarity):
         """When in development you want to create an item on the fly"""
-        self.hp_bonus = armor
-        self.healing = healing
-        self.damage = damage
+        finished_item = self.create_item_random()
+        finished_item["Rarity"] = rarity
+        if name == None or name == "":
+            finished_item["Name"] = finished_item["Name"]
+        else:
+            finished_item["Name"] = name
 
-        self.name = name
-        self.type = item_type
-        self.cost = cost
-
-        self.worth = round(self.cost*0.9)
-        self.rarity = self.item_rarity(self)
         finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.hp_bonus, "Healing Capability": self.healing, "Damage": self.damage}
         return finished_item
             
@@ -148,7 +145,7 @@ class Item_Creator_3000_V2():
     def item_rarity(self, item):
         """Function to determine the rarity of an item based on cost"""
         if item.cost < 30:
-            rarity = "poop"
+            rarity = "Poop"
         if item.cost >= 30:
             rarity = "Common"
         if item.cost >= 70:

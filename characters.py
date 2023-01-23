@@ -31,6 +31,7 @@ class Player( ):
     
     def player_attack(self, enemy):
         """Attack an enemy"""
+        
         if self.weapon == None:
             enemy.health -= self.strength
         else:
@@ -64,7 +65,7 @@ class Human( ):
     """The human subclass"""
     def __init__(self) -> None:
         self.HP = 100
-        self.SPEED = 5
+        self.SPEED = 10
         self.STRENGTH = 100
         self.SUBCLASS = "Human"
 
@@ -80,8 +81,8 @@ class Beast( ):
     """The beast subclass"""
     def __init__(self) -> None:
         self.HP = 200
-        self.SPEED = 10
-        self.STRENGTH = 50
+        self.SPEED = 2
+        self.STRENGTH = 150
         self.SUBCLASS = "Beast"
 class More_Info_Player( ):
     """The player class with more info aka the god class"""
@@ -95,6 +96,7 @@ class More_Info_Player( ):
 class Enemy():
     """The enemy class"""
     def __init__(self, enemy_name, enemy_damage, enemy_health, enemy_type, enemy_speed):
+        self.alive = True
         self.name = enemy_name
         self.damage = enemy_damage
         self.health = enemy_health

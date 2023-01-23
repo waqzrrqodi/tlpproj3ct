@@ -229,7 +229,12 @@ Programmed by: Literally only Kasper and Sebbe
 
 ----------==================----------
        Made by: Tax Fraud Studios
-----------==================----------\n
+----------==================----------
+(We are sorry if this game offended you
+in any way or hurt your feelings. It was
+not our intention. If this game gave you
+suicidal thoughts we would recommend that
+you contact a local suicide hotline.)\n
 '''
 
 #-------------------------------------------------------------------------Voice Lines Section-----------------------------------------------------------------
