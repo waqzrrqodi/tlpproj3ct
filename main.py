@@ -55,7 +55,7 @@ def animate_text(text, sleep_time):
     fast, slow, or default
     '''
     
-    SUPERSPEED = 0.005
+    SUPERSPEED = 0.002
     FAST = 0.03
     SLOW = 0.1
     DEFAULT = 0.05
@@ -190,7 +190,7 @@ class DefaultActionMenu():
                 return action_3
             elif selection == GOTO_MENU:
                 print("Going to menu")
-                return 4
+                menu()
 
         except(IndexError,ValueError):
             print("Invalid player_action. Please try again.")
@@ -268,7 +268,7 @@ class DefaultActionMenu():
                 player_subclass = ch.Gnoblin() 
             elif choice == MORE_INFO:
                 clear_screen()
-                # print(f"{<}")
+                print(class_info)
                 user_choice = input("Please type b to go back (or y?)--> ")
                 if user_choice.lower() == "b":
                     PlayerAndNameSelect()
@@ -467,6 +467,7 @@ def menu():
         menu()
     if menu_choice == CONTINUE or menu_choice == "":
         animate_text("Continuing with story...", "default")
+        return
     if menu_choice == OPTIONS:
         clear_screen()
         options_menu()
@@ -965,17 +966,18 @@ def save_game():
     """
     Save the game to the savegame.dat file
     """
+    global saveFileNumberTracker
     save_game = input("Would you like to save your game? (Y/n): ")
     
     if save_game.lower() == "y" or save_game == "":
         savefile_name = input("What is the name of the save file? (default: savegame {+ number})")
         saveFileNumberTracker += 1
         if savefile_name == "":
-            savefile_name = f"savegame_save_{saveFileNumberTracker}"
+            savefile_name = (f"savegame.dat")
     
         user_data = [player, story_progress, tutorial_done, used_routes, SETTINGS]
         
-        with open(savefile_name + ".dat", 'wb') as file:
+        with open(savefile_name, 'wb') as file:
             pickle.dump(user_data, file)
 
     if save_game.lower() == "n":
@@ -994,9 +996,9 @@ def load_game():
     global SETTINGS
     savefile_name = input("What is the name of the save file? (default: savegame)")
     if savefile_name == "":
-        savefile_name = f"savegame_save_{saveFileNumberTracker}"
+        savefile_name = (f"savegame.dat")
     try:
-        testInfile = open(savefile_name + ".dat", 'rb')
+        testInfile = open(savefile_name, 'rb')
         testInfile.close()
         doesSaveExist = True
     except FileNotFoundError:
@@ -1072,15 +1074,17 @@ def story():
 
         place1, place2, place3 = get_random_places(used_routes)
 
-        route = DefaultActionMenu.action_menu(place1, place2, place3)
-        route = narr.PLACE_NAMES[route]["ROUTE"]
+        choice = None
+        while choice == None:
+            choice = DefaultActionMenu.action_menu(place1, place2, place3)
+        route = narr.PLACE_NAMES[choice]["ROUTE"]
         random_trap_chest = random.choice(["trap", "chest", "nothing"])
         if random_trap_chest == "trap":
             trap()
         elif random_trap_chest == "chest":
             chest()
 
-        used_routes.append(route)
+        used_routes.append(choice)
         
         if len(route) == 1:
             animate_text(route, "superspeed")
