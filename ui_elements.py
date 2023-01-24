@@ -206,11 +206,11 @@ class_info = '''
 ================================================================
 '''
 credits_text = '''
-Directed by: Steven Spielberg
+Directed by: Christopher Nolan
+Produced by: Christopher Nolan
 Written by: Oskis :(
-Produced by: George Lucas
 
-Cast:
+Cast
 Tom Hardy as The Protagonist
 Ana De Armas as Valma the Soulbroken
 Keanu Reeves as Fulcrum
@@ -219,13 +219,56 @@ John Doe as Jack
 Jane Smith as Jill
 Mike Brown as Mike Brown
 Qlex as Steroid Beast
+Leonardo DiCaprio as Goblin
+Willem Dafoe as Skeleton
+Ryan Gosling as Simpa
+Johnny Sins as Russian Strongman
 
-Music:
+Music
 Hans Zimmer
-Lil West & Polyphia
+Lil West 
+Polyphia
+Polytopia
+Polytoliphia
+Polyphitopia
 Andromida
 
-Programmed by: Literally only Kasper and Sebbe
+Janitor Crew
+Janitorial Crew Inspector: Loke Lindström
+Janitorial Sequence Director: Anton Granlund
+Janitorial Commanding Officer: Neo Malmros
+Janitor Chief in Command: Holger Rosenkrantz
+Janitor Field Tester: William Ingo
+
+End Credits Crew
+End Credits Writer: Reformed Ortodox Rabbi Bill Clinton
+End Credits Director: Georg
+Vice Executive Credits Writer: Gorg
+End Credits Art Director: Gogg
+End Credits Vice Commanding Officer: Grogg
+End Credits Proofreader: Elias Rystad
+End Credits Proofreader - Second in Command: Elias Rystad
+End Credits Writer in Chief: Danne Saleem
+End Credits Music Director: Hans Zimmer
+End Credits Crew Commissioner: Oskis
+End Credits Commanding Officer: Simpa
+End Credits Vice Commanding Officer in Chief: Big Wheel
+End Credits Font Chooser: Local Homeless Man
+End Credits Animator: Pixar
+
+Special Thanks
+Catering Service Director: Zakarias Lundman
+Extension Cable Commissioner: Mud Wizard
+Ethernet Cable Inspector: Kaspis
+Toilet Roll Delivery Man: Glex
+Emotional Motivation Director: Lucy
+Emotional Motivation Producer: Lucy
+README.md Writer: Sebastian Jensen
+Website Programmer: Oskar Hughes
+Honey Wagon Driver: Jeremy Clarkson
+
+Programmed by: Literally only Kasper and Sebbe 
+(Oskar was also there)
 
 ----------==================----------
        Made by: Tax Fraud Studios
@@ -237,9 +280,9 @@ intention to cause our players harm.
 If this game gave you suicidal thoughts 
 we would recommend that you contact a 
 suicide hotline and seek help. Tax Fraud 
-Studios is not responsible for any deaths 
-that may occur as a result of playing Escape 
-From Rimbo.)\n
+Studios is not legally responsible for any 
+deaths that may occur as a result of playing 
+Escape From Rimbo.)\n
 '''
 
 #-------------------------------------------------------------------------Voice Lines Section-----------------------------------------------------------------

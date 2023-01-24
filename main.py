@@ -356,7 +356,7 @@ class PlayerAndNameSelect(DefaultActionMenu):
         user_name_input = input("What is your name? --> ")
         self.name = random.choice(VIKING_NAMES)
         clear_screen()
-        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis":
+        if user_name_input.lower == "Martin" or user_name_input.lower == "Oskis" or user_name_input.lower == "Sebbis" or user_name_input.lower == "Kaspis":
             print("That is an absolutely beautiful name mate")
             self.name = user_name_input
         else:
