@@ -210,6 +210,7 @@ Directed by: Christopher Nolan
 Produced by: Christopher Nolan
 Written by: Oskis :(
 
+
 Cast
 Tom Hardy as The Protagonist
 Ana De Armas as Valma the Soulbroken
@@ -224,6 +225,7 @@ Willem Dafoe as Skeleton
 Ryan Gosling as Simpa
 Johnny Sins as Russian Strongman
 
+
 Music
 Hans Zimmer
 Lil West 
@@ -233,21 +235,21 @@ Polytoliphia
 Polyphitopia
 Andromida
 
-Janitor Crew
+
 Janitorial Crew Inspector: Loke Lindström
 Janitorial Sequence Director: Anton Granlund
 Janitorial Commanding Officer: Neo Malmros
 Janitor Chief in Command: Holger Rosenkrantz
 Janitor Field Tester: William Ingo
 
-End Credits Crew
+
 End Credits Writer: Reformed Ortodox Rabbi Bill Clinton
 End Credits Director: Georg
 Vice Executive Credits Writer: Gorg
 End Credits Art Director: Gogg
 End Credits Vice Commanding Officer: Grogg
-End Credits Proofreader: Elias Rystad
-End Credits Proofreader - Second in Command: Elias Rystad
+End Credits Proofreader: Elias
+End Credits Proofreader - Second in Command: Elias
 End Credits Writer in Chief: Danne Saleem
 End Credits Music Director: Hans Zimmer
 End Credits Crew Commissioner: Oskis
@@ -256,8 +258,20 @@ End Credits Vice Commanding Officer in Chief: Big Wheel
 End Credits Font Chooser: Local Homeless Man
 End Credits Animator: Pixar
 
+
+Director of Assassinations: Mike Ehrmantraut
+Candide Productions Spy: Anton Granlund
+Horse Wrangler: Loke Lindström
+
+
+Corpse Disposal Crew:
+Armita
+Local Midgets
+Children from the Daycare
+
+
 Special Thanks
-Catering Service Director: Zakarias Lundman
+Catering Service Director: Zacke
 Extension Cable Commissioner: Mud Wizard
 Ethernet Cable Inspector: Kaspis
 Toilet Roll Delivery Man: Glex
