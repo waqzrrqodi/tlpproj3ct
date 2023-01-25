@@ -13,18 +13,28 @@ class Player( ):
         self.speed = chosen_speed
         self.inventory = InventorySys(3)
         self.gold = 22
-        item = Item_Creator_3000_V2()
-        armour = item.create_item_DIY("Skin", "Poop")
-        weapon = item.create_item_DIY("Fist", "Poop")
-        self.armour = armour
-        self.weapon = weapon
+        self.armour = None
+        self.weapon = None
         self.level = 1  
         self.xp = 0
         self.level_max_xp = 100
+        self.auto_equip()
+    
+    def auto_equip(self):
+        """Auto equip items"""
+        item = Item_Creator_3000_V2()
+        armour = item.create_item_DIY("Skin", "Poop", "Armor")
+        weapon = item.create_item_DIY("Fist", "Poop", "Weapon")
+        self.inventory.inv.append(armour)
+        self.inventory.inv.append(weapon)
+        self.armour = self.inventory.equip_item("Skin")
+        self.weapon = self.inventory.equip_item("Fist")
 
     #equip weapon from inventory
     def player_equip_item(self, item):
         """Equip an item"""
+        clear_screen()
+        #print inventory
         print("What item do you want to equip?")
         item_name = input("-->")
         if item_name["Type"] == "Armour":

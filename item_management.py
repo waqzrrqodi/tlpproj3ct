@@ -18,14 +18,13 @@ class InventorySys():
         else:
             self.inv_cap += upgrade_range
             print(f"Inventory max space upgraded to {self.inv_cap}")
-    def equip_item(self, item):
-        for i in range(self.inv - 1):
-            if (self.inv[i])["Name"]  == item:
-                print(f"You have equipped {item}")
-                return item
-            else:
-                print("Item not found")
-                return None
+    def equip_item(self, item_name):
+        if self.inv.count([item_name])  > 0:
+            print(f"You have equipped {item_name}")
+            return item_name
+        else:
+            print("Item not found")
+            return None
 
 
     def drop(self):
@@ -97,9 +96,9 @@ class Item_Creator_3000_V2():
         self.worth = None
         self.rarity = None
 
-    def create_item_DIY(self, name, rarity):
+    def create_item_DIY(self, name, rarity, type):
         """When in development you want to create an item on the fly"""
-        type = None
+        type = type.lower()
         DIY_item = self.create_item_random()
         DIY_item["Rarity"] = rarity
         if name == None or name == "":
@@ -107,18 +106,20 @@ class Item_Creator_3000_V2():
         else:
             DIY_item["Name"] = name
 
-        if type == "Weapon":
+        if type == "weapon":
             DIY_item["Type"] = "Weapon"
             DIY_item["HP_Bonus"] = None
             DIY_item["Healing Capability"] = None
-        if type == "Armor" or type == "Armour":
+        if type == "armor" or type == "armour":
             DIY_item["Type"] = "Armor"
             DIY_item["Damage"] = None
             DIY_item["Healing Capability"] = None
-        if type == "Heals":
+        if type == "heals":
             DIY_item["Type"] = "Heals"
             DIY_item["HP_Bonus"] = None
             DIY_item["Damage"] = None
+        else:
+            DIY_item["Type"] = type
         return DIY_item
             
     def create_item_random(self):
@@ -230,9 +231,9 @@ class ChestSys():
         rand_item = rand_item.create_item_random()
         self.chest.append(rand_item)
 
-        for i in range(rand.randint(0, 1)):
+        for i in range(0, 1):
             trash = Item_Creator_3000_V2()
-            trash_created = trash.create_item_DIY(0, 0, 0, rand.choice(SCRAP_LIST), "Trash", 0, 0, 0)
+            trash_created = trash.create_item_DIY(rand.choice(SCRAP_LIST), "Poop", "Trash")
             self.chest.append(trash_created)
         return self.chest
 
@@ -275,3 +276,7 @@ Chest = ChestSys()  # Create chest
 chest1 = Chest.chest_generate() # Generate a chest
 Chest.print_chest(chest1) # Print the chest
 '''
+
+item = ChestSys()
+item = item.chest_generate()
+print(item)
