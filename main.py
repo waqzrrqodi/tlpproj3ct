@@ -741,6 +741,7 @@ class FightLoopTM(DefaultActionMenu):
         else:
             print("Unknown enemy")
             death()
+            return
         if self.instant_win == False:
             print(f"Thou hast encountered {enemy_name}!")
             print(f"The {enemy_name} hath {self.enemy_health} health")
@@ -923,23 +924,31 @@ def death():
     print(f"You had {player.gold} gold")
     print(f"You killed player.kills enemies")
     print("Thanks for playing!")
-    print("\nPress any key to exit")
+    print("Item loss has occured")
+    item_lost = player.inventory.inv.pop(random.choice(player.inventory.inv))
+    print("You lost your " + item_lost)
+    print("\nPress any key to continue")
+    
     wait_for_keypress()
     time.sleep(2)
+    print("Quick ad break, please wait...")
     screen_engine()
-    quit()
+    return
 
 def ending1():
     print(narr.COWARD_END)
     screen_engine()
+    quit()
 
 def ending2():
     print(narr.TRUE_END_DEATH)
     screen_engine()
+    quit()
 
 def ending3():
     print(narr.NORMAL_DEATH)
     screen_engine()
+    quit()
     
 #-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
