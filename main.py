@@ -356,7 +356,7 @@ class PlayerAndNameSelect(DefaultActionMenu):
         user_name_input = input("What is your name? --> ")
         self.name = random.choice(VIKING_NAMES)
         clear_screen()
-        if user_name_input.lower == "Martin" or user_name_input.lower == "Oskis" or user_name_input.lower == "Sebbis" or user_name_input.lower == "Kaspis":
+        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis":
             print("That is an absolutely beautiful name mate")
             self.name = user_name_input
         else:
@@ -662,6 +662,7 @@ chest_sound = sound_engine("./SoundEngine5000/Chest_sound.wav")
 item_sound = sound_engine("./SoundEngine5000/Item_Pickup.wav")
 enemy_grunt = sound_engine("./SoundEngine5000/Enemy_Grunt.wav")
 enemy_grunt2 = sound_engine("./SoundEngine5000/Enemy_Grunt2.wav")
+level_up = sound_engine("./SoundEngine5000/levelup.wav")
 # level_up = sound_engine("./SoundEngine5000/Level_Up.wav")
 
 # chest_sound.play()
@@ -871,7 +872,7 @@ class FightLoopTM(DefaultActionMenu):
         '''
         if self.instant_win == True:
             print("Thou hast leveled up!")
-            # sound
+            sound_engine("./SoundEngine5000/levelup.wav")
             # self.level_up()
             self.instant_win = False
             background_theme("./SoundEngine5000/theme_song.wav")
@@ -896,7 +897,7 @@ class FightLoopTM(DefaultActionMenu):
             if self.enemy_health <= 0:
                 print("Thou hast defeated the enemy!")
                 print("Thou hast leveled up!")
-                # sound_engine("level_up")
+                sound_engine("./SoundEngine5000/levelup.wav")
                 player.level += 1
                 break
 
@@ -1154,8 +1155,11 @@ def chest():
 
 def credits():
     """Play the credits of the game"""
-    animate_text(credits_text, "fast")
+    background_theme("./SoundEngine5000/the kill.wav")
+    animate_text(credits_text, "medium")
+    animate_text(simpa_pic, "fast")
     input("\nPress enter to return to the main menu")
+    background_theme("./SoundEngine5000/theme_song.wav")
     return
 
 #-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
