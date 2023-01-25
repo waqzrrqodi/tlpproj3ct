@@ -254,6 +254,75 @@ You enter the brothel but step right into a bear trap. A massive russian man app
 # Hurts the player
 ROUTE20 = [R20_TXT1]
 
+COIN_COLLECT1 = """
+You pick up the enemy's corpse and throw it in the trash. You find some coins in the trash."""
+
+COIN_COLLECT2 = """
+Looks like you've struck gold!
+"""
+
+COIN_COLLECT3 = """
+Money doesn't grow on trees, but it sure drops from enemies!
+"""
+
+COIN_COLLECT4 = """
+Looks like your wallet is about to get a little heavier.
+"""
+
+COIN_COLLECT5 = """
+You've cleaned out this enemy's pockets, time to fill your own!
+"""
+
+COIN_COLLECT6 = """
+Looks like you've found some loose change!
+"""
+
+COIN_COLLECT7 = """
+You've just defeated an enemy and earned some pocket change!
+"""
+
+COIN_COLLECT8 = """
+Looks like the enemy was saving up for a rainy day, and today is your lucky day!
+"""
+
+COIN_COLLECT_LIST = [COIN_COLLECT1, COIN_COLLECT2, COIN_COLLECT3, COIN_COLLECT4, COIN_COLLECT5, COIN_COLLECT6, COIN_COLLECT7, COIN_COLLECT8]
+
+
+
+
+# Coward Ending
+COWARD_END = '''
+You attempt to flee but get tracked down and captured by Rimbo advanced special forces. 
+They attack you with spears and tie you to a cross. You are branded as a coward and live your 
+life in agony, unable to ever escape from Rimbo.
+'''
+
+
+NORMAL_DEATH = '''
+You have fallen, and have thus been eternally condemned to the endless dead end that is Rimbo. Any chance of
+escaping has vanished into thin air, as you draw your last breath and become a trapped spirit, forever chained
+to the worst hellscape in all of the realms.
+'''
+
+BOSS_DEATH = '''
+You think you've won, but the enemy is too strong.
+You are defeated and captured by Rimbo.
+You are branded as a coward and live your life in agony, unable to ever escape from Rimbo.'''
+
+# The Ending
+TRUE_END = '''
+You see the road to Norrtälje, but there is an intimidating figure in the distance blocking your path. 
+The figure sprints towards you at an inhuman speed. You get a closer look and realize that it's the 
+infamous finnish terrorist, Valma the Soulbroken. She is your final obstacle, if you want to get to Norrtälje you 
+have to defeat her. 
+'''
+
+TRUE_END_WIN = '''
+You have won, finally. You walk away having escaped from Rimbo. A muscular testosterone-fueled man approaches you and gives his 
+congratulations. He introduces himself as Martin Loman and offers to drive you to the free regime of 
+Norrtälje. You hop into the martinmobile and powerdrift into the sunset.
+'''
+BOSS_FIGHT = [TRUE_END, TRUE_END_WIN]
 
 PLACE_NAMES = {
     "Bus Stop": {"ENEMY": "Goblins", "ROUTE": ROUTE1},
@@ -275,50 +344,8 @@ PLACE_NAMES = {
     "Used Condom": {"ENEMY": "Instant win", "ROUTE": ROUTE17},
     "Witch's Tower": {"ENEMY": "Witch", "ROUTE": ROUTE18},
     "Cursed Cave": {"ENEMY": "Goblins", "ROUTE": ROUTE19},
-    "Brothel": {"ENEMY": "Russian Muscle Man", "ROUTE": ROUTE20}
+    "Brothel": {"ENEMY": "Russian Muscle Man", "ROUTE": ROUTE20},
+    "End game boss": {"ENEMY": "Valma the Soulbroken", "ROUTE": BOSS_FIGHT}
 }
-
-
-# Coward Ending
-COWARD_END = '''
-You attempt to flee but get tracked down and captured by Rimbo advanced special forces. 
-They attack you with spears and tie you to a cross. You are branded as a coward and live your 
-life in agony, unable to ever escape from Rimbo.
-'''
-
-
-NORMAL_DEATH = '''
-You have fallen, and have thus been eternally condemned to the endless dead end that is Rimbo. Any chance of
-escaping has vanished into thin air, as you draw your last breath and become a trapped spirit, forever chained
-to the worst hellscape in all of the realms.
-'''
-
-
-# The Ending
-TRUE_END = '''
-You see the road to Norrtälje, but there is an intimidating figure in the distance blocking your path. 
-The figure sprints towards you at an inhuman speed. You get a closer look and realize that it's the 
-infamous finnish terrorist, Valma the Soulbroken. She is your final obstacle, if you want to get to Norrtälje you 
-have to defeat her. 
-'''
-# Battle - Waldy
-TRUE_END_WIN = '''
-You have won, finally. Now you have one final choice, will you send Valma to the shadow realm or 
-let her walk among mortals?
-'''
-TRUE_END_DEATH = '''
-Valma deals her final blow, killing you and binding your soul into an eternal contract. You become her
-pawn, unable to make your own decisions or think for yourself. Your foolish ambitions has led to a fate 
-worse than death. You grasp the last piece of your conciousness as it fades away, leaving you as a mindless
-husk.
-'''
-# Choices:
-# 1 - Kill her
-# 2 - Let her live
-FINAL_SCENE = '''
-You walk away having escaped from Rimbo. A muscular testosterone-fueled man approaches you and gives his 
-congratulations. He introduces himself as Martin Loman and offers to drive you to the free regime of 
-Norrtälje. You hop into the martinmobile and powerdrift into the sunset.
-'''
 
 ROUTE = [ROUTE1, ROUTE2, ROUTE3, ROUTE4, ROUTE5, ROUTE6, ROUTE7, ROUTE8, ROUTE9, ROUTE10, ROUTE11, ROUTE12, ROUTE13, ROUTE14, ROUTE15, ROUTE16, ROUTE17, ROUTE18, ROUTE19, ROUTE20]

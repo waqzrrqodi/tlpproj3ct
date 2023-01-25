@@ -135,7 +135,7 @@ class Item_Creator_3000_V2():
             item.type = "Heals"
             item.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
             item.healing = rand.randint(30, 50)
-        item.cost = rand.randint(30, 150)
+        item.cost = rand.randint(30, 400)
         item.worth = round(item.cost*0.9)
         item.rarity = self.item_rarity(item)
         finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.armor, "Healing Capability": item.healing, "Damage": item.damage}
@@ -148,13 +148,13 @@ class Item_Creator_3000_V2():
             rarity = "Poop"
         if item.cost >= 30:
             rarity = "Common"
-        if item.cost >= 70:
+        if item.cost >= 110:
             rarity = "Rare"
-        if item.cost >= 80:
+        if item.cost >= 190:
             rarity = "Epic"
-        if item.cost >= 100:
+        if item.cost >= 250:
             rarity = "Legendary"
-        if item.cost >= 140:
+        if item.cost >= 350:
             rarity = "Mythic"
         return rarity
 

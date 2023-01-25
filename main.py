@@ -56,7 +56,7 @@ def animate_text(text, sleep_time):
     '''
     
     SUPERSPEED = 0.004
-    FAST = 0.03
+    FAST = 0.01
     SLOW = 0.1
     DEFAULT = 0.05
     
@@ -170,35 +170,33 @@ class DefaultActionMenu():
         This is the default player_action menu that is used in the game.
         It is used in the main game loop and in the menu system.
         """
-        # Prompt the player to attack or defend
-        # print(ui_actionmenu)
         GOTO_MENU = "4"
         
-        print (f"Action Menu: \n 1. {action_1} \n 2. {action_2} \n 3. {action_3} \n 4. Go to menu") # For testing purposes
-        selection = input("Your command -->")
+        print (f"Action Menu: \n 1. Head North \n 2. Head West \n 3. Head East \n 4. Go to menu") # For testing purposes
+        selection = input("Your command --> ")
         
         # Handle the player's player_action
         try:
             if selection == "1":
-                print(f"You choose to go to {action_1}!")
+                animate_text(f"\nYou choose to head north and you stumble upon the {action_1}!", "fast")
                 return action_1
             if selection == "2":
-                print(f"You choose to go to {action_2}!")
+                animate_text(f"\nYou choose to head west and in your path stands the {action_2}!", "fast")
                 return action_2
             if selection == "3":
-                print(f"You choose to go to {action_3}!")
+                animate_text(f"\nYou choose to head east, and after some walking you find the {action_3}!", "fast")
                 return action_3
-            elif selection == GOTO_MENU:
-                print("Going to menu")
+            if selection == GOTO_MENU or selection == "menu":
+                animate_text("\nGoing to menu", "fast")
                 menu()
 
         except(IndexError,ValueError):
             print("Invalid player_action. Please try again.")
-            return "error"
+            return
 
         except:
             print("Unknown error hath occured")
-            return "error"
+            return
 
 
     def fight_menu(self):
@@ -292,10 +290,11 @@ def inv_show():
     
     clear_screen()
     #small splash
-    print(f"Player Health: {player.hp}")
-    print(f"Player Strenght: {player.strength}")
-    print(f"Player Armour: {player.armour}")
-    print(f"Player Awesome level: {player.level}")
+    print(f"\nYour name: {player.name}")
+    print(f"\nPlayer Health: {player.hp}")
+    print(f"\nPlayer Strenght: {player.strength}")
+    print(f"\nPlayer Armour: {player.armour}")
+    print(f"\nPlayer Awesomeness level: {player.level}")
 
     
     while True:
@@ -303,7 +302,8 @@ def inv_show():
         if inv_expasion.lower() == "y" or inv_expasion.lower() == "yes" or inv_expasion.lower() == "":
             clear_screen()
             
-            print(f"HP: {player.hp} stronks:{player.strength} armor:{player.armour} lvl{player.level}")
+            print(f"Name: {player.name}")
+            print(f"HP: {player.hp}, stronks: {player.strength}, armor: {player.armour}, lvl: {player.level}")
             print("---------------------------------------------")
             #expand to full inventory view
             if len(player.inventory.inv) == 0:
@@ -313,7 +313,7 @@ def inv_show():
             else:
                 print("Inventory: ")
                 for item in enumerate(player.inventory.inv):
-                    print(f"---------\nItem Name: {item[1]['name']} \nStrength Bonus: {item[1]['strength_bonus']}\n---------")
+                    print('Name: {}\nType: {}\nCost: {}\nWorth: {}\nRarity: {}\nBonus: {} HP\nHealing: {}\nDamage: {}'.format(item.get("Name"), item.get("Type"), item.get("Cost"), item.get("Worth"), item.get("Rarity"), item.get("HP_Bonus"), item.get("Healing Capability"), item.get("Damage")))
                 input("\nPress enter to continue...")
                 break
         elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
@@ -365,9 +365,9 @@ class PlayerAndNameSelect(DefaultActionMenu):
             print("Are you sure? You won't be able to change it later (yes/perhaps)")
             input("Confirm --> ")
             print(f"{self.name} accepted")
-        time.sleep(1)
+        time.sleep(0.3)
 
-        time.sleep(1)
+        time.sleep(0.3)
         clear_screen()
 
         animate_text(f"Welcome {self.name} the {self.player_subclass.SUBCLASS}", "fast")
@@ -402,7 +402,7 @@ def intro_menu():
             # If the player does not have a save file, start the game
             if choice == LOAD: # Not implemented yet
                 animate_text("Loading...", "fast")
-                time.sleep(1)
+                time.sleep(0.3)
                 clear_screen()
                 load_game()
             elif choice == NEW_GAME:
@@ -430,7 +430,7 @@ def intro_menu():
         exit()
     else:
         print("Invalid input")
-        time.sleep(1)
+        time.sleep(0.3)
         intro_menu()
 
 def menu():
@@ -440,8 +440,8 @@ def menu():
     GOTO_TUTORIAL = "1"
     SAVE_AND_EXIT = "2"
     INVENTORY = "3"
-    CONTINUE = "4"
-    OPTIONS = "5"
+    OPTIONS = "4"
+    CONTINUE = "continue"
     # name = "Navigation Menu"
     # action_1 = "Tutorial"
     # action_2 = "Save and Exit"
@@ -450,7 +450,7 @@ def menu():
     # action_5 = "Options"
     clear_screen()
     # print(ui_textbox)
-    print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory \n4. Continue\n5. Options") # For testing purposes
+    print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory or stats \n4. Options \n\nTo continue with story, press [Enter]\n") # For testing purposes
     menu_choice = input("What do thau wish to do? ");
     if menu_choice == GOTO_TUTORIAL:
         print("tutorial")
@@ -482,7 +482,7 @@ def tutorial():
         if user_input.lower() == "y":
             animate_text("Loading tutorial...", "fast")
             print("Haha Silly, you thought there was a tutorial, but there is not.")
-            time.sleep(1)
+            time.sleep(0.3)
         elif user_input.lower() == "n" or user_input.lower() == "":
             animate_text("Continuing without tutorial...", "fast")
         else:
@@ -673,7 +673,7 @@ class FightLoopTM(DefaultActionMenu):
     """
     def __init__(self, enemy_name):
         background_theme("./SoundEngine5000/battle_theme.wav")
-        self.instant_win = True # !todo for testing purposes. Set to False when done testing
+        self.instant_win = False
         self.player_health = player.hp
         self.player_weapon = player.weapon
         self.armour = player.armour
@@ -734,6 +734,11 @@ class FightLoopTM(DefaultActionMenu):
             self.enemy_health = strongman.health
             self.enemy_damage = strongman.damage
             self.enemy_speed = strongman.speed
+        elif enemy_name == "Valma the Soulbroken":
+            self.enemy_health = valma.health
+            self.enemy_damage = valma.damage
+            self.enemy_speed = valma.speed
+            self.enemy_name = valma.name
         elif enemy_name == "Shop":
             self.instant_win = True
         elif enemy_name == "Instant win":
@@ -748,9 +753,9 @@ class FightLoopTM(DefaultActionMenu):
             print(f"Thou hast {self.player_health} health")
             # print(f"Thou hast {self.player_weapon.name} which deals {self.player_weapon.damage} damage")
             # print(f"Thou hast {self.armour.name} which reduces damage by 'placeholder' damage")
-            self.fight_loop()
+            self.fight_loop(enemy_name)
 
-        self.fight_loop()
+        self.fight_loop(enemy_name)
 
     def attack(self):
         """When the player selects the attack option in a fight"""
@@ -865,7 +870,7 @@ class FightLoopTM(DefaultActionMenu):
         elif attack_probability <= 5:
             print(f"Oh no, The enemy is listening to some banger tunes and attacks you with double ({damage * 2}) points of damage.")
 
-    def fight_loop(self):
+    def fight_loop(self, enemy_name):
         '''
         The proprieatary fighting loop of the game (no copying pls) which is used to fight enemies and makes the shots about what happens next
         '''
@@ -878,9 +883,10 @@ class FightLoopTM(DefaultActionMenu):
             return
         while self.player_health > 0 or self.enemy_health > 0:
             # Display the current health of the player and the enemy
-            print(f"Player health: {self.player_health}")
-            print(f"Enemy health: {self.enemy_health}")
-
+            
+            if enemy_name == "Valma the Soulbroken":
+                # background_theme("./SoundEngine5000/valma_theme.wav")
+                pass
             # Display the fight menu and get the user's selection
             user_selection = self.fight_menu()
             if user_selection == "attack":
@@ -893,11 +899,20 @@ class FightLoopTM(DefaultActionMenu):
                 self.heal()
 
             # Check if the enemy has been defeated
-            if self.enemy_health <= 0:
-                print("Thou hast defeated the enemy!")
-                print("Thou hast leveled up!")
+            if self.enemy_health <= 0 and self.enemy_name != "Valma the Soulbroken":
+                print("\nThou hast defeated the enemy!")
+                print("\nThou hast leveled up!")
+                print(f"Player health: {self.player_health}")
+                player.gold += self.enemy_gold
+                print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} gold.")
                 # sound_engine("level_up")
                 player.level += 1
+                break
+            elif self.enemy_health <= 0 and self.enemy_name == "Valma the Soulbroken":
+                print("\nThou hast defeated Valma the soulbroken!")
+                print(f"\nPlayer health: {self.player_health}")
+                player.gold += 99998888
+                print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite gold.")
                 break
 
             # Enemy attacks the player
@@ -924,13 +939,10 @@ def death():
     print(f"You had {player.gold} gold")
     print(f"You killed player.kills enemies")
     print("Thanks for playing!")
-    print("Item loss has occured")
-    item_lost = player.inventory.inv.pop(random.choice(player.inventory.inv))
-    print("You lost your " + item_lost)
     print("\nPress any key to continue")
     
     wait_for_keypress()
-    time.sleep(2)
+    time.sleep(0.3)
     print("Quick ad break, please wait...")
     screen_engine()
     return
@@ -938,17 +950,14 @@ def death():
 def ending1():
     print(narr.COWARD_END)
     screen_engine()
-    quit()
 
 def ending2():
     print(narr.TRUE_END_DEATH)
     screen_engine()
-    quit()
 
 def ending3():
     print(narr.NORMAL_DEATH)
     screen_engine()
-    quit()
     
 #-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
@@ -961,11 +970,23 @@ def game_loop():
         story()
         # if story_progress == len(possible_routes) - 3: # -3 because the we dont want to give the player less than 3 routes
         if story_progress == 3:
-            ending = narr.TRUE_END_WIN
-            print(ending)
-            input("\nPress enter to continue")
+            # Boss fight
+            route = route = narr.PLACE_NAMES["End game boss"]["ROUTE"]
+            if len(route) == 1:
+                animate_text(route, "fast")
+                input("\nPress enter to continue")
+                clear_screen()
+            else:
+                for text in range(len(route) -1):
+                    animate_text(route[text], "fast")
+                input("\nPress enter to continue")
+        # start the fight loop
+        FightLoopTM(narr.PLACE_NAMES["End game boss"]["ENEMY"])
+        # Prints the win text after the fight loop
+        if len(route) != 1:
+            print(route[-1] + "\n")
             clear_screen()
-            print(ending)
+            print(narr.TRUE_END_WIN)
             credits()
             break
     intro_splash_only()
@@ -1041,7 +1062,7 @@ def story():
 
     if story_progress == 0:
         clear_screen()
-        animate_text(narr.INTRO_TXT[0], "superspeed")
+        animate_text(narr.INTRO_TXT[0], "fast")
         input("\nPress enter to continue")
         clear_screen()
         # randomize number between 0 and lenght of path
@@ -1054,12 +1075,12 @@ def story():
         # print the text of the path
         print(place + ":")
         if len(route) == 1:
-            animate_text(route, "superspeed")
+            animate_text(route, "fast")
             input("\nPress enter to continue")
             clear_screen()
         else:
             for text in range(len(route) -1):
-                animate_text(route[text], "superspeed")
+                animate_text(route[text], "fast")
                 input("\nPress enter to continue")
         # start the fight loop
         FightLoopTM(narr.PLACE_NAMES[place]["ENEMY"])
@@ -1087,6 +1108,8 @@ def story():
         choice = None
         while choice == None:
             choice = DefaultActionMenu.action_menu(place1, place2, place3)
+            if choice == None:
+                print("Please choose a valid route")
         route = narr.PLACE_NAMES[choice]["ROUTE"]
         random_trap_chest = random.choice(["trap", "chest", "nothing"])
         if random_trap_chest == "trap":
@@ -1097,12 +1120,12 @@ def story():
         used_routes.append(choice)
         
         if len(route) == 1:
-            animate_text(route, "superspeed")
+            animate_text(route, "fast")
             input("\nPress enter to continue")
             clear_screen()
         else:
             for text in range(len(route) -1):
-                animate_text(route[text], "superspeed")
+                animate_text(route[text], "fast")
                 input("\nPress enter to continue")
         
         if route == narr.ROUTE17:

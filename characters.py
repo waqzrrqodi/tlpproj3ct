@@ -1,6 +1,6 @@
 #för spelaren
 from item_management import *
-import random as rand
+import random
 # INTE LAGLIGT ATT IMPORTERA MAIN I EN ANNAN FIL AJABAJA
 class Player( ):
     """The player class"""
@@ -12,7 +12,7 @@ class Player( ):
         self.subclass = chosen_subclass
         self.speed = chosen_speed
         self.inventory = InventorySys(3)
-        self.gold = 0
+        self.gold = 22
         self.armour = None
         self.weapon = None
         self.level = 1  
@@ -50,7 +50,7 @@ class Player( ):
     
     def defend(self, enemy):
         """Defend"""
-        damage_decrease = rand.randint(0, 10)
+        damage_decrease = random.randint(0, 10)
         if self.armour == None or self.armour <= 0:
             self.hp -= (enemy.damage-damage_decrease)
         if self.armour != None or self.armour > 0:
@@ -102,6 +102,7 @@ class Enemy():
         self.health = enemy_health
         self.type = enemy_type
         self.speed = enemy_speed
+        self.gold = random.randint(1, 3) * self.health * 0.1
     def enemy_stats(self):
         """Print the enemy stats"""
         print("Name: " + self.name)
