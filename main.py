@@ -55,18 +55,18 @@ def animate_text(text, sleep_time):
     fast, slow, or default
     '''
     
-    SUPERSPEED = 0.002
+    SUPERSPEED = 0.004
     FAST = 0.03
     SLOW = 0.1
     DEFAULT = 0.05
     
-    if SETTING1 == "fast":
+    if SETTINGS["text_speed_choice"]["SETTING"] == "fast":
         sleep_time = FAST
-    elif SETTING1 == "slow":
+    elif SETTINGS["text_speed_choice"]["SETTING"] == "slow":
         sleep_time = SLOW
-    elif SETTING1 == "superspeed":
+    elif SETTINGS["text_speed_choice"]["SETTING"] == "superspeed":
         sleep_time = SUPERSPEED
-    elif SETTING1 == "med":
+    elif SETTINGS["text_speed_choice"]["SETTING"] == "med":
         sleep_time = DEFAULT
     else: 
         if sleep_time == "fast":
@@ -467,6 +467,7 @@ def menu():
         menu()
     if menu_choice == CONTINUE or menu_choice == "":
         animate_text("Continuing with story...", "default")
+        clear_screen()
         return
     if menu_choice == OPTIONS:
         clear_screen()
@@ -523,21 +524,21 @@ def options_menu():
                 animate_text("Text speed is already set to slow you nonce", "fast")
                 clear_screen()
             elif text_speed_input == "1":
+                SETTINGS["text_speed_choice"]["SETTING"] = "superspeed"
                 animate_text("Changed text speed to turbo", "fast")
                 clear_screen()
-                SETTINGS["text_speed_choice"]["SETTING"] = "superspeed"
             elif text_speed_input == "2":
+                SETTINGS["text_speed_choice"]["SETTING"] = "fast"
                 animate_text("Changed text speed to fast", "fast")
                 clear_screen()
-                SETTINGS["text_speed_choice"]["SETTING"] = "fast"
             elif text_speed_input == "3":
+                SETTINGS["text_speed_choice"]["SETTING"] = "medium"
                 animate_text("Changed text speed to medium", "fast")
                 clear_screen()
-                SETTINGS["text_speed_choice"]["SETTING"] = "medium"
             elif text_speed_input == "4":
+                SETTINGS["text_speed_choice"]["SETTING"] = "slow"
                 animate_text("Changed text speed to slow", "fast")
                 clear_screen()
-                SETTINGS["text_speed_choice"]["SETTING"] = "slow"
             elif text_speed_input == "5":
                 clear_screen()
                 return
@@ -556,14 +557,14 @@ def options_menu():
                 animate_text("The game is already muted, fuckface", "fast")
                 clear_screen()
             elif sound_input == "1":
+                pygame.mixer.music.set_volume(0.5)
                 animate_text("Volume On", "fast")
                 SETTING2 = "on"
-                pygame.mixer.music.set_volume(0.5)
                 clear_screen()
             elif sound_input == "2":
+                pygame.mixer.music.set_volume(0.0)
                 animate_text("Game Muted", "fast")
                 SETTING2 = "off"
-                pygame.mixer.music.set_volume(0.0)
                 clear_screen()
             else:
                 print("Invalid Input")
@@ -1106,7 +1107,7 @@ def story():
         elif route == narr.ROUTE7:
             item_shop(player)
         else:
-            FightLoopTM(narr.PLACE_NAMES[route]["ENEMY"])
+            FightLoopTM(narr.PLACE_NAMES[choice]["ENEMY"])
         
         if len(route) != 1:
             print(route[-1] + "\n")
