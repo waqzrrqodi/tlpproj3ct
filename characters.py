@@ -7,14 +7,17 @@ class Player( ):
     def __init__(self, chosen_strength, chosen_health, chosen_name, chosen_subclass, chosen_speed):
         #subclass kan antingen vara human eller beast (eller secret gnoblin som jag precis hittade på)
         self.strength = chosen_strength
-        self.hp= chosen_health
+        self.hp = chosen_health
         self.name = chosen_name
         self.subclass = chosen_subclass
         self.speed = chosen_speed
         self.inventory = InventorySys(3)
         self.gold = 22
-        self.armour = None
-        self.weapon = None
+        item = Item_Creator_3000_V2()
+        armour = item.create_item_DIY("Skin", "Poop")
+        weapon = item.create_item_DIY("Fist", "Poop")
+        self.armour = armour
+        self.weapon = weapon
         self.level = 1  
         self.xp = 0
         self.level_max_xp = 100
@@ -27,39 +30,7 @@ class Player( ):
         if item_name["Type"] == "Armour":
             self.armour = self.inventory.equip_item(item_name)
         if item_name["Type"] == "Weapon":
-            self.weapon = self.inventory.equip_item(item_name)
-    
-    def player_attack(self, enemy):
-        """Attack an enemy"""
-        
-        if self.weapon == None:
-            enemy.health -= self.strength
-        else:
-            enemy.health -= self.strength + self.weapon.damage
-    
-    def enemy_attack(self, enemy):
-        """Attack the player"""
-        if self.armour == None or self.armour <= 0:
-            self.hp -= enemy.damage
-        if self.armour != None or self.armour > 0:
-            for i in range(enemy.damage-1):
-                if self.armour <= 0:
-                    self.hp -= 1
-                else:
-                    self.armour -= 1
-    
-    def defend(self, enemy):
-        """Defend"""
-        damage_decrease = random.randint(0, 10)
-        if self.armour == None or self.armour <= 0:
-            self.hp -= (enemy.damage-damage_decrease)
-        if self.armour != None or self.armour > 0:
-            for i in range(enemy.damage-damage_decrease-1):
-                if self.armour <= 0:
-                    self.hp -= 1
-                else:
-                    self.armour -= 1
-        
+            self.weapon = self.inventory.equip_item(item_name)   
 
 class Human( ):
     """The human subclass"""

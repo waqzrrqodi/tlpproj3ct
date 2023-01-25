@@ -37,7 +37,6 @@ if missing:
 
 import pygame
 from pygame.locals import *
-from pygame import mixer
 import pickle
 from ui_elements import * # production materials
 import characters as ch
@@ -208,9 +207,9 @@ class DefaultActionMenu():
         HEAL = "h"
         MORE_INFO = "i"
         player_action = None
-        selection = input(fight_menu_choices)
+        selection = input(fight_menu_choices).lower()
         try:
-            if selection.lower() == ATTACK:
+            if selection == ATTACK:
                 print(f"Attack Selected")
                 return "attack"
 
@@ -388,50 +387,53 @@ def intro_menu():
     TUTORIAL = "3"
     CREDITS = "4"
     EXIT = "5"
-    clear_screen()
-    print(intro_menu_choices)
-    menu_choice = input("What doth thou wish to do? --> ")
-    if menu_choice == PLAY:
-        LOAD = "1"
-        NEW_GAME = "2"
-        try:
-            clear_screen()
-            choice = input("Do you wish to load a save file or start a new game? (1)Load or (2)New Game --> ")
-            # Check if the player has a save file
-            # If the player has a save file, ask if the player wants to load the save file
-            # If the player does not have a save file, start the game
-            if choice == LOAD: # Not implemented yet
-                animate_text("Loading...", "fast")
-                time.sleep(0.3)
+    main_menu = True
+    while main_menu:
+        clear_screen()
+        print(intro_menu_choices)
+        menu_choice = input("What doth thou wish to do? --> ")
+        if menu_choice == PLAY:
+            LOAD = "1"
+            NEW_GAME = "2"
+            try:
                 clear_screen()
-                load_game()
-            elif choice == NEW_GAME:
-                PlayerAndNameSelect()
-                game_loop()
-        except ValueError:
+                choice = input("Do you wish to load a save file or start a new game? (1)Load or (2)New Game --> ")
+                # Check if the player has a save file
+                # If the player has a save file, ask if the player wants to load the save file
+                # If the player does not have a save file, start the game
+                if choice == LOAD: # Not implemented yet
+                    animate_text("Loading...", "fast")
+                    time.sleep(0.3)
+                    clear_screen()
+                    load_game()
+                elif choice == NEW_GAME:
+                    PlayerAndNameSelect()
+                    game_loop()
+            except ValueError:
+                print("Invalid input")
+                continue
+            clear_screen()
+            animate_text("Loading...", "fast")
+        elif menu_choice == OPTIONS:
+            animate_text("\nSummoning options menu...\n", "fast")
+            clear_screen()
+            options_menu()
+            continue
+        elif menu_choice == TUTORIAL:
+            tutorial()
+            continue
+        elif menu_choice == CREDITS:
+            clear_screen()
+            animate_text("\ninitiating credits sequence...\n", "fast")
+            credits()
+            continue
+        elif menu_choice == EXIT:
+            screen_engine()
+            exit()
+        else:
             print("Invalid input")
-            intro_menu()
-        clear_screen()
-        animate_text("Loading...", "fast")
-    elif menu_choice == OPTIONS:
-        animate_text("\nSummoning options menu...\n", "fast")
-        clear_screen()
-        options_menu()
-        intro_menu()
-    elif menu_choice == TUTORIAL:
-        tutorial()
-        intro_menu()
-    elif menu_choice == CREDITS:
-        clear_screen()
-        animate_text("\ninitiating credits sequence...\n", "fast")
-        credits()
-        intro_menu()
-    elif menu_choice == EXIT:
-        exit()
-    else:
-        print("Invalid input")
-        time.sleep(0.3)
-        intro_menu()
+            time.sleep(0.3)
+            continue
 
 def menu():
     """
@@ -489,6 +491,7 @@ def tutorial():
             print("Invalid input")
             tutorial()
         input("Press enter to go back to the main menu...")
+        return
     except:
         print("Unknown error hath occured")
         tutorial()
@@ -752,16 +755,19 @@ class FightLoopTM(DefaultActionMenu):
             print(f"Thou hast encountered {enemy_name}!")
             print(f"The {enemy_name} hath {self.enemy_health} health")
             print(f"Thou hast {self.player_health} health")
-            # print(f"Thou hast {self.player_weapon.name} which deals {self.player_weapon.damage} damage")
-            # print(f"Thou hast {self.armour.name} which reduces damage by 'placeholder' damage")
+            print(f"""Thou hast {self.player_weapon["Name"]} which deals {self.player_weapon["Damage"]} damage""")
+            print(f"""Thou hast {self.armour["Name"]} which protects with {self.armour["HP_Bonus"] } armor""")
             self.fight_loop(enemy_name)
 
         self.fight_loop(enemy_name)
 
     def attack(self):
         """When the player selects the attack option in a fight"""
-        self.enemy_health -= self.player_weapon.damage
-        print(f"Thou attacketh the foe and dealeth {self.player_weapon.damage} points of damage!")
+        if self.player_weapon == None:
+            enemy_health -= self.strength
+        else:
+            enemy_health -= self.strength + self.player_weapon.get["Damage"]
+            print(f"""Thou attacketh the foe and dealeth {self.player_weapon.get["Damage"]} points of damage!""")
 
     def run(self):
         """When the player selects the run option in a fight"""
@@ -781,11 +787,17 @@ class FightLoopTM(DefaultActionMenu):
 
     def defend(self, damage):
         """When the player selects the defend option in a fight"""
-        if self.armour != None:
-            print(f"You defend against the enemy's attack and take {damage * self.armour.defense} points of damage.")
-        else:
-            # Reduce the damage taken by the player by 50% or maybe probability of taking damage?
-            print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
+        """Defend"""
+        damage_decrease = random.randint(0, 10)
+        if self.armour["HP_Bonus"] == None or self.armour["HP_Bonus"] <= 0:
+            self.player_health -= (damage-damage_decrease)
+        if self.armour["HP_Bonus"] != None or self.armour["HP_Bonus"] > 0:
+            for i in range(damage-damage_decrease-1):
+                if self.armour["HP_Bonus"] <= 0:
+                    self.player_health -= 1
+                else:
+                    self.armour["HP_Bonus"] -= 1
+        #print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
 
     def heal(self):
         """When the player selects the heal option in a fight"""
@@ -865,6 +877,15 @@ class FightLoopTM(DefaultActionMenu):
         # damage = damage * 2
         # "Oh no, the enemy hath drunken a kong strong and maketh triple damage."
         # damage = damage * 3
+        """Attack the player"""
+        if self.armour["HP_Bonus"] == None or self.armour["HP_Bonus"] <= 0:
+            self.player_health -= damage
+        if self.armour["HP_Bonus"] != None or self.armour["HP_Bonus"] > 0:
+            for i in range(damage-1):
+                if self.armour["HP_Bonus"] <= 0:
+                    self.player_health -= 1
+                else:
+                    self.armour -= 1 
         attack_probability = random.randint(1, 100)
         if attack_probability <= 20:
             print(f"The enemy attacks you with {attack}and deals {damage} points of damage.")
@@ -1053,7 +1074,8 @@ def load_game():
         intro_menu()
 
 def story():
-    """All the story of the game and the narration of the game, as well as when to play each story part. Also initiates the fight loop and the chest loop with the right enemies and items."""
+    """All the story of the game and the narration of the game, as well as when to play each story part. 
+    Also initiates the fight loop and the chest loop with the right enemies and items."""
     global level
     global story_progress
     global used_routes
@@ -1130,13 +1152,13 @@ def story():
                 input("\nPress enter to continue")
         
         if route == narr.ROUTE17:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY(None, "Rare"))
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY(None, "Rare", None))
         elif route == narr.ROUTE6:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Used Rollin pin", "Legendary"))
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Used Rollin pin", "Legendary", None))
         elif route == narr.ROUTE9:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Bag of cocaine", "Mythic"))
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Bag of cocaine", "Mythic", None))
         elif route == narr.ROUTE8:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY(None, "Poop"))
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY(None, "Poop", None))
         elif route == narr.ROUTE7:
             item_shop(player)
         else:

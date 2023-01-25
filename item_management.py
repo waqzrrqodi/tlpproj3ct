@@ -17,18 +17,15 @@ class InventorySys():
             print("Error, already at max capacity")
         else:
             self.inv_cap += upgrade_range
-
-    def item(self, item_name, item_strength_bonus):
-        """The item class"""
-        self.name = item_name
-        self.strength_bonus = item_strength_bonus
-        item = {'name': self.name, 'strength_bonus': self.strength_bonus}
-        return item
-    def equip_item(self, item_name):
+            print(f"Inventory max space upgraded to {self.inv_cap}")
+    def equip_item(self, item):
         for i in range(self.inv - 1):
-            if (self.inv[i])["Name"]  == item_name:
-                self.equipped_weapon = item_name
-                print(f"You have equipped {item_name}")
+            if (self.inv[i])["Name"]  == item:
+                print(f"You have equipped {item}")
+                return item
+            else:
+                print("Item not found")
+                return None
 
 
     def drop(self):
@@ -92,6 +89,7 @@ class Item_Creator_3000_V2():
         self.hp_bonus = None
         self.healing = None
         self.damage = None
+        self.armor = None
 
         self.name = None
         self.type = None
@@ -101,60 +99,70 @@ class Item_Creator_3000_V2():
 
     def create_item_DIY(self, name, rarity):
         """When in development you want to create an item on the fly"""
-        finished_item = self.create_item_random()
-        finished_item["Rarity"] = rarity
+        type = None
+        DIY_item = self.create_item_random()
+        DIY_item["Rarity"] = rarity
         if name == None or name == "":
-            finished_item["Name"] = finished_item["Name"]
+            DIY_item["Name"] = DIY_item["Name"]
         else:
-            finished_item["Name"] = name
+            DIY_item["Name"] = name
 
-        finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.hp_bonus, "Healing Capability": self.healing, "Damage": self.damage}
-        return finished_item
+        if type == "Weapon":
+            DIY_item["Type"] = "Weapon"
+            DIY_item["HP_Bonus"] = None
+            DIY_item["Healing Capability"] = None
+        if type == "Armor" or type == "Armour":
+            DIY_item["Type"] = "Armor"
+            DIY_item["Damage"] = None
+            DIY_item["Healing Capability"] = None
+        if type == "Heals":
+            DIY_item["Type"] = "Heals"
+            DIY_item["HP_Bonus"] = None
+            DIY_item["Damage"] = None
+        return DIY_item
             
     def create_item_random(self):
         """Function to create a random item"""
-        WEAPONS = 1
+        self.__init__()
+        WEAPON = 1
         ARMOR = 2
         HEALS = 3
         rand_item_choice = rand.randint(1,3)
-        if rand_item_choice == WEAPONS:
+        if rand_item_choice == WEAPON:
             item_iteration_weapon_list = list(ITEM_LIST.get("Weapons"))
-            item = Item_Creator_3000_V2()
-            item.type = "Weapon"
-            item.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
-            item.damage = rand.randint(3, 5)
+            self.type = "Weapon"
+            self.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
+            self.damage = rand.randint(3, 5)
         if rand_item_choice == ARMOR:
             item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
-            item = Item_Creator_3000_V2()
-            item.type = "Armor"
-            item.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
-            item.armor = rand.randint(50, 70)
+            self.type = "Armor"
+            self.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
+            self.armor = rand.randint(50, 70)
         if rand_item_choice == HEALS:
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
-            item = Item_Creator_3000_V2()
-            item.type = "Heals"
-            item.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
-            item.healing = rand.randint(30, 50)
-        item.cost = rand.randint(30, 400)
-        item.worth = round(item.cost*0.9)
-        item.rarity = self.item_rarity(item)
-        finished_item = {"Name": item.name, "Type": item.type, "Cost": item.cost, "Worth": item.worth, "Rarity": item.rarity, "HP_Bonus": item.armor, "Healing Capability": item.healing, "Damage": item.damage}
+            self.type = "Heals"
+            self.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
+            self.healing = rand.randint(30, 50)
+        self.cost = rand.randint(30, 400)
+        self.worth = round(self.cost*0.9)
+        self.rarity = self.item_rarity(self.cost)
+        finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.armor, "Healing Capability": self.healing, "Damage": self.damage}
         return finished_item
 
     # Item rarity system based on cost
     def item_rarity(self, item):
         """Function to determine the rarity of an item based on cost"""
-        if item.cost < 30:
+        if item < 30:
             rarity = "Poop"
-        if item.cost >= 30:
+        if item >= 30:
             rarity = "Common"
-        if item.cost >= 110:
+        if item >= 110:
             rarity = "Rare"
-        if item.cost >= 190:
+        if item >= 190:
             rarity = "Epic"
-        if item.cost >= 250:
+        if item >= 250:
             rarity = "Legendary"
-        if item.cost >= 350:
+        if item >= 350:
             rarity = "Mythic"
         return rarity
 
