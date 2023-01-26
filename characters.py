@@ -21,7 +21,6 @@ class Player( ):
         self.level = 1  
         self.xp = 0
         self.level_max_xp = 100
-        self.auto_equip()
     
     def auto_equip(self):
         """Auto equip items"""
