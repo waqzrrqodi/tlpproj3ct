@@ -30,7 +30,8 @@ class InventorySys():
             except:
                 print("Unknown error has occured")
             if the_item_dilemma.lower == "y" or the_item_dilemma == "yes":
-                inv_show()
+                for i in range(len(self.inventory.inv)):
+                    print(f"{i+1}. {self.inventory.inv[i].get('Name')} - {self.inventory.inv[i].get('Worth')} gold")
                 print("Which item would thau most prefferably switch?")
 
                 for item_numbah in range(self.inv):
@@ -57,6 +58,26 @@ class InventorySys():
                 ----------==================----------
                     You picked up ___{item}!___
                 ----------==================----------''')
+        #let the player equip an item from inventory
+        def equip_item(self, item):
+            """Equip an item"""
+            if item in self.inv:
+                item["Equip"] = True
+                self.inv.remove(item)
+                return item
+            else:
+                print("Item not found in inventory")
+                return None
+        #let the player unequip an item
+        def unequip_item(self, item):
+            """Unequip an item"""
+            if item in self.inv:
+                item["Equip"] = False
+                self.inv.append(item)
+                return item
+            else:
+                print("Item not found in inventory")
+                return None
     
 
 ITEM_LIST = {
@@ -127,7 +148,7 @@ class Item_Creator_3000_V2():
             self.type = "Heals"
             self.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
             self.healing = rand.randint(30, 50)
-        self.cost = rand.randint(30, 400)
+        self.cost = rand.randint(30, 350)
         self.worth = round(self.cost*0.9)
         self.rarity = self.item_rarity(self.cost)
         finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.armor, "Healing Capability": self.healing, "Damage": self.damage, "Equip": self.equipped_check}
@@ -154,8 +175,10 @@ class Item_Creator_3000_V2():
 def item_shop(player):
     """Function to create a shop where the player can buy and sell items"""
     item_shop_list = []
+    item_shop_items = Item_Creator_3000_V2()
     for i in range(5):
-        item_shop_list.append(Item_Creator_3000_V2.create_item_random())
+        item = item_shop_items.create_item_random()
+        item_shop_list.append(item)
 
     print("Would you like to buy or sell an item?")
     buy_sell_item = input("buy/sell/quit--> ").lower()
@@ -166,13 +189,15 @@ def item_shop(player):
         for i in range(len(item_shop_list)):
             print(f"{i+1}. {item_shop_list[i].get('Name')} - {item_shop_list[i].get('Cost')} gold")
     
-        print("Which item would you like to buy?")
-        item_choice = int(input("--> ")) - 1
+        print("Which item would you like to buy? you have", player.gold, "amount of gold")
+        item_choice = int(input("--> "))
+        item_choice -= 1
         if item_choice <= len(item_shop_list):
             if item_shop_list[item_choice].get("Cost") <= player.gold:
                 player.gold = player.gold - item_shop_list[item_choice].get("Cost")
                 player.inventory.inv.append(item_shop_list[item_choice])
                 print(f"You bought {item_shop_list[item_choice].get('Name')} for {item_shop_list[item_choice].get('Cost')} gold")
+                print("You have", player.gold, "amount of gold left")
             else:
                 print("You do not have enough gold")
         else:
@@ -180,12 +205,17 @@ def item_shop(player):
 
     elif buy_sell_item == "sell":
         print("Which item would you like to sell?")
-        inv_show()
-        item_choice = int(input("--> ")) - 1
+        for i in range(len(player.inventory.inv)):
+            print(f"{i+1}. {player.inventory.inv[i].get('Name')} - {player.inventory.inv[i].get('Worth')} gold")
+        
+        item_choice = int(input("--> ")) 
+        item_choice -= 1
         if item_choice <= len(player.inventory.inv):
-            player.gold = player.gold + player.inventory.inv[item_choice].get("Worth")
+            print(f"""You sold an item for {player.inventory.inv[item_choice].get("Worth")} gold""")
+            player.gold += player.inventory.inv[item_choice].get("Worth")
             player.inventory.inv.pop(item_choice)
-            print(f"You sold an item for {player.inventory.inv[item_choice].get('Worth')} gold")
+            print(f"Your current gold is {player.gold}")
+            input("Press enter to continue \n -->")
         else:
             print("Please provide a valid item number")
 
@@ -213,11 +243,6 @@ class ChestSys():
         rand_item = Item_Creator_3000_V2()
         rand_item = rand_item.create_item_random()
         self.chest.append(rand_item)
-
-        for i in range(0, 1):
-            trash = Item_Creator_3000_V2()
-            trash_created = trash.create_item_DIY(rand.choice(SCRAP_LIST), "Poop", "Trash")
-            self.chest.append(trash_created)
         return self.chest
 
     #Request chest content
