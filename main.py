@@ -205,7 +205,7 @@ class DefaultActionMenu():
         ATTACK = "a"
         DEFEND = "d"
         HEAL = "h"
-        MORE_INFO = "i"
+        INFO = "i"
         player_action = None
         selection = input(fight_menu_choices).lower()
         try:
@@ -221,8 +221,11 @@ class DefaultActionMenu():
                 print(f"Heal selected")
                 return "heal"
 
-            elif selection == MORE_INFO:
-                print("Prints more info about the player's attacks and info about the enemy")
+            elif selection == INFO:
+                """Prints more info about the player's attacks and info about the enemy"""
+                print(f"Info selected")
+                print(f"Enemy info: {self.enemy_name} \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
+                print(f"Player info: \n Player health: {self.player_health} \n Player damage: {self.player_damage}")
                 user_choice = input("Please type b to go back --> ")
                 if user_choice.lower() == "b":
                     self.fight_menu()
@@ -312,11 +315,17 @@ def inv_show():
             else:
                 print("Inventory: ")
                 for item in enumerate(player.inventory.inv):
-                    print('Name: {}\nType: {}\nCost: {}\nWorth: {}\nRarity: {}\nBonus: {} HP\nHealing: {}\nDamage: {}'.format(item.get("Name"), item.get("Type"), item.get("Cost"), item.get("Worth"), item.get("Rarity"), item.get("HP_Bonus"), item.get("Healing Capability"), item.get("Damage")))
+                    print('Name: {}\nType: {}\nCost: {}\nWorth: {}\nRarity: {}\nBonus: {} HP\nHealing: {}\nDamage: {}'.format(item["Name"], item["Type"], item["Cost"], item["Worth"], item["Rarity"], item["Bonus"], item["Healing"], item["Damage"]))
                 input("\nPress enter to continue...")
                 break
         elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
-            break
+            print("Would you like to equip an item? (Y/n)")
+            equip_choice = input("-->")
+            if equip_choice.lower() == "y" or equip_choice.lower() == "yes" or equip_choice.lower() == "":
+                player.player_equip_item()
+                break
+            elif equip_choice.lower() == "n" or equip_choice.lower() == "no" or equip_choice.lower() == "q":
+                break
         else:
             input("Please provid valid input")
             continue
@@ -463,8 +472,6 @@ def menu():
         exit()
     if menu_choice == INVENTORY:
         print("inv")
-        player.inventory.inv.append(player.inventory.item("Test Item", 10)) # For testing purposes
-        player.inventory.inv.append(player.inventory.item("Test Item 2", 5)) # For testing purposes
         inv_show()
         menu()
     if menu_choice == CONTINUE or menu_choice == "":
@@ -812,7 +819,7 @@ class FightLoopTM(DefaultActionMenu):
             print("Thou art already at full health!")
 
     
-    def enemy_attack(self, damage, type):
+    def enemy_attack(self, damage):
         """When the enemy attacks the player in a fight and all the moves the enemy can do"""
         HUMAN_ATTACK_LIST = {
             "Punch": {"type": "Physical", "damage": 10},
@@ -916,7 +923,7 @@ class FightLoopTM(DefaultActionMenu):
             elif user_selection == "run":
                 self.run()
             elif user_selection == "defend":
-                self.defend(self.damage)
+                self.defend(self.enemy_damage)
             elif user_selection == "heal":
                 self.heal()
 
@@ -1195,8 +1202,8 @@ def trap():
 
 def chest():
     chest = ChestSys()
-    chest.chest_generate()
-    chest.print_chest()
+    chest1 = chest.chest_generate()
+    chest.print_chest(chest1)
 
 def credits():
     """Play the credits of the game"""
