@@ -295,7 +295,7 @@ def inv_show():
     print(f"\nYour name: {player.name}")
     print(f"\nPlayer Health: {player.hp}")
     print(f"\nPlayer Strenght: {player.strength}")
-    print(f"\nPlayer Armour: {player.armour}")
+    print(f"""\nPlayer Armour: {player.armour["Name"]}""")
     print(f"\nPlayer Awesomeness level: {player.level}")
 
     
@@ -305,7 +305,19 @@ def inv_show():
             clear_screen()
             
             print(f"Name: {player.name}")
-            print(f"HP: {player.hp}, stronks: {player.strength}, armor: {player.armour}, lvl: {player.level}")
+            print(f"""HP: {player.hp}, stronks: {player.strength} lvl: {player.level}""")
+            print(f"""
+            Armour: {player.armour["Name"]} 
+            Armour type: {player.armour["Type"]}
+            Armour worth: {player.armour["Worth"]}
+            Armour rarity: {player.armour["Rarity"]}
+            """)
+            print(f"""
+            Weapon: {player.weapon["Name"]}
+            Weapon type: {player.weapon["Type"]}
+            Weapon worth: {player.weapon["Worth"]}
+            Weapon rarity: {player.weapon["Rarity"]}
+            """)
             print("---------------------------------------------")
             #expand to full inventory view
             if len(player.inventory.inv) == 0:
@@ -459,28 +471,31 @@ def menu():
     # action_3 = "Inventory"
     # action_4 = "Continue"
     # action_5 = "Options"
-    clear_screen()
-    # print(ui_textbox)
-    print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory or stats \n4. Options \n\nTo continue with story, press [Enter]\n") # For testing purposes
-    menu_choice = input("What do thau wish to do? ");
-    if menu_choice == GOTO_TUTORIAL:
-        print("tutorial")
-        tutorial()
-    if menu_choice == SAVE_AND_EXIT:
-        print("Save + Exit")
-        save_game()
-        exit()
-    if menu_choice == INVENTORY:
-        print("inv")
-        inv_show()
-        menu()
-    if menu_choice == CONTINUE or menu_choice == "":
-        animate_text("Continuing with story...", "default")
+    while True:
         clear_screen()
-        return
-    if menu_choice == OPTIONS:
-        clear_screen()
-        options_menu()
+        # print(ui_textbox)
+        print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory or stats \n4. Options \n\nTo continue with story, press [Enter]\n") # For testing purposes
+        menu_choice = input("What do thau wish to do? ");
+        if menu_choice == GOTO_TUTORIAL:
+            print("tutorial")
+            tutorial()
+            continue
+        if menu_choice == SAVE_AND_EXIT:
+            print("Save + Exit")
+            save_game()
+            screen_engine()
+            exit()
+        if menu_choice == INVENTORY:
+            print("inv")
+            inv_show()
+            continue
+        if menu_choice == CONTINUE or menu_choice == "":
+            animate_text("Continuing with story...", "default")
+            clear_screen()
+            return
+        if menu_choice == OPTIONS:
+            clear_screen()
+            options_menu()
 
 def tutorial():
     '''
