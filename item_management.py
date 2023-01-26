@@ -18,13 +18,6 @@ class InventorySys():
         else:
             self.inv_cap += upgrade_range
             print(f"Inventory max space upgraded to {self.inv_cap}")
-    def equip_item(self, item_name):
-        if self.inv.count([item_name])  > 0:
-            print(f"You have equipped {item_name}")
-            return item_name
-        else:
-            print("Item not found")
-            return None
 
 
     def drop(self):
@@ -73,8 +66,7 @@ class InventorySys():
             print(f'''
                 ----------==================----------
                     You picked up ___{item}!___
-                ----------==================----------
-                ''')
+                ----------==================----------''')
     
 
 ITEM_LIST = {
@@ -95,6 +87,7 @@ class Item_Creator_3000_V2():
         self.cost = None
         self.worth = None
         self.rarity = None
+        self.equipped_check = False
 
     def create_item_DIY(self, name, rarity, type):
         """When in development you want to create an item on the fly"""
@@ -138,7 +131,7 @@ class Item_Creator_3000_V2():
             item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
             self.type = "Armor"
             self.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
-            self.armor = rand.randint(50, 70)
+            self.armor = rand.randint(60, 90)
         if rand_item_choice == HEALS:
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
             self.type = "Heals"
@@ -147,7 +140,7 @@ class Item_Creator_3000_V2():
         self.cost = rand.randint(30, 400)
         self.worth = round(self.cost*0.9)
         self.rarity = self.item_rarity(self.cost)
-        finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.armor, "Healing Capability": self.healing, "Damage": self.damage}
+        finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.armor, "Healing Capability": self.healing, "Damage": self.damage, "Equip": self.equipped_check}
         return finished_item
 
     # Item rarity system based on cost

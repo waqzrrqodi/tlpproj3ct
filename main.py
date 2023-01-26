@@ -685,10 +685,6 @@ class FightLoopTM(DefaultActionMenu):
     def __init__(self, enemy_name):
         background_theme("./SoundEngine5000/battle_theme.wav")
         self.instant_win = False
-        self.player_health = player.hp
-        self.player_weapon = player.weapon
-        self.armour = player.armour
-        self.speed = player.speed
         if enemy_name == "Goblins":
             self.enemy_health = goblin.health
             self.enemy_damage = goblin.damage
@@ -761,9 +757,9 @@ class FightLoopTM(DefaultActionMenu):
         if self.instant_win == False:
             print(f"Thou hast encountered {enemy_name}!")
             print(f"The {enemy_name} hath {self.enemy_health} health")
-            print(f"Thou hast {self.player_health} health")
-            print(f"""Thou hast {self.player_weapon["Name"]} which deals {self.player_weapon["Damage"]} damage""")
-            print(f"""Thou hast {self.armour["Name"]} which protects with {self.armour["HP_Bonus"] } armor""")
+            print(f"Thou hast {player.hp} health")
+            print(f"""Thou hast {player.weapon["Name"]} which deals {player.weapon["Damage"]} damage""")
+            print(f"""Thou hast {player.armour["Name"]} which protects with {player.armour["HP_Bonus"] } armor""")
             self.fight_loop(enemy_name)
 
         self.fight_loop(enemy_name)
@@ -771,10 +767,13 @@ class FightLoopTM(DefaultActionMenu):
     def attack(self):
         """When the player selects the attack option in a fight"""
         if self.player_weapon == None:
-            enemy_health -= self.strength
+            health_lost = player.strength + random.randint(1, 5)
+            enemy_health -= health_lost
+            print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
         else:
-            enemy_health -= self.strength + self.player_weapon.get["Damage"]
-            print(f"""Thou attacketh the foe and dealeth {self.player_weapon.get["Damage"]} points of damage!""")
+            health_lost = self.strenght + player.weapon["Damage"] + random.randint(1, 5)
+            enemy_health -= health_lost
+            print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
 
     def run(self):
         """When the player selects the run option in a fight"""
@@ -796,30 +795,28 @@ class FightLoopTM(DefaultActionMenu):
         """When the player selects the defend option in a fight"""
         """Defend"""
         damage_decrease = random.randint(0, 10)
-        if self.armour["HP_Bonus"] == None or self.armour["HP_Bonus"] <= 0:
-            self.player_health -= (damage-damage_decrease)
-        if self.armour["HP_Bonus"] != None or self.armour["HP_Bonus"] > 0:
+        if player.armour["HP_Bonus"] == None or player.armour["HP_Bonus"] <= 0:
+            player.hp -= (damage-damage_decrease)
+        if player.armour["HP_Bonus"] != None or player.armour["HP_Bonus"] > 0:
             for i in range(damage-damage_decrease-1):
                 if self.armour["HP_Bonus"] <= 0:
-                    self.player_health -= 1
+                    player.hp -= 1
                 else:
-                    self.armour["HP_Bonus"] -= 1
+                    player.armour["HP_Bonus"] -= 1
         #print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
 
     def heal(self):
         """When the player selects the heal option in a fight"""
-        if self.player_health != self.player_max_health:
-            print("Thou art not at full health!")
-            inv_show()
-            
+        inv_show()
+        print("Which item would you like to use to heal?")
+        print(list(ITEM_LIST.get("Heals")))
             # Show the player it's inventory and ask them to select an item to use to heal
             # Calculate the amount of health restored by the player and add it to the player's health
             # If the player's health is greater than the player's maximum health, set the player's health to the player's maximum health
-        elif self.player_health == self.player_max_health:
-            print("Thou art already at full health!")
+
 
     
-    def enemy_attack(self, damage):
+    def enemy_attack(self, enemy_name):
         """When the enemy attacks the player in a fight and all the moves the enemy can do"""
         HUMAN_ATTACK_LIST = {
             "Punch": {"type": "Physical", "damage": 10},
@@ -871,13 +868,13 @@ class FightLoopTM(DefaultActionMenu):
             "Yodie Smack": {"type": "Magical", "damage": 20},
         }
         if type == "Human":
-            attack = random.choice(HUMAN_ATTACK_LIST)
+            attack = random.choice(list(HUMAN_ATTACK_LIST.keys()))
         elif type == "God":
-            attack = random.choice(GOD_ATTACK_LIST)
+            attack = random.choice(list(GOD_ATTACK_LIST.keys()))
         elif type == "Monster":
-            attack = random.choice(MONSTER_ATTACK_LIST)
+            attack = random.choice(list(MONSTER_ATTACK_LIST.keys()))
         elif type == "Yodie Gang":
-            attack = random.choice(YODIE_GANG_ATTACK_LIST)
+            attack = random.choice(list(YODIE_GANG_ATTACK_LIST.keys()))
             
 
         # "Oh no, the enemy hath practiced the sacred art of sparring and maketh double damage."
@@ -892,12 +889,14 @@ class FightLoopTM(DefaultActionMenu):
                 if self.armour["HP_Bonus"] <= 0:
                     self.player_health -= 1
                 else:
-                    self.armour -= 1 
+                    self.armour -= 1
         attack_probability = random.randint(1, 100)
         if attack_probability <= 20:
+            player.hp -= damage
             print(f"The enemy attacks you with {attack}and deals {damage} points of damage.")
         elif attack_probability <= 5:
-            print(f"Oh no, The enemy is listening to some banger tunes and attacks you with double ({damage * 2}) points of damage.")
+            player.hp -= damage * 2
+            print(f"Oh no, The enemy is listening to some banger tunes and attacks you with ({damage * 2}) points of damage.")
 
     def fight_loop(self, enemy_name):
         '''
@@ -945,7 +944,7 @@ class FightLoopTM(DefaultActionMenu):
                 break
 
             # Enemy attacks the player
-            self.enemy_attack(self.enemy_damage)
+            self.enemy_attack(self.enemy_name)
 
             # Check if the player has been a "has been"
             if self.player_health <= 0: death()
@@ -1186,17 +1185,17 @@ def story():
 def trap():
     """A trap that damages the player"""
     if player.speed >= 10:
-        player.hp -= range(1, 5)
+        player.hp -= int(range(1, 5))
         print("You managed to avoid the trap")
         input("\nPress enter to continue")
 
     if player.speed <= 5:
-        player.hp -= range(1, 10)
+        player.hp -= int(range(1, 5))
         print("You got caught in the trap")
         input("\nPress enter to continue")
         
     elif player.speed < 10:
-        player.hp -= range(1, 10)
+        player.hp -= int(range(1, 5))
         print("You got caught in the trap")
         input("\nPress enter to continue")
 

@@ -31,23 +31,25 @@ class Player( ):
         self.weapon = self.inventory.equip_item("Fist")
 
     #equip weapon from inventory
-    def player_equip_item(self, item):
+    def player_equip_item(self):
         """Equip an item"""
         clear_screen()
         #print inventory
+        inv_show()
         print("What item do you want to equip?")
         item_name = input("-->")
-        if item_name["Type"] == "Armour":
-            self.armour = self.inventory.equip_item(item_name)
-        if item_name["Type"] == "Weapon":
-            self.weapon = self.inventory.equip_item(item_name)   
+        if item_name in self.inventory.inv:
+            if item_name["Type"] == "Armour":
+                self.armour = self.inventory.equip_item(item_name)
+            if item_name["Type"] == "Weapon":
+                self.weapon = self.inventory.equip_item(item_name) 
 
 class Human( ):
     """The human subclass"""
     def __init__(self) -> None:
         self.HP = 100
         self.SPEED = 10
-        self.STRENGTH = 100
+        self.STRENGTH = 10
         self.SUBCLASS = "Human"
 
 class Gnoblin( ):
@@ -63,7 +65,7 @@ class Beast( ):
     def __init__(self) -> None:
         self.HP = 200
         self.SPEED = 2
-        self.STRENGTH = 150
+        self.STRENGTH = 15
         self.SUBCLASS = "Beast"
 class More_Info_Player( ):
     """The player class with more info aka the god class"""
