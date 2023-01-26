@@ -288,7 +288,7 @@ Programmed by: Literally only Kasper and Sebbe
        Made by: Tax Fraud Studios
 ----------==================----------
 
-(We are sorry if this game damaged your
+(We don't take any Responsibility if this game damaged your
 physical or mental health. It is not our
 intention to cause our players harm.
 If this game gave you suicidal thoughts 
