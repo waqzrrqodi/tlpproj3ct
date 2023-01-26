@@ -1156,7 +1156,7 @@ def story():
         # randomize number between 0 and lenght of path
         place = random.choice(list(narr.PLACE_NAMES.keys()))
         route = narr.PLACE_NAMES[place]["ROUTE"]
-        while place == 'Shop':
+        while place == 'Shop' or place == 'End game boss':
             place = random.choice(list(narr.PLACE_NAMES.keys()))
             route = narr.PLACE_NAMES[place]["ROUTE"]
         used_routes.append(place)
@@ -1199,7 +1199,7 @@ def story():
             if choice == None:
                 print("Please choose a valid route")
         route = narr.PLACE_NAMES[choice]["ROUTE"]
-        random_trap_chest = random.choice(["trap", "chest", "nothing"])
+        random_trap_chest = random.choice(["chest", "chest", "chest"])
         if random_trap_chest == "trap":
             trap()
         elif random_trap_chest == "chest":
@@ -1262,8 +1262,13 @@ def chest():
     chest = ChestSys()
     chest1 = chest.chest_generate()
     chest.print_chest(chest1)
-    player.inventory.pickup_item(chest1[0])
-    return
+    print("Do you want to take the item? (y/N)")
+    print("If you don't take the item, it will be destroyed")
+    choice = input(">>> ")
+    if choice.lower() == "y":
+        player.inventory.pickup_item(chest1[0])
+        print("You took the item")
+        input("\nPress enter to continue")
 
 def credits():
     """Play the credits of the game"""

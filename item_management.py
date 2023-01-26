@@ -272,8 +272,7 @@ class ChestSys():
     def print_chest(self, chest):
         """Show the item in the chest"""
         if (chest[0])["Type"] == "Weapon":
-            print(f""" 
-            Name: {(chest[0])["Name"]}
+            print(f"""\n You find a chest with a {(chest[0])["Name"]} inside it. \n
             Type: {(chest[0])["Type"]}
             Damage: {(chest[0])["Damage"]}
             Worth: {(chest[0])["Worth"]}
@@ -296,7 +295,7 @@ class ChestSys():
             Rarity: {(chest[0])["Rarity"]}
             """)
         print(f"And...")
-        print(f"""
+        print(f""" some scrap at the bottom of the chest. \n
         Name: {(chest[1])["Name"]}
         Type: {(chest[1])["Type"]}
         Worth: {(chest[1])["Worth"]}
