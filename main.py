@@ -290,15 +290,16 @@ def inv_show():
     """
     Shows the player's inventory, in a small and a full view.
     """
-    
     clear_screen()
     #small splash
     print(f"\nYour name: {player.name}")
     print(f"\nPlayer Health: {player.hp}")
     print(f"\nPlayer Strenght: {player.strength}")
-    print(f"""\nPlayer Armour: {player.armour["Name"]}""")
     print(f"\nPlayer Awesomeness level: {player.level}")
-
+    print(f"""\nPlayer Armour: {player.armour["Name"]}""")
+    print(f"""\nPlayer Weapon: {player.weapon["Name"]}""")
+    
+   
     
     while True:
         inv_expasion = input("------------------------------- \n Do you wish to expand to full overview? (Y/n) \n------------------------------- \n-->")
@@ -326,15 +327,17 @@ def inv_show():
                 input("\nPress enter to continue...")
                 break
             else:
+                #prints the inventory
                 print("Inventory: ")
                 for item in enumerate(player.inventory.inv):
-                    print('Name: {}\nType: {}\nCost: {}\nWorth: {}\nRarity: {}\nBonus: {} HP\nHealing: {}\nDamage: {}'.format(item["Name"], item["Type"], item["Cost"], item["Worth"], item["Rarity"], item["Bonus"], item["Healing"], item["Damage"]))
+                    print(f""" {item[0] + 1}. {item[1]["Name"]}""")
                 input("\nPress enter to continue...")
                 break
         elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
             print("Would you like to equip an item? (Y/n)")
             equip_choice = input("-->")
             if equip_choice.lower() == "y" or equip_choice.lower() == "yes" or equip_choice.lower() == "":
+                clear_screen()
                 player.player_equip_item()
                 break
             elif equip_choice.lower() == "n" or equip_choice.lower() == "no" or equip_choice.lower() == "q":
@@ -836,14 +839,29 @@ class FightLoopTM(DefaultActionMenu):
 
     def heal(self):
         """When the player selects the heal option in a fight"""
-        inv_show()
-        print("Which item would you like to use to heal?")
-        print(list(ITEM_LIST.get("Heals")))
+        if self.inventory.inv == []:
+            print("You have no items to heal with!")
+        else:
+            for item in enumerate(self.inventory.inv):
+                print(f"""{item[0] + 1}. {item[1]["Name"]} """)
+            print("Which item would you like to use to heal?")
+            item_choice = input("--> ")
+            item_choice -= 1
+            if item_choice <= len(player.inventory.inv):
+                if player.inventory.inv[item_choice].get("Type") == "Healing":
+                    print(f"""You used {player.inventory.inv[item_choice].get("Name")} to heal for {player.inventory.inv[item_choice].get("Healing")} health""")
+                    player.hp += player.inventory.inv[item_choice].get("Healing")
+                    player.inventory.inv.pop(item_choice)
+                    print(f"Your current health is {player.hp}")
+                    input("Press enter to continue \n -->")
+                    return
+                else:
+                    print("That item is not a healing item!")
+                    self.heal()
+
             # Show the player it's inventory and ask them to select an item to use to heal
             # Calculate the amount of health restored by the player and add it to the player's health
             # If the player's health is greater than the player's maximum health, set the player's health to the player's maximum health
-
-
     
     def enemy_attack(self, enemy_name):
         """When the enemy attacks the player in a fight and all the moves the enemy can do"""
@@ -1023,7 +1041,6 @@ def game_loop():
     '''
     The main game loop of the game which is used to run the main mechanics of the game
     '''
-    
     while True:
         story()
         # if story_progress == len(possible_routes) - 3: # -3 because the we dont want to give the player less than 3 routes
@@ -1251,7 +1268,6 @@ def credits():
     return
 
 #-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
-
 pygame.init()
 dev = input("Do you want to skip setup and go directly to story? (y/N): ")
 if dev.lower() == "y":

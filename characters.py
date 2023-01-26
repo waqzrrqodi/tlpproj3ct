@@ -21,30 +21,34 @@ class Player( ):
         self.level = 1  
         self.xp = 0
         self.level_max_xp = 100
-    
-    def auto_equip(self):
-        """Auto equip items"""
-        item = Item_Creator_3000_V2()
-        armour = item.create_item_DIY("Skin", "Poop", "Armor")
-        weapon = item.create_item_DIY("Fist", "Poop", "Weapon")
-        self.inventory.inv.append(armour)
-        self.inventory.inv.append(weapon)
-        self.armour = self.inventory.equip_item("Skin")
-        self.weapon = self.inventory.equip_item("Fist")
 
-    #equip weapon from inventory
-    # def player_equip_item(self):
-    #     """Equip an item"""
-    #     clear_screen()
-    #     #print inventory
-    #     inv_show()
-    #     print("What item do you want to equip?")
-    #     item_name = input("-->")
-    #     if item_name in self.inventory.inv:
-    #         if item_name["Type"] == "Armour":
-    #             self.armour = self.inventory.equip_item(item_name)
-    #         if item_name["Type"] == "Weapon":
-    #             self.weapon = self.inventory.equip_item(item_name) 
+        item_test = item.create_item_DIY("Loke", "Poop", "Armor")
+        self.inventory.inv.append(item_test)
+
+    #equip the item from inventory
+    def player_equip_item(self):
+        """Equip an item"""
+        while True:
+            #print inventory
+            print("What item do you want to equip?")
+            print("Inventory: ")
+            if self.inventory.inv == []:
+                print("Inventory is empty")
+            else:
+                for item in enumerate(self.inventory.inv):
+                    print(f"""{item[0] + 1}. {item[1]["Name"]} """)
+            item_name = input("Item name: \n --> ").lower()
+            for i in self.inventory.inv:
+                print(i)
+                if i["Name"].lower() == item_name:
+                    if i["Type"] == "Armour":
+                        self.armour = self.inventory.equip_item(item_name)
+                    if i["Type"] == "Weapon":
+                        self.weapon = self.inventory.equip_item(item_name)
+                    return
+                else:
+                    print("Item not found")
+                    continue
 
 class Human( ):
     """The human subclass"""
