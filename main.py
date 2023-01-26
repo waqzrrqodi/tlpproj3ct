@@ -1199,17 +1199,17 @@ def story():
 def trap():
     """A trap that damages the player"""
     if player.speed >= 10:
-        player.hp -= int(range(1, 5))
+        player.hp -= 5
         print("You managed to avoid the trap")
         input("\nPress enter to continue")
 
     if player.speed <= 5:
-        player.hp -= int(range(1, 5))
+        player.hp -= 10
         print("You got caught in the trap")
         input("\nPress enter to continue")
         
     elif player.speed < 10:
-        player.hp -= int(range(1, 5))
+        player.hp -= 20
         print("You got caught in the trap")
         input("\nPress enter to continue")
 

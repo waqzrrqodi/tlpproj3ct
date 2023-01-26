@@ -19,16 +19,6 @@ class InventorySys():
             self.inv_cap += upgrade_range
             print(f"Inventory max space upgraded to {self.inv_cap}")
 
-
-    def drop(self):
-        """Drop an item"""
-        if self.inv == []:
-            print("Thou doth not have any items")
-        else:
-            print("Which item would you like to drop?")
-            for a in range(self.inv):
-                print(f"Example. {self.inv[a]} is number {a}")
-
     def pickup_item(self, item):
         """Pickup an item"""
         if len(self.inv) >= self.inv_cap:
@@ -269,7 +259,3 @@ Chest = ChestSys()  # Create chest
 chest1 = Chest.chest_generate() # Generate a chest
 Chest.print_chest(chest1) # Print the chest
 '''
-
-item = ChestSys()
-item = item.chest_generate()
-print(item)
