@@ -207,7 +207,8 @@ class DefaultActionMenu():
         HEAL = "h"
         INFO = "i"
         player_action = None
-        selection = input(fight_menu_choices).lower()
+        print(fight_menu_choices)
+        selection = input("-->").lower()
         try:
             if selection == ATTACK:
                 print(f"Attack Selected")
@@ -225,7 +226,7 @@ class DefaultActionMenu():
                 """Prints more info about the player's attacks and info about the enemy"""
                 print(f"Info selected")
                 print(f"Enemy info: {self.enemy_name} \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
-                print(f"Player info: \n Player health: {self.player_health} \n Player damage: {self.player_damage}")
+                print(f"Player info: \n Player health: {player.hp} \n Player damage: {player.strength}")
                 user_choice = input("Please type b to go back --> ")
                 if user_choice.lower() == "b":
                     self.fight_menu()
@@ -766,12 +767,12 @@ class FightLoopTM(DefaultActionMenu):
 
     def attack(self):
         """When the player selects the attack option in a fight"""
-        if self.player_weapon == None:
+        if player.weapon == None:
             health_lost = player.strength + random.randint(1, 5)
             enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
         else:
-            health_lost = self.strenght + player.weapon["Damage"] + random.randint(1, 5)
+            health_lost = player.strenght + player.weapon["Damage"] + random.randint(1, 5)
             enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
 
@@ -795,11 +796,11 @@ class FightLoopTM(DefaultActionMenu):
         """When the player selects the defend option in a fight"""
         """Defend"""
         damage_decrease = random.randint(0, 10)
-        if player.armour["HP_Bonus"] == None or player.armour["HP_Bonus"] <= 0:
+        if player.armour["Equip"] == False or player.armour["HP_Bonus"] <= 0:
             player.hp -= (damage-damage_decrease)
-        if player.armour["HP_Bonus"] != None or player.armour["HP_Bonus"] > 0:
+        if player.armour["HP_Bonus"] > 0:
             for i in range(damage-damage_decrease-1):
-                if self.armour["HP_Bonus"] <= 0:
+                if player.armour["HP_Bonus"] <= 0:
                     player.hp -= 1
                 else:
                     player.armour["HP_Bonus"] -= 1
@@ -895,12 +896,12 @@ class FightLoopTM(DefaultActionMenu):
         # "Oh no, the enemy hath drunken a kong strong and maketh triple damage."
         # damage = damage * 3
         """Attack the player"""
-        if self.armour["HP_Bonus"] == None or self.armour["HP_Bonus"] <= 0:
-            self.player_health -= attack["damage"]
-        if self.armour["HP_Bonus"] != None or self.armour["HP_Bonus"] > 0:
+        if player.armour["HP_Bonus"] == None or player.armour["HP_Bonus"] <= 0:
+            player.hp -= attack["damage"]
+        if player.armour["HP_Bonus"] != None or player.armour["HP_Bonus"] > 0:
             for i in range(attack["damage"]-1):
                 if player > 0:
-                    self.player_health -= 1
+                    player.hp -= 1
                 else:
                     death()
         attack_probability = random.randint(1, 100)
@@ -923,7 +924,7 @@ class FightLoopTM(DefaultActionMenu):
             self.instant_win = False
             background_theme("./SoundEngine5000/theme_song.wav")
             return
-        while self.player_health > 0 or self.enemy_health > 0:
+        while player.hp > 0 or self.enemy_health > 0:
             # Display the current health of the player and the enemy
             
             if enemy_name == "Valma the Soulbroken":
@@ -944,7 +945,7 @@ class FightLoopTM(DefaultActionMenu):
             if self.enemy_health <= 0 and self.enemy_name != "Valma the Soulbroken":
                 print("\nThou hast defeated the enemy!")
                 print("\nThou hast leveled up!")
-                print(f"Player health: {self.player_health}")
+                print(f"Player health: {player.hp}")
                 player.gold += self.enemy_gold
                 print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} gold.")
                 sound_engine("./SoundEngine5000/levelup.wav")
@@ -952,16 +953,16 @@ class FightLoopTM(DefaultActionMenu):
                 break
             elif self.enemy_health <= 0 and self.enemy_name == "Valma the Soulbroken":
                 print("\nThou hast defeated Valma the soulbroken!")
-                print(f"\nPlayer health: {self.player_health}")
+                print(f"\nPlayer health: {player.hp}")
                 player.gold += 99998888
                 print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite gold.")
                 break
 
             # Enemy attacks the player
-            self.enemy_attack(self.enemy_name)
+            self.enemy_attack(enemy_name)
 
             # Check if the player has been a "has been"
-            if self.player_health <= 0: death()
+            if player.hp <= 0: death()
         background_theme("./SoundEngine5000/theme_song.wav")
 
 #--------------------------------------------------------------Death and Endings-----------------------------------------------------------------------#

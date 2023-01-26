@@ -89,18 +89,18 @@ class Item_Creator_3000_V2():
         else:
             DIY_item["Name"] = name
 
-        if type == "weapon":
+        if type == "Weapon":
             DIY_item["Type"] = "Weapon"
-            DIY_item["HP_Bonus"] = None
-            DIY_item["Healing Capability"] = None
-        if type == "armor" or type == "armour":
+            DIY_item["HP_Bonus"] = 0
+            DIY_item["Healing Capability"] = 0
+        if type == "Armor" or type == "Armour":
             DIY_item["Type"] = "Armor"
-            DIY_item["Damage"] = None
-            DIY_item["Healing Capability"] = None
-        if type == "heals":
+            DIY_item["Damage"] = 0
+            DIY_item["Healing Capability"] = 0
+        if type == "Heals":
             DIY_item["Type"] = "Heals"
-            DIY_item["HP_Bonus"] = None
-            DIY_item["Damage"] = None
+            DIY_item["HP_Bonus"] = 0
+            DIY_item["Damage"] = 0
         else:
             DIY_item["Type"] = type
         return DIY_item

@@ -180,7 +180,6 @@ fight_menu_choices = """
         | (H)eal
         | (I)nfo
         ============================-----
-        \n--> 
         """
 
 intro_menu_choices = '''
