@@ -819,6 +819,19 @@ class FightLoopTM(DefaultActionMenu):
                 else:
                     player.armour["HP_Bonus"] -= 1
         #print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
+            attack_probability = random.randint(1, 100)
+        if attack_probability <= 97:
+            ending1()
+            death()
+        elif attack_probability <= 80:
+            player.hp -= damage_decrease * 0.2
+        elif attack_probability <= 70:
+            player.hp -= damage_decrease
+            print("You defend against the enemy and it only deals {} damage".format(damage_decrease))
+        elif attack_probability <= 5:
+            health_loss = damage_decrease * 2
+            player.hp -= health_loss
+            print("Oh no, The enemy is listening to some banger tunes while you defend and attacks you with only ({}) points of damage.".format(health_loss))
 
     def heal(self):
         """When the player selects the heal option in a fight"""
@@ -898,20 +911,21 @@ class FightLoopTM(DefaultActionMenu):
         # damage = damage * 3
         """Attack the player"""
         if self.armour["HP_Bonus"] == None or self.armour["HP_Bonus"] <= 0:
-            self.player_health -= damage
+            self.player_health -= attack["damage"]
         if self.armour["HP_Bonus"] != None or self.armour["HP_Bonus"] > 0:
-            for i in range(damage-1):
-                if self.armour["HP_Bonus"] <= 0:
+            for i in range(attack["damage"]-1):
+                if player > 0:
                     self.player_health -= 1
                 else:
-                    self.armour -= 1
+                    death()
         attack_probability = random.randint(1, 100)
         if attack_probability <= 20:
-            player.hp -= damage
-            print(f"The enemy attacks you with {attack}and deals {damage} points of damage.")
+            player.hp -= attack["damage"]
+            print("The enemy attacks you with {} and deals {} points of damage.".format(attack, attack["damage"]))
         elif attack_probability <= 5:
-            player.hp -= damage * 2
-            print(f"Oh no, The enemy is listening to some banger tunes and attacks you with ({damage * 2}) points of damage.")
+            health_loss = attack["damage"] * 2
+            player.hp -= health_loss
+            print("Oh no, The enemy is listening to some banger tunes and attacks you with {}({}) points of damage.".format(attack, health_loss))
 
     def fight_loop(self, enemy_name):
         '''
