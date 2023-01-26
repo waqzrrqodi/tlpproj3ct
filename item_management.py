@@ -199,7 +199,7 @@ def item_shop(player):
 
 # Chest system
 
-SCRAP_LIST = ["Rock", "Trash", "Dirty Socks", "Cock Cola", "Macbook", "Estet Linjen"]
+SCRAP_LIST = ["Rock", "Trash", "Dirty Socks", "Dr Pepper", "Macbook", "Estet Linjen"]
 
 class ChestSys():
     """The chest system"""
