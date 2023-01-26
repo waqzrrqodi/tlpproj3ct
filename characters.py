@@ -13,8 +13,11 @@ class Player( ):
         self.speed = chosen_speed
         self.inventory = InventorySys(3)
         self.gold = 22
-        self.armour = None
-        self.weapon = None
+        item = Item_Creator_3000_V2()
+        armour = item.create_item_DIY("Skin", "Poop", "Armor")
+        weapon = item.create_item_DIY("Fist", "Poop", "Weapon")
+        self.armour = armour
+        self.weapon = weapon
         self.level = 1  
         self.xp = 0
         self.level_max_xp = 100
@@ -31,18 +34,18 @@ class Player( ):
         self.weapon = self.inventory.equip_item("Fist")
 
     #equip weapon from inventory
-    def player_equip_item(self):
-        """Equip an item"""
-        clear_screen()
-        #print inventory
-        inv_show()
-        print("What item do you want to equip?")
-        item_name = input("-->")
-        if item_name in self.inventory.inv:
-            if item_name["Type"] == "Armour":
-                self.armour = self.inventory.equip_item(item_name)
-            if item_name["Type"] == "Weapon":
-                self.weapon = self.inventory.equip_item(item_name) 
+    # def player_equip_item(self):
+    #     """Equip an item"""
+    #     clear_screen()
+    #     #print inventory
+    #     inv_show()
+    #     print("What item do you want to equip?")
+    #     item_name = input("-->")
+    #     if item_name in self.inventory.inv:
+    #         if item_name["Type"] == "Armour":
+    #             self.armour = self.inventory.equip_item(item_name)
+    #         if item_name["Type"] == "Weapon":
+    #             self.weapon = self.inventory.equip_item(item_name) 
 
 class Human( ):
     """The human subclass"""
