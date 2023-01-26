@@ -226,7 +226,11 @@ class DefaultActionMenu():
                 """Prints more info about the player's attacks and info about the enemy"""
                 print(f"Info selected")
                 print(f"Enemy info: {self.enemy_name} \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
-                print(f"Player info: \n Player health: {player.hp} \n Player damage: {player.strength}")
+                print(f"""Player info: \n 
+                Player health:{player.hp} 
+                Player Strength: {player.strength}
+                Player weapon damage: {player.weapon["Damage"]}
+                """)
                 user_choice = input("Please type b to go back --> ")
                 if user_choice.lower() == "b":
                     self.fight_menu()
@@ -287,6 +291,8 @@ class DefaultActionMenu():
             return
 
 def inv_show():
+    EQUIP = 1
+    UNEQUIP = 2
     """
     Shows the player's inventory, in a small and a full view.
     """
@@ -332,16 +338,24 @@ def inv_show():
                 for item in enumerate(player.inventory.inv):
                     print(f""" {item[0] + 1}. {item[1]["Name"]}""")
                 input("\nPress enter to continue...")
-                break
-        elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
-            print("Would you like to equip an item? (Y/n)")
-            equip_choice = input("-->")
-            if equip_choice.lower() == "y" or equip_choice.lower() == "yes" or equip_choice.lower() == "":
                 clear_screen()
-                player.player_equip_item()
-                break
-            elif equip_choice.lower() == "n" or equip_choice.lower() == "no" or equip_choice.lower() == "q":
-                break
+                
+                print("Would you like to equip or unequip an item?")
+                equip_choice = int(input("1. Equip \n2. Unequip \n--> "))
+                if equip_choice == EQUIP:
+                    clear_screen()
+                    player.player_equip_item()
+                    break
+                elif equip_choice == UNEQUIP:
+                    clear_screen()
+                    player.player_unequip_item()
+                    break
+                else:
+                    print("Invalid input")
+                    continue
+                    
+        elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
+            break
         else:
             input("Please provid valid input")
             continue
@@ -389,8 +403,6 @@ class PlayerAndNameSelect(DefaultActionMenu):
             print("Are you sure? You won't be able to change it later (yes/perhaps)")
             input("Confirm --> ")
             print(f"{self.name} accepted")
-        time.sleep(0.3)
-
         time.sleep(0.3)
         clear_screen()
 
@@ -1205,13 +1217,13 @@ def story():
                 input("\nPress enter to continue")
         
         if route == narr.ROUTE17:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY(None, "Rare", None))
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("", "Rare", "Weapon"))
         elif route == narr.ROUTE6:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Used Rollin pin", "Legendary", None))
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Used Rollin pin", "Legendary", "Weapon"))
         elif route == narr.ROUTE9:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Bag of cocaine", "Mythic", None))
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Bag of cocaine", "Mythic", "Heals"))
         elif route == narr.ROUTE8:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY(None, "Poop", None))
+            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("", "Poop", "Armor"))
         elif route == narr.ROUTE7:
             item_shop(player)
         else:

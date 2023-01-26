@@ -13,14 +13,15 @@ class Player( ):
         self.speed = chosen_speed
         self.inventory = InventorySys(3)
         self.gold = 22
+        self.level = 1  
+        self.xp = 0
+        self.level_max_xp = 100
+
         item = Item_Creator_3000_V2()
         armour = item.create_item_DIY("Skin", "Poop", "Armor")
         weapon = item.create_item_DIY("Fist", "Poop", "Weapon")
         self.armour = armour
         self.weapon = weapon
-        self.level = 1  
-        self.xp = 0
-        self.level_max_xp = 100
 
         item_test = item.create_item_DIY("Loke", "Poop", "Armor")
         self.inventory.inv.append(item_test)
@@ -37,19 +38,37 @@ class Player( ):
             else:
                 for item in enumerate(self.inventory.inv):
                     print(f"""{item[0] + 1}. {item[1]["Name"]} """)
-            item_name = input("Item name: \n --> ").lower()
+            item_name = input("Item name: \n --> ")
             for i in self.inventory.inv:
-                print(i)
-                if i["Name"].lower() == item_name:
+                if i["Name"] == item_name:
                     if i["Type"] == "Armour":
-                        self.armour = self.inventory.equip_item(item_name)
-                    if i["Type"] == "Weapon":
-                        self.weapon = self.inventory.equip_item(item_name)
-                    return
-                else:
-                    print("Item not found")
-                    continue
+                        self.armour = self.inventory.equip_item(item_name, self.armour)
+                        return
+                    elif i["Type"] == "Weapon":
+                        self.weapon = self.inventory.equip_item(item_name, self.weapon)
+                        return
+                    
+            print("Item not found")
+            input ("Press enter to continue")
 
+    #unequip the item
+    def player_unequip_item(self):
+        """Unequip an item"""
+        print ("What item do you want to unequip?")
+        print ("equipped items: ")
+        print (f"""Armour: {self.armour["Name"]}""")
+        print (f"""Weapon: {self.weapon["Name"]}""")
+        item_name = input("Item name: \n --> ")
+        if item_name == self.armour["Name"]:
+            self.armour = self.inventory.unequip_item(item_name, self.armour)
+            return
+        elif item_name == self.weapon["Name"]:
+            self.weapon = self.inventory.unequip_item(item_name, self.weapon)
+            return
+        else:
+            print("Item not found")
+            input ("Press enter to continue")
+        
 class Human( ):
     """The human subclass"""
     def __init__(self) -> None:
