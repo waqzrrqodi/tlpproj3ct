@@ -1254,7 +1254,7 @@ def chest():
     print("If you don't take the item, it will be destroyed")
     choice = input(">>> ")
     if choice.lower() == "y":
-        player.inventory.pickup_item(chest1)
+        player.inventory.pickup_item(chest1[0])
         print("You took the item")
         input("\nPress enter to continue")
 
