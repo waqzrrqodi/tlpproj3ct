@@ -1,21 +1,20 @@
 #för spelaren
 from item_management import *
 import random
-# INTE LAGLIGT ATT IMPORTERA MAIN I EN ANNAN FIL AJABAJA
 class Player( ):
     """The player class"""
     def __init__(self, chosen_strength, chosen_health, chosen_name, chosen_subclass, chosen_speed):
         #subclass kan antingen vara human eller beast (eller secret gnoblin som jag precis hittade på)
         self.strength = chosen_strength
-        self.hp = chosen_health
+        self.MAX_HP = chosen_health
+        self.hp = self.MAX_HP
         self.name = chosen_name
         self.subclass = chosen_subclass
         self.speed = chosen_speed
         self.inventory = InventorySys(3)
         self.gold = 22
-        self.level = 1  
+        self.level = 1
         self.xp = 0
-        self.level_max_xp = 100
 
         item = Item_Creator_3000_V2()
         armour = item.create_item_DIY("Skin", "Poop", "Armor")

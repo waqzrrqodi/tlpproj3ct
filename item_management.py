@@ -119,7 +119,7 @@ class Item_Creator_3000_V2():
         if type == "Weapon":
             DIY_item["Type"] = "Weapon"
             DIY_item["Healing Capability"] = 0
-            DIY_item["Damage"] = random.randint(1, 10)
+            DIY_item["Damage"] = random.randint(8, 19)
             DIY_item["Cost"] = round(DIY_item["Damage"]*5)
         if type == "Armor" or type == "Armour":
             DIY_item["Type"] = "Armor"

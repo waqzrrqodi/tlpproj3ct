@@ -133,7 +133,7 @@ def intro_splash_only():
 
 #----------------------------------------------------------------------Player, Enemy and Objects----------------------------------------------------------#
 
-# Initialize all the enemies and add stats for story progression, level, and tutorial etc.
+# Initialize all the enemies and add stats for story progression, level etc.
 valma = ch.Enemy("Valma the Soulbroken", 200, 1000, "God", 3)
 simpa = ch.Enemy("Simpa", 50, 100, "Human", 2)
 goblin = ch.Enemy("Lwittle Gwoblin", 50, 100, "Monster", 1)
@@ -157,7 +157,6 @@ strongman = ch.Enemy("Russian Muscle Man", 200, 200, "Human", 5)
 player = None
 level = 0
 story_progress = 0
-tutorial_done = bool
 used_routes = []
 
 
@@ -205,7 +204,6 @@ class DefaultActionMenu():
         The menu of the choices of the player's attacks.
         """
         ATTACK = "a"
-        DEFEND = "d"
         RUN = "r"
         HEAL = "h"
         INFO = "i"
@@ -219,11 +217,6 @@ class DefaultActionMenu():
                     print(f"Attack Selected")
                     time.sleep(0.5)
                     return "attack"
-
-                elif selection == DEFEND or selection == "defend" or selection == "2":
-                    print(f"Defend selected")
-                    time.sleep(0.5)
-                    return "defend"
 
                 elif selection == RUN or selection == "run" or selection == "3":
                     print(f"Run selected")
@@ -323,13 +316,13 @@ def inv_show():
             print(f"""
             Armour: {player.armour["Name"]} 
             Armour type: {player.armour["Type"]}
-            Armour worth: {player.armour["Worth"]} €
+            Armour worth: {player.armour["Worth"]} Shillings
             Armour rarity: {player.armour["Rarity"]}
             """)
             print(f"""
             Weapon: {player.weapon["Name"]}
             Weapon type: {player.weapon["Type"]}
-            Weapon worth: {player.weapon["Worth"]} €
+            Weapon worth: {player.weapon["Worth"]} Shillings
             Weapon rarity: {player.weapon["Rarity"]}
             """)
             print("---------------------------------------------")
@@ -431,9 +424,8 @@ def intro_menu():
     """
     PLAY = "1"
     OPTIONS = "2"
-    TUTORIAL = "3"
-    CREDITS = "4"
-    EXIT = "5"
+    CREDITS = "3"
+    EXIT = "4"
     main_menu = True
     while main_menu:
         clear_screen()
@@ -466,9 +458,6 @@ def intro_menu():
             clear_screen()
             options_menu()
             continue
-        elif menu_choice == TUTORIAL:
-            tutorial()
-            continue
         elif menu_choice == CREDITS:
             clear_screen()
             animate_text("\ninitiating credits sequence...\n", "fast")
@@ -486,26 +475,15 @@ def menu():
     """
     The menu system of the game that is used to navigate, save, and exit the game.
     """
-    GOTO_TUTORIAL = "1"
-    SAVE_AND_EXIT = "2"
-    INVENTORY = "3"
-    OPTIONS = "4"
+    SAVE_AND_EXIT = "1"
+    INVENTORY = "2"
+    OPTIONS = "3"
     CONTINUE = "continue"
-    # name = "Navigation Menu"
-    # action_1 = "Tutorial"
-    # action_2 = "Save and Exit"
-    # action_3 = "Inventory"
-    # action_4 = "Continue"
-    # action_5 = "Options"
     while True:
         clear_screen()
         # print(ui_textbox)
-        print("Navigation Menu: \n1. Tutorial \n2. Save and Exit \n3. Inventory or stats \n4. Options \n\nTo continue with story, press [Enter]\n") # For testing purposes
+        print("Navigation Menu: \n1. Save and Exit \n2. Inventory or stats \n3. Options \n\nTo continue with story, press [Enter]\n") # For testing purposes
         menu_choice = input("What do thau wish to do? ");
-        if menu_choice == GOTO_TUTORIAL:
-            print("tutorial")
-            tutorial()
-            continue
         if menu_choice == SAVE_AND_EXIT:
             print("Save + Exit")
             save_game()
@@ -522,28 +500,6 @@ def menu():
         if menu_choice == OPTIONS:
             clear_screen()
             options_menu()
-
-def tutorial():
-    '''
-    This is the tutorial to make sure the player knows how to play the game
-    '''
-    user_input = input("Wouldst thou like to see the tutorial, or art thou bold enough to continue without it? (y/N) --> ")
-    try:
-        if user_input.lower() == "y":
-            animate_text("Loading tutorial...", "fast")
-            print("Haha Silly, you thought there was a tutorial, but there is not.")
-            time.sleep(0.3)
-        elif user_input.lower() == "n" or user_input.lower() == "":
-            animate_text("Continuing without tutorial...", "fast")
-        else:
-            print("Invalid input")
-            tutorial()
-        input("Press enter to go back...")
-        return
-    except:
-        print("Unknown error hath occured")
-        tutorial()
-
 
 #-----------------------------------------------------------------------------Options---------------------------------------------------------------
 
@@ -747,77 +703,92 @@ class FightLoopTM(DefaultActionMenu):
             self.enemy_damage = goblin.damage
             self.enemy_speed = goblin.speed
             self.enemy_type = goblin.type
+            self.enemy_gold = goblin.gold
         elif enemy_name == "Skeletons":
             self.enemy_health = skeletons.health
             self.enemy_damage = skeletons.damage
             self.enemy_speed = skeletons.speed
             self.enemy_type = skeletons.type
+            self.enemy_gold = skeletons.gold
         elif enemy_name == "Simpa":
             self.enemy_health = simpa.health
             self.enemy_damage = simpa.damage
             self.enemy_speed = simpa.speed
             self.enemy_type = simpa.type
+            self.enemy_gold = simpa.gold
         elif enemy_name == "Pangloss":
             self.enemy_health = pangloss.health
             self.enemy_damage = pangloss.damage
             self.enemy_speed = pangloss.speed
             self.enemy_type = pangloss.type
+            self.enemy_gold = pangloss.gold
         elif enemy_name == "Bilo":
             self.enemy_health = bilo.health
             self.enemy_damage = bilo.damage
             self.enemy_speed = bilo.speed
             self.enemy_type = bilo.type
+            self.enemy_gold = bilo.gold
         elif enemy_name == "Steroid Beast":
             self.enemy_health = steroid_beast.health
             self.enemy_damage = steroid_beast.damage
             self.enemy_speed = steroid_beast.speed
             self.enemy_type = steroid_beast.type
+            self.enemy_gold = steroid_beast.gold
         elif enemy_name == "Homeless man":
             self.enemy_health = homeless_man.health
             self.enemy_damage = homeless_man.damage
             self.enemy_speed = homeless_man.speed
             self.enemy_type = homeless_man.type
+            self.enemy_gold = homeless_man.gold
         elif enemy_name == "The Anti-Virgin":
             self.enemy_health = anti_virgin.health
             self.enemy_damage = anti_virgin.damage
             self.enemy_speed = anti_virgin.speed
             self.enemy_type = anti_virgin.type
+            self.enemy_gold = anti_virgin.gold
         elif enemy_name == "Guards":
             self.enemy_health = guards.health
             self.enemy_damage = guards.damage
             self.enemy_speed = guards.speed
             self.enemy_type = guards.type
+            self.enemy_gold = guards.gold
         elif enemy_name == "Rap God":
             self.enemy_health = rap_god.health
             self.enemy_damage = rap_god.damage
             self.enemy_speed = rap_god.speed
             self.enemy_type = rap_god.type
+            self.enemy_gold = rap_god.gold
         elif enemy_name == "Strange Lady":
             self.enemy_health = ladythatstolemylypsyl.health
             self.enemy_damage = ladythatstolemylypsyl.damage
             self.enemy_speed = ladythatstolemylypsyl.speed
             self.enemy_type = ladythatstolemylypsyl.type
+            self.enemy_gold = ladythatstolemylypsyl.gold
         elif enemy_name == "Ghosts":
             self.enemy_health = ghosts.health
             self.enemy_damage = ghosts.damage
             self.enemy_speed = ghosts.speed
             self.enemy_type = ghosts.type
+            self.enemy_gold = ghosts.gold
         elif enemy_name == "Witch":
             self.enemy_health = witch.health
             self.enemy_damage = witch.damage
             self.enemy_speed = witch.speed
             self.enemy_type = witch.type
+            self.enemy_gold = witch.gold
         elif enemy_name == "Russian Muscle Man":
             self.enemy_health = strongman.health
             self.enemy_damage = strongman.damage
             self.enemy_speed = strongman.speed
             self.enemy_type = strongman.type
+            self.enemy_gold = strongman.gold
         elif enemy_name == "Valma the Soulbroken":
             self.enemy_health = valma.health
             self.enemy_damage = valma.damage
             self.enemy_speed = valma.speed
             self.enemy_name = valma.name
             self.enemy_type = valma.type
+            self.enemy_gold = valma.gold
         elif enemy_name == "Shop":
             self.instant_win = True
         elif enemy_name == "Instant win":
@@ -833,8 +804,8 @@ class FightLoopTM(DefaultActionMenu):
             print(f"""Thou hast {player.weapon["Name"]} which deals {player.weapon["Damage"]} damage""")
             print(f"""Thou hast {player.armour["Name"]} which protects with {player.armour["HP_Bonus"] } armor""")
             self.fight_loop(enemy_name)
-
-        self.fight_loop(enemy_name)
+        else:
+            self.fight_loop(enemy_name)
 
     def attack(self):
         """When the player selects the attack option in a fight"""
@@ -842,14 +813,22 @@ class FightLoopTM(DefaultActionMenu):
         strength_bonus = player.strength * 0.1
         if player.weapon["Name"] == "Empty":
             health_lost = strength_bonus + random.randint(1, 5)
+            if random.randint(1, 100) <= 5:
+                health_lost *= 2
+                print("Critical hit!")
             self.enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
             print(f"""The foe hast {self.enemy_health} health left""")
+            print("You have {} HP left.".format(player.hp))
         else:
             health_lost = strength_bonus + player.weapon["Damage"] + random.randint(1, 5)
+            if random.randint(1, 100) <= int(player.weapon["Damage"]):
+                health_lost *= 2
+                print("Critical hit!")
             self.enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
             print(f"""The foe hast {self.enemy_health} health left""")
+            print("You have {} HP left.".format(player.hp))
 
     def run(self):
         """When the player selects the run option in a fight"""
@@ -862,38 +841,10 @@ class FightLoopTM(DefaultActionMenu):
             print("Thau successfully run away from the fight!")
             print("Though it came with an item loss")
             player.inventory.inv.pop(random.choice(list(player.inventory.inv)))
-            return True
+            self.instant_win = True
         elif random.randint(1, 100) >= 1:
             print("You try to run, but thau trips and falls, shattering every bone in your body.")
             death()
-
-    def defend(self, damage):
-        """When the player selects the defend option in a fight"""
-        """Defend"""
-        random_fight_sound(fighting_sounds)
-        damage_decrease = random.randint(0, 10)
-        if player.armour["Equip"] == False or player.armour["HP_Bonus"] <= 0:
-            damage_decrease = (damage-damage_decrease)
-        if player.armour["HP_Bonus"] > 0:
-            for i in range(damage-damage_decrease-1):
-                if player.armour["HP_Bonus"] <= 0:
-                    player.hp -= 1
-                else:
-                    player.armour["HP_Bonus"] -= 1
-        #print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
-        attack_probability = random.randint(1, 100)
-        if attack_probability >= 99:
-            ending1()
-            death()
-        elif attack_probability >= 80:
-            player.hp -= damage_decrease * 0.2
-        elif attack_probability >= 70:
-            player.hp -= damage_decrease
-            print("You defend against the enemy and it only deals {} damage".format(damage_decrease))
-        elif attack_probability >= 5:
-            health_loss = damage_decrease * 2
-            player.hp -= health_loss
-            print("Oh no, The enemy is listening to some banger tunes while you defend and attacks you with only ({}) points of damage.".format(health_loss))
 
     def heal(self):
         """When the player selects the heal option in a fight"""
@@ -925,56 +876,56 @@ class FightLoopTM(DefaultActionMenu):
     def enemy_attack(self, enemy_name, type):
         """When the enemy attacks the player in a fight and all the moves the enemy can do"""
         HUMAN_ATTACK_LIST = {
-            "Punch": {"name": "Punch","type": "Physical", "damage": 10},
-            "Kick": {"name": "Kick","type": "Physical", "damage": 15},
-            "Block": {"name": "Block","type": "Physical", "damage": 5},
+            "Punch": {"name": "Punch","type": "Physical", "damage": 2},
+            "Kick": {"name": "Kick","type": "Physical", "damage": 5},
+            "Block": {"name": "Block","type": "Physical", "damage": 1},
             "Dodge": {"name": "Dodge","type": "Physical", "damage": 0},
-            "Sweep": {"name": "Sweep","type": "Physical", "damage": 12},
-            "Jab": {"name": "Jab","type": "Physical", "damage": 8},
-            "Uppercut": {"name": "Uppercut","type": "Physical", "damage": 20},
-            "Haymaker": {"name": "Haymaker","type": "Physical", "damage": 25},
-            "Elbow Strike": {"name": "Elbow Strike","type": "Physical", "damage": 15},
-            "Headbutt": {"name": "Headbutt","type": "Physical", "damage": 18},
-            "Power Slam": {"name": "Power Slam", "type": "Physical", "damage": 15},
-            "Elegant Ejaculation": {"name": "Elegant Ejaculation","type": "Physical", "damage": 15},
+            "Sweep": {"name": "Sweep","type": "Physical", "damage": 6},
+            "Jab": {"name": "Jab","type": "Physical", "damage": 7},
+            "Uppercut": {"name": "Uppercut","type": "Physical", "damage": 10},
+            "Haymaker": {"name": "Haymaker","type": "Physical", "damage": 11},
+            "Elbow Strike": {"name": "Elbow Strike","type": "Physical", "damage": 4},
+            "Headbutt": {"name": "Headbutt","type": "Physical", "damage": 8},
+            "Power Slam": {"name": "Power Slam", "type": "Physical", "damage": 8},
+            "Elegant Ejaculation": {"name": "Elegant Ejaculation","type": "Physical", "damage": 7},
         }
 
 
         MONSTER_ATTACK_LIST = {
-            "Bite": {"name": "Bite","type": "Physical", "damage": 20},
-            "Claw": {"name": "Claw","type": "Physical", "damage": 15},
-            "Tail Whip": {"name": "Tail Whip","type": "Physical", "damage": 10},
+            "Bite": {"name": "Bite","type": "Physical", "damage": 13},
+            "Claw": {"name": "Claw","type": "Physical", "damage": 11},
+            "Tail Whip": {"name": "Tail Whip","type": "Physical", "damage": 8},
             "Roar": {"name": "Roar","type": "Physical", "damage": 0},
-            "Pounce": {"name": "Pounce","type": "Physical", "damage": 25},
-            "Charge": {"name": "Charge","type": "Physical", "damage": 20},
-            "Slam": {"name": "Slam","type": "Physical", "damage": 30},
-            "Poison Spit": {"name": "Poison Spit","type": "Magical", "damage": 15},
-            "Acid Spray": {"name": "Acid Spray", "type": "Magical", "damage": 20},
-            "Fire Breath": {"name": "Fire Breath","type": "Magical", "damage": 25},
+            "Pounce": {"name": "Pounce","type": "Physical", "damage": 7},
+            "Charge": {"name": "Charge","type": "Physical", "damage": 10},
+            "Slam": {"name": "Slam","type": "Physical", "damage": 9},
+            "Poison Spit": {"name": "Poison Spit","type": "Magical", "damage": 11},
+            "Acid Spray": {"name": "Acid Spray", "type": "Magical", "damage": 10},
+            "Fire Breath": {"name": "Fire Breath","type": "Magical", "damage": 12},
         }
 
         GOD_ATTACK_LIST = {
-            "Divine Strike": {"name": "Divine Strike","type": "Magical", "damage": 30},
-            "Holy Smite": {"name": "Holy Smite","type": "Magical", "damage": 25},
-            "Celestial Blast": {"name": "Celestial Blast","type": "Magical", "damage": 35},
+            "Divine Strike": {"name": "Divine Strike","type": "Magical", "damage": 13},
+            "Holy Smite": {"name": "Holy Smite","type": "Magical", "damage": 13},
+            "Celestial Blast": {"name": "Celestial Blast","type": "Magical", "damage": 13},
             "Divine Shield": {"name": "Divine Shield","type": "Magical", "damage": 0},
             "Divine Healing": {"name": "Divine Healing","type": "Magical", "damage": -20},
-            "Divine Summoning": {"name": "Divine Summoning","type": "Magical", "damage": 20},
-            "Divine Retribution": {"name": "Divine Retribution","type": "Magical", "damage": 40},
-            "Divine Judgement": {"name": "Divine Judgement","type": "Magical", "damage": 50},
+            "Divine Summoning": {"name": "Divine Summoning","type": "Magical", "damage": 13},
+            "Divine Retribution": {"name": "Divine Retribution","type": "Magical", "damage": 14},
+            "Divine Judgement": {"name": "Divine Judgement","type": "Magical", "damage": 15},
             "Divine Intervention": {"name": "Divine Intervention","type": "Magical", "damage": 0},
-            "Divine Wrath": {"name": "Divine Wrath","type": "Magical", "damage": 60},
+            "Divine Wrath": {"name": "Divine Wrath","type": "Magical", "damage": 16},
         }
 
         YODIE_GANG_ATTACK_LIST = {
-            "Yodie Blast": {"name": "Yodie Blast","type": "Magical", "damage": 25},
-            "Yodie Strike": {"name": "Yodie Strike","type": "Magical", "damage": 20},
-            "Yodie Flail": {"name": "Yodie Flail","type": "Magical", "damage": 15},
-            "Yodie Swing": {"name": "Yodie Swing","type": "Magical", "damage": 30},
-            "Yodie Rush": {"name": "Yodie Rush","type": "Magical", "damage": 25},
-            "Yodie Shout": {"name": "Yodie Shout","type": "Magical", "damage": 10},
-            "Yodie Scream": {"name": "Yodie Scream","type": "Magical", "damage": 15},
-            "Yodie Smack": {"name": "Yodie Smack","type": "Magical", "damage": 20},
+            "Yodie Blast": {"name": "Yodie Blast","type": "Magical", "damage": 8},
+            "Yodie Strike": {"name": "Yodie Strike","type": "Magical", "damage": 4},
+            "Yodie Flail": {"name": "Yodie Flail","type": "Magical", "damage": 2},
+            "Yodie Swing": {"name": "Yodie Swing","type": "Magical", "damage": 6},
+            "Yodie Rush": {"name": "Yodie Rush","type": "Magical", "damage": 2},
+            "Yodie Shout": {"name": "Yodie Shout","type": "Magical", "damage": 1},
+            "Yodie Scream": {"name": "Yodie Scream","type": "Magical", "damage": 1},
+            "Yodie Smack": {"name": "Yodie Smack","type": "Magical", "damage": 3},
         }
         if type == "Human":
             attack_name = random.choice(list(HUMAN_ATTACK_LIST.keys()))
@@ -990,28 +941,20 @@ class FightLoopTM(DefaultActionMenu):
             attack = YODIE_GANG_ATTACK_LIST[attack_name]
             
 
-        # "Oh no, the enemy hath practiced the sacred art of sparring and maketh double damage."
-        # damage = damage * 2
-        # "Oh no, the enemy hath drunken a kong strong and maketh triple damage."
-        # damage = damage * 3
         """Attack the player"""
-        if player.armour["HP_Bonus"] == None or player.armour["HP_Bonus"] <= 0:
-            player.hp -= int(attack["damage"])
-        if player.armour["HP_Bonus"] != None or player.armour["HP_Bonus"] > 0:
-            for i in range(int(attack["damage"]-1)):
-                if player.hp > 0:
-                    player.hp -= 1
-                else:
-                    death()
+        damage_level_reduction = round(int(attack["damage"] + player.level*2))
         attack_probability = random.randint(1, 100)
-        if attack_probability <= 20:
-            player.hp -= attack["damage"]
-            print("The enemy attacks you with {} and deals {} points of damage.".format(attack["name"], attack["damage"]))
+        if attack_probability >= 60:
+            print("The enemy attacks you with {} and misses.".format(attack["name"]))
+            print("You have {} HP left.".format(player.hp))
+        elif attack_probability <= 20 and attack_probability >= 6:
+            player.hp -= damage_level_reduction
+            print("The enemy attacks you with {} and deals {} points of damage.".format(attack["name"], damage_level_reduction))
             print("You have {} HP left.".format(player.hp))
         elif attack_probability <= 5:
-            health_loss = attack["damage"] * 2
+            health_loss = damage_level_reduction * 2
             player.hp -= health_loss
-            print("Oh no, The enemy is listening to some banger tunes and attacks you with {}({}) points of damage.".format(attack, health_loss))
+            print("Oh no, The enemy is listening to some banger tunes and attacks you with {} with double power and deals({}) points of damage.".format(attack["name"], health_loss))
             print("You have {} HP left.".format(player.hp))
 
     def fight_loop(self, enemy_name):
@@ -1041,29 +984,44 @@ class FightLoopTM(DefaultActionMenu):
                     break
                 else:
                     continue
-            elif user_selection == "defend":
-                self.defend(self.enemy_damage)
             elif user_selection == "heal":
                 self.heal()
             else:
                 return
 
             # Check if the enemy has been defeated
-            if self.enemy_health <= 0 and self.enemy_name != "Valma the Soulbroken":
+            if self.enemy_health <= 0 and enemy_name != "Valma the Soulbroken":
                 print("\nThou hast defeated the enemy!")
                 print("\nThou hast leveled up!")
+                if player.hp < player.MAX_HP:
+                    player.hp = player.MAX_HP
+                else:
+                    player.hp = player.hp
+                print(f"You heal up to default health: {player.hp}")
+                player.gold += self.enemy_gold
+                print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} shillings.")
+                sound_engine("./SoundEngine5000/levelup.wav")
+                player.level += 1
+                return
+            elif self.instant_win == True:
+                print("\nThou hast leveled up!")
+                if player.hp < player.MAX_HP:
+                    player.hp = player.MAX_HP
+                else:
+                    player.hp = player.hp
+                print(f"You heal up to default health: {player.hp}")
                 print(f"Player health: {player.hp}")
                 player.gold += self.enemy_gold
                 print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} shillings.")
                 sound_engine("./SoundEngine5000/levelup.wav")
                 player.level += 1
-                break
+                return
             elif self.enemy_health <= 0 and self.enemy_name == "Valma the Soulbroken":
                 print("\nThou hast defeated Valma the soulbroken!")
                 print(f"\nPlayer health: {player.hp}")
                 player.gold += 99998888
                 print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite shillings.")
-                break
+                return
 
             # Enemy attacks the player
             self.enemy_attack(enemy_name, self.enemy_type)
@@ -1152,7 +1110,7 @@ def save_game():
         if savefile_name == "":
             savefile_name = (f"savegame.dat")
     
-        user_data = [player, story_progress, tutorial_done, used_routes, SETTINGS]
+        user_data = [player, story_progress, used_routes, SETTINGS]
         
         with open(savefile_name, 'wb') as file:
             pickle.dump(user_data, file)
@@ -1169,7 +1127,6 @@ def load_game():
     
     global player
     global story_progress
-    global tutorial_done
     global SETTINGS
     savefile_name = input("What is the name of the save file? (default: savegame)")
     if savefile_name == "":
@@ -1192,8 +1149,7 @@ def load_game():
 
         player = user_data[0] # Not implemented yet
         story_progress = user_data[1] # Not implemented yet
-        tutorial_done = user_data[2] # Not implemented yet
-        SETTINGS = user_data[3] # Not implemented yet
+        SETTINGS = user_data[2] # Not implemented yet
     elif doesSaveExist == False:
         intro_menu()
 
@@ -1215,7 +1171,7 @@ def story():
         # randomize number between 0 and lenght of path
         place = random.choice(list(narr.PLACE_NAMES.keys()))
         route = narr.PLACE_NAMES[place]["ROUTE"]
-        while place == 'Shop' or place == 'End game boss':
+        while place == 'Shop' or place == 'End game boss' or place == 'Landfill' or place == 'Used Condom':
             place = random.choice(list(narr.PLACE_NAMES.keys()))
             route = narr.PLACE_NAMES[place]["ROUTE"]
         used_routes.append(place)
@@ -1258,7 +1214,7 @@ def story():
             if choice == None:
                 print("Please choose a valid route")
         route = narr.PLACE_NAMES[choice]["ROUTE"]
-        random_trap_chest = random.choice(["chest", "trap", "chest"])
+        random_trap_chest = random.choice(["chest", "trap", "nothing", "nothing"])
         if random_trap_chest == "trap":
             trap()
         elif random_trap_chest == "chest":
@@ -1304,17 +1260,17 @@ def trap():
     """A trap that damages the player"""
     if player.speed >= 10:
         player.hp -= 5
-        print("You managed to avoid the trap")
+        print("You managed to avoid the trap but you lost 5 health")
         input("\nPress enter to continue")
 
     if player.speed <= 5:
         player.hp -= 10
-        print("You got caught in the trap")
+        print("You got caught in the trap and lost 10 health")
         input("\nPress enter to continue")
         
     elif player.speed < 10:
         player.hp -= 20
-        print("You got caught in the trap")
+        print("You got caught in the trap and lost 20 health")
         input("\nPress enter to continue")
     return
 

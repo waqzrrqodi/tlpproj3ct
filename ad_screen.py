@@ -28,5 +28,6 @@ def screen_engine():
     pygame.mixer.music.play()
 
     pygame.display.quit()
+    return
         
 

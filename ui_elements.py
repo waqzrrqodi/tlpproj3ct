@@ -177,7 +177,6 @@ fight_menu_choices = """
         ============================-----
         | Choose your action:                   
         | (A)ttack
-        | (D)efend
         | (R)un
         | (H)eal
         | (I)nfo
@@ -189,9 +188,8 @@ intro_menu_choices = '''
 | Choose your action:
 | 1 - Begin Adventure
 | 2 - Options
-| 3 - Tutorial
-| 4 - Credits
-| 5 - Exit
+| 3 - Credits
+| 4 - Exit
 ============================-----
 '''
 
