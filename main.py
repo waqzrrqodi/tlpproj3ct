@@ -729,63 +729,78 @@ class FightLoopTM(DefaultActionMenu):
             self.enemy_health = goblin.health
             self.enemy_damage = goblin.damage
             self.enemy_speed = goblin.speed
+            self.enemy_type = goblin.type
         elif enemy_name == "Skeletons":
             self.enemy_health = skeletons.health
             self.enemy_damage = skeletons.damage
             self.enemy_speed = skeletons.speed
+            self.enemy_type = skeletons.type
         elif enemy_name == "Simpa":
             self.enemy_health = simpa.health
             self.enemy_damage = simpa.damage
             self.enemy_speed = simpa.speed
+            self.enemy_type = simpa.type
         elif enemy_name == "Pangloss":
             self.enemy_health = pangloss.health
             self.enemy_damage = pangloss.damage
             self.enemy_speed = pangloss.speed
+            self.enemy_type = pangloss.type
         elif enemy_name == "Bilo":
             self.enemy_health = bilo.health
             self.enemy_damage = bilo.damage
             self.enemy_speed = bilo.speed
+            self.enemy_type = bilo.type
         elif enemy_name == "Steroid Beast":
             self.enemy_health = steroid_beast.health
             self.enemy_damage = steroid_beast.damage
             self.enemy_speed = steroid_beast.speed
+            self.enemy_type = steroid_beast.type
         elif enemy_name == "Homeless man":
             self.enemy_health = homeless_man.health
             self.enemy_damage = homeless_man.damage
             self.enemy_speed = homeless_man.speed
+            self.enemy_type = homeless_man.type
         elif enemy_name == "The Anti-Virgin":
             self.enemy_health = anti_virgin.health
             self.enemy_damage = anti_virgin.damage
             self.enemy_speed = anti_virgin.speed
+            self.enemy_type = anti_virgin.type
         elif enemy_name == "Guards":
             self.enemy_health = guards.health
             self.enemy_damage = guards.damage
             self.enemy_speed = guards.speed
+            self.enemy_type = guards.type
         elif enemy_name == "Rap God":
             self.enemy_health = rap_god.health
             self.enemy_damage = rap_god.damage
             self.enemy_speed = rap_god.speed
+            self.enemy_type = rap_god.type
         elif enemy_name == "Strange Lady":
             self.enemy_health = ladythatstolemylypsyl.health
             self.enemy_damage = ladythatstolemylypsyl.damage
             self.enemy_speed = ladythatstolemylypsyl.speed
+            self.enemy_type = ladythatstolemylypsyl.type
         elif enemy_name == "Ghosts":
             self.enemy_health = ghosts.health
             self.enemy_damage = ghosts.damage
             self.enemy_speed = ghosts.speed
+            self.enemy_type = ghosts.type
         elif enemy_name == "Witch":
             self.enemy_health = witch.health
             self.enemy_damage = witch.damage
             self.enemy_speed = witch.speed
+            self.enemy_type = witch.type
         elif enemy_name == "Russian Muscle Man":
             self.enemy_health = strongman.health
             self.enemy_damage = strongman.damage
             self.enemy_speed = strongman.speed
+            self.enemy_type = strongman.type
         elif enemy_name == "Valma the Soulbroken":
             self.enemy_health = valma.health
             self.enemy_damage = valma.damage
             self.enemy_speed = valma.speed
             self.enemy_name = valma.name
+            self.enemy_type = valma.type
         elif enemy_name == "Shop":
             self.instant_win = True
         elif enemy_name == "Instant win":
@@ -836,7 +851,7 @@ class FightLoopTM(DefaultActionMenu):
         """Defend"""
         damage_decrease = random.randint(0, 10)
         if player.armour["Equip"] == False or player.armour["HP_Bonus"] <= 0:
-            player.hp -= (damage-damage_decrease)
+            damage_decrease -= (damage-damage_decrease)
         if player.armour["HP_Bonus"] > 0:
             for i in range(damage-damage_decrease-1):
                 if player.armour["HP_Bonus"] <= 0:
@@ -844,16 +859,16 @@ class FightLoopTM(DefaultActionMenu):
                 else:
                     player.armour["HP_Bonus"] -= 1
         #print(f"You defend against the enemy's attack and take {damage * 0.5} points of damage.")
-            attack_probability = random.randint(1, 100)
-        if attack_probability <= 97:
+        attack_probability = random.randint(1, 100)
+        if attack_probability >= 99:
             ending1()
             death()
-        elif attack_probability <= 80:
+        elif attack_probability >= 80:
             player.hp -= damage_decrease * 0.2
-        elif attack_probability <= 70:
+        elif attack_probability >= 70:
             player.hp -= damage_decrease
             print("You defend against the enemy and it only deals {} damage".format(damage_decrease))
-        elif attack_probability <= 5:
+        elif attack_probability >= 5:
             health_loss = damage_decrease * 2
             player.hp -= health_loss
             print("Oh no, The enemy is listening to some banger tunes while you defend and attacks you with only ({}) points of damage.".format(health_loss))
@@ -884,7 +899,7 @@ class FightLoopTM(DefaultActionMenu):
             # Calculate the amount of health restored by the player and add it to the player's health
             # If the player's health is greater than the player's maximum health, set the player's health to the player's maximum health
     
-    def enemy_attack(self, enemy_name):
+    def enemy_attack(self, enemy_name, type):
         """When the enemy attacks the player in a fight and all the moves the enemy can do"""
         HUMAN_ATTACK_LIST = {
             "Punch": {"type": "Physical", "damage": 10},
@@ -939,13 +954,17 @@ class FightLoopTM(DefaultActionMenu):
             "Yodie Smack": {"type": "Magical", "damage": 20},
         }
         if type == "Human":
-            attack = random.choice(list(HUMAN_ATTACK_LIST.keys()))
-        elif type == "God":
-            attack = random.choice(list(GOD_ATTACK_LIST.keys()))
-        elif type == "Monster":
-            attack = random.choice(list(MONSTER_ATTACK_LIST.keys()))
-        elif type == "Yodie Gang":
-            attack = random.choice(list(YODIE_GANG_ATTACK_LIST.keys()))
+            attack_name = random.choice(list(HUMAN_ATTACK_LIST.keys()))
+            attack = HUMAN_ATTACK_LIST[attack_name]
+        if type == "God":
+            attack_name = random.choice(list(GOD_ATTACK_LIST.keys()))
+            attack = GOD_ATTACK_LIST[attack_name]
+        if type == "Monster":
+            attack_name = random.choice(list(MONSTER_ATTACK_LIST.keys()))
+            attack = MONSTER_ATTACK_LIST[attack_name]
+        if type == "Yodie Gang":
+            attack_name = random.choice(list(YODIE_GANG_ATTACK_LIST.keys()))
+            attack = YODIE_GANG_ATTACK_LIST[attack_name]
             
 
         # "Oh no, the enemy hath practiced the sacred art of sparring and maketh double damage."
@@ -1016,7 +1035,7 @@ class FightLoopTM(DefaultActionMenu):
                 break
 
             # Enemy attacks the player
-            self.enemy_attack(enemy_name)
+            self.enemy_attack(enemy_name, self.enemy_type)
 
             # Check if the player has been a "has been"
             if player.hp <= 0: death()
