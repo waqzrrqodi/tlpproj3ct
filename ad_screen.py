@@ -21,8 +21,12 @@ def screen_engine():
     screen.blit(background_image, (0, 0))
 
     pygame.display.update()
-
     time.sleep(5)
+
+    pygame.mixer.music.fadeout(3)
+    pygame.mixer.music.load("./SoundEngine5000/Theme_Song.wav")
+    pygame.mixer.music.play()
+
     pygame.display.quit()
         
 
