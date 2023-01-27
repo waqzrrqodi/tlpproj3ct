@@ -30,7 +30,6 @@ class InventorySys():
                     
         print(item)
         return item
-
             
     #let the player unequip an item
     def unequip_item(self, current_item):
@@ -116,6 +115,7 @@ class Item_Creator_3000_V2():
         else:
             DIY_item["Name"] = name
 
+        #Make sure the item matches the system in place
         if type == "Weapon":
             DIY_item["Type"] = "Weapon"
             DIY_item["HP_Bonus"] = 0
@@ -129,6 +129,7 @@ class Item_Creator_3000_V2():
             DIY_item["HP_Bonus"] = 0
             DIY_item["Damage"] = 0
 
+        #Specifically for the empty item
         if type == "Empty":
             DIY_item["Type"] = "Empty"
             DIY_item["HP_Bonus"] = 0
@@ -155,21 +156,32 @@ class Item_Creator_3000_V2():
             self.type = "Weapon"
             self.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
             self.damage = rand.randint(3, 5)
+
         if rand_item_choice == ARMOR:
             item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
             self.type = "Armor"
             self.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
             self.armor = rand.randint(60, 90)
+
         if rand_item_choice == HEALS:
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
             self.type = "Heals"
             self.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
             self.healing = rand.randint(30, 50)
+
         #Creating a random cost and worth for the item
         #Generic item attributes
-        self.cost = rand.randint(30, 350)
-        self.worth = round(self.cost*0.9)
+        """"Cost based on item attributes"""
+        if self.type == "Weapon":
+            self.cost = round(self.damage*10)
+        if self.type == "Armor":
+            self.cost = round(self.armor*0.5)
+        if self.type == "Heals":
+            self.cost = round(self.healing*0.5)
+        
+        self.worth = round(self.cost*0.7)
         self.rarity = self.item_rarity(self.cost)
+        
         finished_item = {"Name": self.name, "Type": self.type, "Cost": self.cost, "Worth": self.worth, "Rarity": self.rarity, "HP_Bonus": self.armor, "Healing Capability": self.healing, "Damage": self.damage, "Equip": self.equipped_check}
         return finished_item
 
@@ -206,12 +218,27 @@ def item_shop(player):
     if buy_sell_item == "buy" or buy_sell_item == "b" or buy_sell_item == "":
         print("List of purchasable items:")
         for i in range(len(item_shop_list)):
+            print("\n --------------------------------------------------")
             print(f"{i+1}. {item_shop_list[i].get('Name')} - {item_shop_list[i].get('Cost')} gold")
-    
+            print(f"Rarity: {item_shop_list[i].get('Rarity')}")
+
+            if item["Type"] == "Weapon":
+                print(f"Damage: {item_shop_list[i].get('Damage')}")
+
+            elif item["Type"] == "Armor" or item["Type"] == "Armour":
+                print(f"Armor: {item_shop_list[i].get('HP_Bonus')}")
+
+            elif item["Type"] == "Heals":
+                print(f"Healing Capability: {item_shop_list[i].get('Healing Capability')}")
+
+        print("--------------------------------------------------")
         print("Which item would you like to buy? you have", player.gold, "amount of gold")
         item_choice = int(input("--> "))
         item_choice -= 1
+
+        #Checks if the choice is withing range
         if item_choice <= len(item_shop_list):
+            #Checks if the player has enough gold
             if item_shop_list[item_choice].get("Cost") <= player.gold:
                 player.gold = player.gold - item_shop_list[item_choice].get("Cost")
                 player.inventory.inv.append(item_shop_list[item_choice])
@@ -230,6 +257,7 @@ def item_shop(player):
         
         item_choice = int(input("--> ")) 
         item_choice -= 1
+
         if item_choice <= len(player.inventory.inv):
             print(f"""You sold an item for {player.inventory.inv[item_choice].get("Worth")} gold""")
             player.gold += player.inventory.inv[item_choice].get("Worth")

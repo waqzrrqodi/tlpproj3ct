@@ -302,7 +302,7 @@ def inv_show():
     Shows the player's inventory, in a small and a full view.
     """
     clear_screen()
-    #small splash
+    #small splash screen
     print(f"\nYour name: {player.name}")
     print(f"\nPlayer Health: {player.hp}")
     print(f"\nPlayer Strenght: {player.strength}")
@@ -365,6 +365,9 @@ def inv_show():
         else:
             input("Please provid valid input")
             continue
+        
+    print("Quick ad break, please wait...")
+    screen_engine()
     return
 
 #-------------------------------------------------------------------------Player and Name Selection----------------------------------------------------------------#
@@ -1018,9 +1021,6 @@ class FightLoopTM(DefaultActionMenu):
 
 #--------------------------------------------------------------Death and Endings-----------------------------------------------------------------------#
 
-
-
-
 def death():
     print("YOU DIED")
     # if player does something stupid and dies play ending 1
@@ -1293,7 +1293,7 @@ if dev.lower() == "y":
 else:
     dev = False
 if dev == True:
-    player = ch.Player(100, 100, "Bon", "Beast", 10)
+    player = ch.Player(100, 100, "Bing Chillin' ", "Beast", 10)
     game_loop()
 else:
     intro()
