@@ -62,7 +62,7 @@ class InventorySys():
                 the_item_dilemma_final_choice = int(
                     input("Choose numbah----->"))
                 self.inv.pop(the_item_dilemma_final_choice-1)
-                self.inv.append(self.item(item))
+                self.inv.append(item)
                 print(f'''
                 ----------==================----------
                     You picked up ___{item}!___
@@ -75,7 +75,7 @@ class InventorySys():
             else:
                 print("Please provide a Y/n answer")
         else:
-            self.inv.append(self.item(item))
+            self.inv.append(item)
             print(f'''
                 ----------==================----------
                     You picked up ___{item}!___
@@ -118,11 +118,11 @@ class Item_Creator_3000_V2():
         #Make sure the item matches the system in place
         if type == "Weapon":
             DIY_item["Type"] = "Weapon"
-            DIY_item["HP_Bonus"] = 0
             DIY_item["Healing Capability"] = 0
         if type == "Armor" or type == "Armour":
             DIY_item["Type"] = "Armor"
             DIY_item["Damage"] = 0
+            DIY_item["HP_Bonus"] = 0
             DIY_item["Healing Capability"] = 0
         if type == "Heals":
             DIY_item["Type"] = "Heals"
