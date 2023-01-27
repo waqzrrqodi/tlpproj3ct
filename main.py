@@ -309,6 +309,7 @@ def inv_show():
     print(f"\nPlayer Health: {player.hp}")
     print(f"\nPlayer Strength: {player.strength}")
     print(f"\nPlayer Awesomeness level: {player.level}")
+    print(f"\nPlayer shillings: {player.gold}")
     print(f"""\nPlayer Armour: {player.armour["Name"]}""")
     print(f"""\nPlayer Weapon: {player.weapon["Name"]}""")
     
