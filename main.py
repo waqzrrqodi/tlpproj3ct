@@ -239,6 +239,13 @@ class DefaultActionMenu():
                     print(f"Info selected")
                     print(f"Enemy info: \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
                     print(f"""Player info: \n Player health:{player.hp} \n Player Strength: {player.strength} \n Player weapon damage: {player.weapon["Damage"]} \n Player Armor: {player.armour["HP_Bonus"]}""")
+                    
+                    print("Would you like to enter inv? (y/n)")
+                    selection = input("-->").lower()
+                    if selection == "y" or selection == "yes":
+                        inv_show()
+                    else:
+                        pass
                     input("Press enter to continue")
                     continue
                 else:
@@ -299,6 +306,7 @@ class DefaultActionMenu():
 def inv_show():
     EQUIP = 1
     UNEQUIP = 2
+    PURCHASE = 3
     """
     Shows the player's inventory, in a small and a full view.
     """
@@ -337,7 +345,7 @@ def inv_show():
             if len(player.inventory.inv) == 0:
                 print("Inventory is empty")
                 input("\nPress enter to continue...")
-                break
+                clear_screen()
             else:
                 #prints the inventory
                 print("Inventory: ")
@@ -346,20 +354,23 @@ def inv_show():
                 input("\nPress enter to continue...")
                 clear_screen()
                 
-            print("Would you like to equip or unequip an item?")
-            equip_choice = int(input("1. Equip \n2. Unequip \n--> "))
+            print("Would you like to equip, unequip or purchase an item?")
+            equip_choice = int(input("1. Equip \n2. Unequip \n3. Purchase \n--> "))
             if equip_choice == EQUIP:
                 clear_screen()
                 player.player_equip_item()
-                continue
                     
             elif equip_choice == UNEQUIP:
                 clear_screen()
                 player.player_unequip_item()
-                break
+
+            elif equip_choice == PURCHASE:
+                clear_screen()
+                item_shop(player)
+
             else:
                 print("Invalid input")
-                continue
+            continue
                     
         elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
             break
@@ -832,9 +843,9 @@ class FightLoopTM(DefaultActionMenu):
             print(f"\nThou hast {player.hp} health")
             print(f"""Thou hast {player.weapon["Name"]} which deals {player.weapon["Damage"]} damage""")
             print(f"""Thou hast {player.armour["Name"]} which protects with {player.armour["HP_Bonus"] } armor""")
-            self.fight_loop(enemy_name)
+            self.fight_loop(enemy_name, player)
 
-        self.fight_loop(enemy_name)
+        self.fight_loop(enemy_name, player)
 
     def attack(self):
         """When the player selects the attack option in a fight"""
@@ -851,17 +862,16 @@ class FightLoopTM(DefaultActionMenu):
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
             print(f"""The foe hast {self.enemy_health} health left""")
 
-    def run(self):
+    def run(self, player):
         """When the player selects the run option in a fight"""
         random_fight_sound(fighting_sounds)
         if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
             background_theme("./SoundEngine5000/battle_theme.wav")
-            return False
         elif random.randint(1, 100) >= 10:
             print("Thau successfully run away from the fight!")
             print("Though it came with an item loss")
-            player.inventory.inv.pop(random.choice(list(player.inventory.inv)))
+            player.inventory.inv.remove(random.choice(player.inventory.inv))
             return True
         elif random.randint(1, 100) >= 1:
             print("You try to run, but thau trips and falls, shattering every bone in your body.")
@@ -1014,7 +1024,7 @@ class FightLoopTM(DefaultActionMenu):
             print("Oh no, The enemy is listening to some banger tunes and attacks you with {}({}) points of damage.".format(attack, health_loss))
             print("You have {} HP left.".format(player.hp))
 
-    def fight_loop(self, enemy_name):
+    def fight_loop(self, enemy_name, player):
         '''
         The proprieatary fighting loop of the game (no copying pls) which is used to fight enemies and makes the shots about what happens next
         '''
@@ -1036,7 +1046,7 @@ class FightLoopTM(DefaultActionMenu):
             if user_selection == "attack":
                 self.attack()
             elif user_selection == "run":
-                escape_rate = self.run()
+                escape_rate = self.run(player)
                 if escape_rate == True:
                     break
                 else:
@@ -1092,7 +1102,7 @@ def death():
     time.sleep(0.3)
     print("Quick ad break, please wait...")
     screen_engine()
-    return
+    quit()
 
 def ending1():
     print(narr.COWARD_END)

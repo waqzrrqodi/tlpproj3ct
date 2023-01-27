@@ -177,17 +177,17 @@ class Item_Creator_3000_V2():
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
             self.type = "Heals"
             self.name = item_iteration_heals_list[random.randint(0, len(item_iteration_heals_list)-1)]
-            self.healing = random.randint(30, 50)
+            self.healing = random.randint(20, 40)
 
         #Creating a random cost and worth for the item
         #Generic item attributes
         """"Cost based on item attributes"""
         if self.type == "Weapon":
-            self.cost = round(self.damage*10)
+            self.cost = round(self.damage*5)
         if self.type == "Armor":
-            self.cost = round(self.armor*0.5)
+            self.cost = round(self.armor*5)
         if self.type == "Heals":
-            self.cost = round(self.healing*0.5)
+            self.cost = round(self.healing*3)
         
         self.worth = round(self.cost*0.7)
         self.rarity = self.item_rarity(self.cost)
@@ -231,14 +231,12 @@ def item_shop(player):
             print("\n --------------------------------------------------")
             print(f"{i+1}. {item_shop_list[i].get('Name')} - {item_shop_list[i].get('Cost')} shillings")
             print(f"Rarity: {item_shop_list[i].get('Rarity')}")
-
-            if item["Type"] == "Weapon":
+            
+            if item_shop_list[i].get("Type") == "Weapon":
                 print(f"Damage: {item_shop_list[i].get('Damage')}")
-
-            elif item["Type"] == "Armor" or item["Type"] == "Armour":
+            elif item_shop_list[i].get("Type") == "Armor":
                 print(f"Armor: {item_shop_list[i].get('HP_Bonus')}")
-
-            elif item["Type"] == "Heals":
+            elif item_shop_list[i].get("Type") == "Heals":
                 print(f"Healing Capability: {item_shop_list[i].get('Healing Capability')}")
 
         print("--------------------------------------------------")
