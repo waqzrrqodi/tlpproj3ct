@@ -1336,14 +1336,5 @@ def credits():
 
 #-------------------------------------------------------------------------Main-------------------------------------------------------------------------#
 pygame.init()
-dev = input("Do you want to skip setup and go directly to story? (y/N): ")
-if dev.lower() == "y":
-    dev = True
-else:
-    dev = False
-if dev == True:
-    player = ch.Player(10, 100, "Bing Chillin' ", "Beast", 10)
-    game_loop()
-else:
-    intro()
-    game_loop()
+intro()
+game_loop()
