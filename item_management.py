@@ -19,6 +19,36 @@ class InventorySys():
             self.inv_cap += upgrade_range
             print(f"Inventory max space upgraded to {self.inv_cap}")
 
+    def equip_item(self, item_name, current_item):
+        """Equip an item"""
+        for item in self.inv:
+            if item["Name"] == item_name:
+                item["Equip"] = True
+                self.inv.remove(item)
+
+                current_item["Equip"] = False
+                self.inv.append(current_item)
+                    
+                print(item)
+                return item
+        
+            
+    #let the player unequip an item
+    def unequip_item(self, current_item_name, current_item):
+        """Unequip an item"""
+        for item in self.inv:
+            if item["Name"] == current_item_name:
+                item["Equip"] = False
+                self.inv.append(current_item)
+                
+                empty_item = Item_Creator_3000_V2()
+                empty_item = empty_item.create_item_random("Empty", "Empty", "Empty")
+                return empty_item
+        else:
+            print("Item not found")
+            input ("Press enter to continue")
+            return current_item
+
     def pickup_item(self, item):
         """Pickup an item"""
         if len(self.inv) >= self.inv_cap:
@@ -59,25 +89,8 @@ class InventorySys():
                     You picked up ___{item}!___
                 ----------==================----------''')
         #let the player equip an item from inventory
-        def equip_item(self, item):
-            """Equip an item"""
-            if item in self.inv:
-                item["Equip"] = True
-                self.inv.remove(item)
-                return item
-            else:
-                print("Item not found in inventory")
-                return None
-        #let the player unequip an item
-        def unequip_item(self, item):
-            """Unequip an item"""
-            if item in self.inv:
-                item["Equip"] = False
-                self.inv.append(item)
-                return item
-            else:
-                print("Item not found in inventory")
-                return None
+        
+            
     
 
 ITEM_LIST = {
@@ -122,6 +135,16 @@ class Item_Creator_3000_V2():
             DIY_item["Type"] = "Heals"
             DIY_item["HP_Bonus"] = 0
             DIY_item["Damage"] = 0
+
+        if type == "Empty":
+            DIY_item["Type"] = "Empty"
+            DIY_item["HP_Bonus"] = 0
+            DIY_item["Damage"] = 0
+            DIY_item["Healing Capability"] = 0
+            DIY_item["Worth"] = 0
+            DIY_item["Name"] = "Empty"
+            DIY_item["Rarity"] = "Empty"
+
         else:
             DIY_item["Type"] = type
         return DIY_item
