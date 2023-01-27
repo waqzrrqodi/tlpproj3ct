@@ -897,7 +897,10 @@ class FightLoopTM(DefaultActionMenu):
             "Haymaker": {"type": "Physical", "damage": 25},
             "Elbow Strike": {"type": "Physical", "damage": 15},
             "Headbutt": {"type": "Physical", "damage": 18},
+            "Power Slam": {"type": "Physical", "damage": 15},
+            "Elegant Ejaculation": {"type": "Physical", "damage": 15},
         }
+
 
         MONSTER_ATTACK_LIST = {
             "Bite": {"type": "Physical", "damage": 20},
