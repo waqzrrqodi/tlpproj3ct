@@ -1032,7 +1032,7 @@ class FightLoopTM(DefaultActionMenu):
             animate_text(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} shillings.", "fast")
             sound_engine("./SoundEngine5000/levelup.wav")
             player.level += 1
-            input("Press enter to continue")
+            input("\nPress enter to continue")
             return False
         elif self.instant_win == True:
             print("\nThou hast leveled up!")
