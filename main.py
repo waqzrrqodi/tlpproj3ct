@@ -210,9 +210,10 @@ class DefaultActionMenu():
         HEAL = "h"
         INFO = "i"
         player_action = None
-        print(fight_menu_choices)
-        selection = input("-->").lower()
+        
         while True:
+            print(fight_menu_choices)
+            selection = input("-->").lower()
             try:
                 if selection == ATTACK or selection == "attack" or selection == "1":
                     print(f"Attack Selected")
@@ -236,12 +237,8 @@ class DefaultActionMenu():
                 elif selection == INFO or selection == "info" or selection == "5":
                     """Prints more info about the player's attacks and info about the enemy"""
                     print(f"Info selected")
-                    print(f"Enemy info: {self.enemy_name} \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
-                    print(f"""Player info: \n 
-                    Player health:{player.hp} 
-                    Player Strength: {player.strength}
-                    Player weapon damage: {player.weapon["Damage"]}
-                    """)
+                    print(f"Enemy info: \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
+                    print(f"""Player info: \n Player health:{player.hp} \n Player Strength: {player.strength} \n Player weapon damage: {player.weapon["Damage"]} \n Player Armor: {player.armour["HP_Bonus"]}""")
                     input("Press enter to continue")
                     continue
                 else:
@@ -407,7 +404,7 @@ class PlayerAndNameSelect(DefaultActionMenu):
         user_name_input = input("What is your name? --> ")
         self.name = random.choice(VIKING_NAMES)
         clear_screen()
-        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis" or user_name_input == "Booster Gold":
+        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis" or user_name_input == "Booster shillings":
             print("That is an absolutely beautiful name mate.")
             self.name = user_name_input
         else:
@@ -908,7 +905,7 @@ class FightLoopTM(DefaultActionMenu):
             for item in enumerate(player.inventory.inv):
                 print(f"""{item[0] + 1}. {item[1]["Name"]} """)
             print("Which item would you like to use to heal?")
-            item_choice = input("--> ")
+            item_choice = int(input("--> "))
             item_choice -= 1
             if item_choice <= len(player.inventory.inv):
                 if player.inventory.inv[item_choice].get("Type") == "Healing":
@@ -1054,7 +1051,7 @@ class FightLoopTM(DefaultActionMenu):
                 print("\nThou hast leveled up!")
                 print(f"Player health: {player.hp}")
                 player.gold += self.enemy_gold
-                print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} gold.")
+                print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} shillings.")
                 sound_engine("./SoundEngine5000/levelup.wav")
                 player.level += 1
                 break
@@ -1062,7 +1059,7 @@ class FightLoopTM(DefaultActionMenu):
                 print("\nThou hast defeated Valma the soulbroken!")
                 print(f"\nPlayer health: {player.hp}")
                 player.gold += 99998888
-                print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite gold.")
+                print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite shillings.")
                 break
 
             # Enemy attacks the player
@@ -1082,7 +1079,7 @@ def death():
     print(game_over)
     # Prints the ending and stats of the player and their achievements.
     print(f"Your level was {player.level}")
-    print(f"You had {player.gold} gold")
+    print(f"You had {player.gold} shillings")
     print(f"You killed player.kills enemies")
     print("Thanks for playing!")
     animate_text(credits_text, "default")

@@ -51,24 +51,24 @@ class InventorySys():
                 print("Please provide a Y/n answer")
             except:
                 print("Unknown error has occured")
+
             if the_item_dilemma.lower == "y" or the_item_dilemma == "yes":
                 for i in range(len(self.inventory.inv)):
-                    print(f"{i+1}. {self.inventory.inv[i].get('Name')} - {self.inventory.inv[i].get('Worth')} gold")
+                    print(f"{i+1}. {self.inventory.inv[i].get('Name')} - {self.inventory.inv[i].get('Worth')} shillings")
                 print("Which item would thau most prefferably switch?")
 
                 for item_numbah in range(self.inv):
-                    print(f"{item_numbah + 1}, self.inv{item_numbah}")
+                    print(f"{item_numbah + 1}, {self.inv[item_numbah]}")
 
-                the_item_dilemma_final_choice = int(
-                    input("Choose numbah----->"))
+                the_item_dilemma_final_choice = int(input("Choose numbah----->"))
                 self.inv.pop(the_item_dilemma_final_choice-1)
                 self.inv.append(item)
+
                 print(f'''
                 ----------==================----------
-                    You picked up ___{item}!___
+                    You picked up ___{item["Name"]}!___
                 ----------==================----------
                 ''')
-                # Not working fully yet dingus
 
             elif the_item_dilemma.lower == "n" or the_item_dilemma == "no":
                 print("As thau wish good sir")
@@ -78,7 +78,7 @@ class InventorySys():
             self.inv.append(item)
             print(f'''
                 ----------==================----------
-                    You picked up ___{item}!___
+                    You picked up ___{item["Name"]}!___
                 ----------==================----------''')
         #let the player equip an item from inventory
         
@@ -229,7 +229,7 @@ def item_shop(player):
         print("List of purchasable items:")
         for i in range(len(item_shop_list)):
             print("\n --------------------------------------------------")
-            print(f"{i+1}. {item_shop_list[i].get('Name')} - {item_shop_list[i].get('Cost')} gold")
+            print(f"{i+1}. {item_shop_list[i].get('Name')} - {item_shop_list[i].get('Cost')} shillings")
             print(f"Rarity: {item_shop_list[i].get('Rarity')}")
 
             if item["Type"] == "Weapon":
@@ -242,7 +242,7 @@ def item_shop(player):
                 print(f"Healing Capability: {item_shop_list[i].get('Healing Capability')}")
 
         print("--------------------------------------------------")
-        print("Which item would you like to buy? you have", player.gold, "amount of gold")
+        print("Which item would you like to buy? you have", player.gold, "amount of shillings")
         item_choice = int(input("--> "))
         item_choice -= 1
 
@@ -252,10 +252,10 @@ def item_shop(player):
             if item_shop_list[item_choice].get("Cost") <= player.gold:
                 player.gold = player.gold - item_shop_list[item_choice].get("Cost")
                 player.inventory.inv.append(item_shop_list[item_choice])
-                print(f"You bought {item_shop_list[item_choice].get('Name')} for {item_shop_list[item_choice].get('Cost')} gold")
-                print("You have", player.gold, "amount of gold left")
+                print(f"You bought {item_shop_list[item_choice].get('Name')} for {item_shop_list[item_choice].get('Cost')} shillings")
+                print("You have", player.gold, "amount of shillings left")
             else:
-                print("You do not have enough gold")
+                print("You do not have enough shillings")
         else:
             print("Please provide a valid item number")
 
@@ -263,16 +263,16 @@ def item_shop(player):
     elif buy_sell_item == "sell":
         print("Which item would you like to sell?")
         for i in range(len(player.inventory.inv)):
-            print(f"{i+1}. {player.inventory.inv[i].get('Name')} - {player.inventory.inv[i].get('Worth')} gold")
+            print(f"{i+1}. {player.inventory.inv[i].get('Name')} - {player.inventory.inv[i].get('Worth')} shillings")
         
         item_choice = int(input("--> ")) 
         item_choice -= 1
 
         if item_choice <= len(player.inventory.inv):
-            print(f"""You sold an item for {player.inventory.inv[item_choice].get("Worth")} gold""")
+            print(f"""You sold an item for {player.inventory.inv[item_choice].get("Worth")} shillings""")
             player.gold += player.inventory.inv[item_choice].get("Worth")
             player.inventory.inv.pop(item_choice)
-            print(f"Your current gold is {player.gold}")
+            print(f"Your current shillings is {player.gold}")
             input("Press enter to continue \n -->")
         else:
             print("Please provide a valid item number")
