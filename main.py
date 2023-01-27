@@ -85,7 +85,7 @@ def animate_text(text, sleep_time):
 
 os.system('color 7')
 SETTING3 = 'white'
-
+SETTING2 = 'on'
 
 def wait_for_keypress():
     '''
@@ -534,7 +534,7 @@ def tutorial():
         else:
             print("Invalid input")
             tutorial()
-        input("Press enter to go back to the main menu...")
+        input("Press enter to go back...")
         return
     except:
         print("Unknown error hath occured")

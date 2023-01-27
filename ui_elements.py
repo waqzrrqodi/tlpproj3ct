@@ -215,13 +215,13 @@ Tom Hardy as The Protagonist
 Ana De Armas as Valma the Soulbroken
 Keanu Reeves as Fulcrum
 Scarlett Johansson as Lypsyl Lady
+Leonardo DiCaprio as Goblin
+Willem Dafoe as Skeleton
+Paul Dano as Simpa
 John Doe as Jack
 Jane Smith as Jill
 Mike Brown as Mike Brown
 Qlex as Steroid Beast
-Leonardo DiCaprio as Goblin
-Willem Dafoe as Skeleton
-Ryan Gosling as Simpa
 Johnny Sins as Russian Strongman
 
 
@@ -259,14 +259,16 @@ End Credits Animator: Pixar
 
 
 Director of Assassinations: Mike Ehrmantraut
-Candide Productions Spy: Anton Granlund
+Candide Productions Internal Spy: Anton Granlund
 Horse Wrangler: Loke Lindström
+Inside Trader: Holgis
 
 
 Corpse Disposal Crew:
 Armita
 Local Midgets
 Children from the Daycare
+Gnoblins
 
 
 Special Thanks
@@ -287,10 +289,10 @@ Programmed by: Literally only Kasper and Sebbe
        Made by: Tax Fraud Studios
 ----------==================----------
 
-(We don't take any Responsibility if this game damaged your
-physical or mental health. It is not our
-intention to cause our players harm.
-If this game gave you suicidal thoughts 
+(We don't take any Responsibility if this 
+game damaged your physical or mental health. 
+It is not our intention to cause our players 
+harm. If this game gave you suicidal thoughts 
 we would recommend that you contact a 
 suicide hotline and seek help. Tax Fraud 
 Studios is not legally responsible for any 
