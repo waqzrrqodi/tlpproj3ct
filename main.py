@@ -1113,7 +1113,7 @@ def game_loop():
 saveFileNumberTracker = 0 #for all the lazy mfs
 def save_game():
     """
-    Save the game to the savegame.dat file
+    Save the game to the savegame.dat file, upcoming feature that is paid dlc, will be free with next gen consoles or within rimbo 2
     """
     global saveFileNumberTracker
     save_game = input("Would you like to save your game? (Y/n): ")
