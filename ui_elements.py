@@ -149,6 +149,7 @@ characterselect = '''
 |         1 - Human                2 - Beast              |
 ===========================================================
                  type "i" for more info
+        type "g" for ultra hard mode (Gnoblin mode)
 '''
 
 waldy = '''
@@ -177,6 +178,7 @@ fight_menu_choices = """
         | Choose your action:                   
         | (A)ttack
         | (D)efend
+        | (R)un
         | (H)eal
         | (I)nfo
         ============================-----

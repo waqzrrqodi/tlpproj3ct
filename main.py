@@ -206,6 +206,7 @@ class DefaultActionMenu():
         """
         ATTACK = "a"
         DEFEND = "d"
+        RUN = "r"
         HEAL = "h"
         INFO = "i"
         player_action = None
@@ -223,12 +224,16 @@ class DefaultActionMenu():
                     time.sleep(0.5)
                     return "defend"
 
-                elif selection == HEAL or selection == "heal" or selection == "3":
+                elif selection == RUN or selection == "run" or selection == "3":
+                    print(f"Run selected")
+                    time.sleep(0.5)
+                    return "run"
+                elif selection == HEAL or selection == "heal" or selection == "4":
                     print(f"Heal selected")
                     time.sleep(0.5)
                     return "heal"
 
-                elif selection == INFO or selection == "info" or selection == "4":
+                elif selection == INFO or selection == "info" or selection == "5":
                     """Prints more info about the player's attacks and info about the enemy"""
                     print(f"Info selected")
                     print(f"Enemy info: {self.enemy_name} \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
@@ -840,12 +845,14 @@ class FightLoopTM(DefaultActionMenu):
         strength_bonus = player.strength * 0.1
         if player.weapon == None:
             health_lost = strength_bonus + random.randint(1, 5)
-            enemy_health -= health_lost
+            self.enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
+            print(f"""The foe hast {self.enemy_health} health left""")
         else:
             health_lost = strength_bonus + player.weapon["Damage"] + random.randint(1, 5)
             self.enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
+            print(f"""The foe hast {self.enemy_health} health left""")
 
     def run(self):
         """When the player selects the run option in a fight"""
@@ -922,56 +929,56 @@ class FightLoopTM(DefaultActionMenu):
     def enemy_attack(self, enemy_name, type):
         """When the enemy attacks the player in a fight and all the moves the enemy can do"""
         HUMAN_ATTACK_LIST = {
-            "Punch": {"type": "Physical", "damage": 10},
-            "Kick": {"type": "Physical", "damage": 15},
-            "Block": {"type": "Physical", "damage": 5},
-            "Dodge": {"type": "Physical", "damage": 0},
-            "Sweep": {"type": "Physical", "damage": 12},
-            "Jab": {"type": "Physical", "damage": 8},
-            "Uppercut": {"type": "Physical", "damage": 20},
-            "Haymaker": {"type": "Physical", "damage": 25},
-            "Elbow Strike": {"type": "Physical", "damage": 15},
-            "Headbutt": {"type": "Physical", "damage": 18},
-            "Power Slam": {"type": "Physical", "damage": 15},
-            "Elegant Ejaculation": {"type": "Physical", "damage": 15},
+            "Punch": {"name": "Punch","type": "Physical", "damage": 10},
+            "Kick": {"name": "Kick","type": "Physical", "damage": 15},
+            "Block": {"name": "Block","type": "Physical", "damage": 5},
+            "Dodge": {"name": "Dodge","type": "Physical", "damage": 0},
+            "Sweep": {"name": "Sweep","type": "Physical", "damage": 12},
+            "Jab": {"name": "Jab","type": "Physical", "damage": 8},
+            "Uppercut": {"name": "Uppercut","type": "Physical", "damage": 20},
+            "Haymaker": {"name": "Haymaker","type": "Physical", "damage": 25},
+            "Elbow Strike": {"name": "Elbow Strike","type": "Physical", "damage": 15},
+            "Headbutt": {"name": "Headbutt","type": "Physical", "damage": 18},
+            "Power Slam": {"name": "Power Slam", "type": "Physical", "damage": 15},
+            "Elegant Ejaculation": {"name": "Elegant Ejaculation","type": "Physical", "damage": 15},
         }
 
 
         MONSTER_ATTACK_LIST = {
-            "Bite": {"type": "Physical", "damage": 20},
-            "Claw": {"type": "Physical", "damage": 15},
-            "Tail Whip": {"type": "Physical", "damage": 10},
-            "Roar": {"type": "Physical", "damage": 0},
-            "Pounce": {"type": "Physical", "damage": 25},
-            "Charge": {"type": "Physical", "damage": 20},
-            "Slam": {"type": "Physical", "damage": 30},
-            "Poison Spit": {"type": "Magical", "damage": 15},
-            "Acid Spray": {"type": "Magical", "damage": 20},
-            "Fire Breath": {"type": "Magical", "damage": 25},
+            "Bite": {"name": "Bite","type": "Physical", "damage": 20},
+            "Claw": {"name": "Claw","type": "Physical", "damage": 15},
+            "Tail Whip": {"name": "Tail Whip","type": "Physical", "damage": 10},
+            "Roar": {"name": "Roar","type": "Physical", "damage": 0},
+            "Pounce": {"name": "Pounce","type": "Physical", "damage": 25},
+            "Charge": {"name": "Charge","type": "Physical", "damage": 20},
+            "Slam": {"name": "Slam","type": "Physical", "damage": 30},
+            "Poison Spit": {"name": "Poison Spit","type": "Magical", "damage": 15},
+            "Acid Spray": {"name": "Acid Spray", "type": "Magical", "damage": 20},
+            "Fire Breath": {"name": "Fire Breath","type": "Magical", "damage": 25},
         }
 
         GOD_ATTACK_LIST = {
-            "Divine Strike": {"type": "Magical", "damage": 30},
-            "Holy Smite": {"type": "Magical", "damage": 25},
-            "Celestial Blast": {"type": "Magical", "damage": 35},
-            "Divine Shield": {"type": "Magical", "damage": 0},
-            "Divine Healing": {"type": "Magical", "damage": -20},
-            "Divine Summoning": {"type": "Magical", "damage": 20},
-            "Divine Retribution": {"type": "Magical", "damage": 40},
-            "Divine Judgement": {"type": "Magical", "damage": 50},
-            "Divine Intervention": {"type": "Magical", "damage": 0},
-            "Divine Wrath": {"type": "Magical", "damage": 60},
+            "Divine Strike": {"name": "Divine Strike","type": "Magical", "damage": 30},
+            "Holy Smite": {"name": "Holy Smite","type": "Magical", "damage": 25},
+            "Celestial Blast": {"name": "Celestial Blast","type": "Magical", "damage": 35},
+            "Divine Shield": {"name": "Divine Shield","type": "Magical", "damage": 0},
+            "Divine Healing": {"name": "Divine Healing","type": "Magical", "damage": -20},
+            "Divine Summoning": {"name": "Divine Summoning","type": "Magical", "damage": 20},
+            "Divine Retribution": {"name": "Divine Retribution","type": "Magical", "damage": 40},
+            "Divine Judgement": {"name": "Divine Judgement","type": "Magical", "damage": 50},
+            "Divine Intervention": {"name": "Divine Intervention","type": "Magical", "damage": 0},
+            "Divine Wrath": {"name": "Divine Wrath","type": "Magical", "damage": 60},
         }
 
         YODIE_GANG_ATTACK_LIST = {
-            "Yodie Blast": {"type": "Magical", "damage": 25},
-            "Yodie Strike": {"type": "Magical", "damage": 20},
-            "Yodie Flail": {"type": "Magical", "damage": 15},
-            "Yodie Swing": {"type": "Magical", "damage": 30},
-            "Yodie Rush": {"type": "Magical", "damage": 25},
-            "Yodie Shout": {"type": "Magical", "damage": 10},
-            "Yodie Scream": {"type": "Magical", "damage": 15},
-            "Yodie Smack": {"type": "Magical", "damage": 20},
+            "Yodie Blast": {"name": "Yodie Blast","type": "Magical", "damage": 25},
+            "Yodie Strike": {"name": "Yodie Strike","type": "Magical", "damage": 20},
+            "Yodie Flail": {"name": "Yodie Flail","type": "Magical", "damage": 15},
+            "Yodie Swing": {"name": "Yodie Swing","type": "Magical", "damage": 30},
+            "Yodie Rush": {"name": "Yodie Rush","type": "Magical", "damage": 25},
+            "Yodie Shout": {"name": "Yodie Shout","type": "Magical", "damage": 10},
+            "Yodie Scream": {"name": "Yodie Scream","type": "Magical", "damage": 15},
+            "Yodie Smack": {"name": "Yodie Smack","type": "Magical", "damage": 20},
         }
         if type == "Human":
             attack_name = random.choice(list(HUMAN_ATTACK_LIST.keys()))
@@ -1003,11 +1010,13 @@ class FightLoopTM(DefaultActionMenu):
         attack_probability = random.randint(1, 100)
         if attack_probability <= 20:
             player.hp -= attack["damage"]
-            print("The enemy attacks you with {} and deals {} points of damage.".format(attack.keys(), attack["damage"]))
+            print("The enemy attacks you with {} and deals {} points of damage.".format(attack["name"], attack["damage"]))
+            print("You have {} HP left.".format(player.hp))
         elif attack_probability <= 5:
             health_loss = attack["damage"] * 2
             player.hp -= health_loss
             print("Oh no, The enemy is listening to some banger tunes and attacks you with {}({}) points of damage.".format(attack, health_loss))
+            print("You have {} HP left.".format(player.hp))
 
     def fight_loop(self, enemy_name):
         '''
@@ -1071,12 +1080,12 @@ def death():
     # if player dies fighting valma the Soulbroken play ending 2
     # if player dies in a normal fight play ending 3
     print(game_over)
-    animate_text(credits_text, "slow")
     # Prints the ending and stats of the player and their achievements.
     print(f"Your level was {player.level}")
     print(f"You had {player.gold} gold")
     print(f"You killed player.kills enemies")
     print("Thanks for playing!")
+    animate_text(credits_text, "default")
     print("\nPress any key to continue")
     
     wait_for_keypress()
@@ -1325,7 +1334,7 @@ def chest():
 def credits():
     """Play the credits of the game"""
     background_theme("./SoundEngine5000/Weight of the World.wav")
-    animate_text(credits_text, "slow")
+    animate_text(credits_text, "default")
     animate_text(simpa_pic, "fast")
     input("\nPress enter to return to the main menu")
     background_theme("./SoundEngine5000/theme_song.wav")
