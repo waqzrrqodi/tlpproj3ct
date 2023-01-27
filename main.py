@@ -523,7 +523,7 @@ def menu():
 
 def options_menu():
     '''
-    So you can change text speed, mute music and alter font colour
+    So you can change text speed, mute music and alter font colour.
     '''
     global SETTING1
     global SETTING2
@@ -824,7 +824,7 @@ class FightLoopTM(DefaultActionMenu):
             self.fight_loop(enemy_name)
 
     def attack(self):
-        """When the player selects the attack option in a fight"""
+        """When the player selects the attack option in a fight. Chance to crit, and damage is based on strength and weapon damage."""
         random_fight_sound(fighting_sounds)
         strength_bonus = player.strength * 0.1
         if player.weapon["Name"] == "Empty":
@@ -847,7 +847,7 @@ class FightLoopTM(DefaultActionMenu):
             print("You have {} HP left.".format(player.hp))
 
     def run(self):
-        """When the player selects the run option in a fight"""
+        """When the player selects the run option in a fight. A chance to die or escape"""
         global player
         random_fight_sound(fighting_sounds)
         if random.randint(1, 100) >= 50:
@@ -866,7 +866,7 @@ class FightLoopTM(DefaultActionMenu):
             death()
 
     def heal(self):
-        """When the player selects the heal option in a fight"""
+        """When the player selects the heal option in a fight and show the items in the inventory"""
         random_fight_sound(fighting_sounds)
         if player.inventory.inv == []:
             print("You have no items to heal with!")
@@ -1016,17 +1016,18 @@ class FightLoopTM(DefaultActionMenu):
             death()
             # Check if the enemy has been defeated
         if self.enemy_health <= 0 and enemy_name != "Valma the Soulbroken":
-            print("\nThou hast defeated the enemy!")
-            print("\nThou hast leveled up!")
+            animate_text("\nThou hast defeated the enemy!", "fast")
+            animate_text("\nThou hast leveled up!", "fast")
             if player.hp < player.MAX_HP:
                 player.hp = player.MAX_HP
             else:
                 player.hp = player.hp
             print(f"You heal up to default health: {player.hp}")
             player.gold += self.enemy_gold
-            print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} shillings.")
+            animate_text(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} shillings.", "fast")
             sound_engine("./SoundEngine5000/levelup.wav")
             player.level += 1
+            input("Press enter to continue")
             return False
         elif self.instant_win == True:
             print("\nThou hast leveled up!")
@@ -1038,12 +1039,14 @@ class FightLoopTM(DefaultActionMenu):
             print(f"Player health: {player.hp}")
             sound_engine("./SoundEngine5000/levelup.wav")
             player.level += 1
+            input("Press enter to continue")
             return True
         elif self.enemy_health <= 0 and self.enemy_name == "Valma the Soulbroken":
             print("\nThou hast defeated Valma the soulbroken!")
             print(f"\nPlayer health: {player.hp}")
             player.gold += 99998888
             print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite shillings.")
+            input("Press enter to continue")
             return False
 
         # Check if the player has been a "has been"
@@ -1053,6 +1056,7 @@ class FightLoopTM(DefaultActionMenu):
 #--------------------------------------------------------------Death and Endings-----------------------------------------------------------------------#
 
 def death():
+    """The death function which is called when the player dies"""
     print("YOU DIED")
     # if player does something stupid and dies play ending 1
     # if player dies fighting valma the Soulbroken play ending 2
@@ -1073,14 +1077,17 @@ def death():
     quit()
 
 def ending1():
+    """The ending for the player who is a coward and runs away from the boss"""
     print(narr.COWARD_END)
     screen_engine()
 
 def ending2():
+    """The ending for the player who dies fighting the boss"""
     print(narr.TRUE_END_DEATH)
     screen_engine()
 
 def ending3():
+    """The ending for the player who dies fighting a normal enemy"""
     print(narr.NORMAL_DEATH)
     screen_engine()
     
@@ -1088,7 +1095,7 @@ def ending3():
 
 def game_loop():
     '''
-    The main game loop of the game which is used to run the main mechanics of the game
+    The main game loop of the game which is used to run the main mechanics of the game. Runs until the player dies or wins.
     '''
     while True:
         story()
@@ -1142,7 +1149,7 @@ def save_game():
 
 def load_game():
     """
-    Load the game from the savegame.dat file or a file specified by the user
+    Load the game from the savegame.dat file or a file specified by the user. Not in use.
     """
     
     global player
@@ -1183,6 +1190,7 @@ def story():
     menu()
 
     if story_progress == 0:
+        """The intro of the story to show the player what the game is about and a test mission"""
         clear_screen()
         animate_text(narr.INTRO_TXT[0], "fast")
         input("\nPress enter to continue")
@@ -1205,20 +1213,18 @@ def story():
                 animate_text(route[text], "fast")
                 input("\nPress enter to continue")
         # start the fight loop
-        is_coward = FightLoopTM(narr.PLACE_NAMES[place]["ENEMY"])
+        FightLoopTM(narr.PLACE_NAMES[place]["ENEMY"])
         # Prints the win text after the fight loop
-        if is_coward == False:
-            if len(route) != 1:
-                print(route[-1] + "\n")
-                input("\nPress enter to continue")
-                clear_screen()
+        if len(route) != 1:
+            print(route[-1] + "\n")
+            input("\nPress enter to continue")
+            clear_screen()
             # add 1 to the story progress
             story_progress += 1
-        elif is_coward == True:
-            is_coward = False
-        
-        
+
+
     if story_progress != 0:
+        """This is the story loop, it will run until the story_progress is equal to the length of the possible routes"""
         def get_random_places(used_routes):
             places = list(narr.PLACE_NAMES.keys())
             place1, place2, place3 = None, None, None
@@ -1264,17 +1270,13 @@ def story():
         elif route == narr.ROUTE7:
             item_shop(player)
         else:
-            is_coward = FightLoopTM(narr.PLACE_NAMES[choice]["ENEMY"])
+            FightLoopTM(narr.PLACE_NAMES[choice]["ENEMY"])
         
-        if is_coward == False:
-            if len(route) != 1:
-                print(route[-1] + "\n")
-                input("\nPress enter to continue")
-                clear_screen()
+        if len(route) != 1:
+            print(route[-1] + "\n")
+            input("\nPress enter to continue")
+            clear_screen()
             story_progress += 1
-        elif is_coward == True:
-            is_coward = False
-
 
     level += 1
     return level
@@ -1298,6 +1300,7 @@ def trap():
     return
 
 def chest():
+    """A chest that gives the player a random item"""
     chest = ChestSys()
     chest1 = chest.chest_generate()
     print("On your way to the destination you found a chest which contains:")
