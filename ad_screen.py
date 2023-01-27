@@ -6,6 +6,10 @@ def screen_engine():
     pygame.init()
     pygame.font.init()
 
+    pygame.mixer.music.fadeout(3)
+    pygame.mixer.music.load("./SoundEngine5000/reklam.wav")
+    pygame.mixer.music.play()
+
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode((1024, 512))
 
