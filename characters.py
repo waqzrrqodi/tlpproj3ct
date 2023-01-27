@@ -28,28 +28,36 @@ class Player( ):
 
     #equip the item from inventory
     def player_equip_item(self):
-        """Equip an item"""
-        while True:
+            """Equip an item"""
             #print inventory
             print("What item do you want to equip?")
             print("Inventory: ")
             if self.inventory.inv == []:
                 print("Inventory is empty")
+                input ("Press enter to continue")
+                return
             else:
                 for item in enumerate(self.inventory.inv):
                     print(f"""{item[0] + 1}. {item[1]["Name"]} """)
-            item_name = input("Item name: \n --> ")
-            for i in self.inventory.inv:
-                if i["Name"] == item_name:
-                    if i["Type"] == "Armour":
-                        self.armour = self.inventory.equip_item(item_name, self.armour)
-                        return
-                    elif i["Type"] == "Weapon":
-                        self.weapon = self.inventory.equip_item(item_name, self.weapon)
-                        return
-                    
-            print("Item not found")
-            input ("Press enter to continue")
+
+            item_choice = int(input("Item number: \n --> "))
+            item_choice -= 1
+
+            if item_choice <= len(self.inventory.inv):
+                item = self.inventory.inv[item_choice]
+                if item.get("Type") == "Armor":
+                    self.armour = self.inventory.equip_item(item, self.armour)
+                    print(f"""Armor: {self.armour["Name"]} equipped""")
+                    input("Press enter to continue")
+                    return
+                elif item.get("Type") == "Weapon":
+                    self.weapon = self.inventory.equip_item(item, self.weapon)
+                    print(f"""Weapon: {self.weapon["Name"]} equipped""")
+                    input("Press enter to continue")
+                    return
+            else:
+                print("Item not found")
+                input ("Press enter to continue")
 
     #unequip the item
     def player_unequip_item(self):
@@ -60,10 +68,11 @@ class Player( ):
         print (f"""Weapon: {self.weapon["Name"]}""")
         item_name = input("Item name: \n --> ")
         if item_name == self.armour["Name"]:
-            self.armour = self.inventory.unequip_item(item_name, self.armour)
+            #replace armer item with an empty one
+            self.armour = self.inventory.unequip_item(self.armour)
             return
         elif item_name == self.weapon["Name"]:
-            self.weapon = self.inventory.unequip_item(item_name, self.weapon)
+            self.weapon = self.inventory.unequip_item(self.weapon)
             return
         else:
             print("Item not found")

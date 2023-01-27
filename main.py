@@ -345,11 +345,12 @@ def inv_show():
                 if equip_choice == EQUIP:
                     clear_screen()
                     player.player_equip_item()
-                    break
+                    return
+                    
                 elif equip_choice == UNEQUIP:
                     clear_screen()
                     player.player_unequip_item()
-                    break
+                    return
                 else:
                     print("Invalid input")
                     continue
@@ -802,7 +803,7 @@ class FightLoopTM(DefaultActionMenu):
             enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
         else:
-            health_lost = player.strenght + player.weapon["Damage"] + random.randint(1, 5)
+            health_lost = player.strength + player.weapon["Damage"] + random.randint(1, 5)
             enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
 
