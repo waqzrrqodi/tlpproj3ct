@@ -12,7 +12,7 @@ from ad_screen import *
 
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'pygame'}
+    required = {'progressbar', 'pygame', 'emoji'}
 else:
     required = {'progressbar', 'pygame', 'getch'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
@@ -40,6 +40,7 @@ from pygame.locals import *
 import pickle
 from ui_elements import * # production materials
 import characters as ch
+
 
 if system() == "Windows":
     from msvcrt import getch as getkey
@@ -834,6 +835,9 @@ class FightLoopTM(DefaultActionMenu):
                 print("Critical hit!")
             self.enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
+            if self.enemy_health <= 0:
+                self.enemy_health = 0
+
             print(f"""The foe hast {self.enemy_health} health left""")
             print("You have {} HP left.".format(player.hp))
         else:

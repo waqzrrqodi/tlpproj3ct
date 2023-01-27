@@ -140,7 +140,7 @@ class Item_Creator_3000_V2():
             DIY_item["Type"] = "Heals"
             DIY_item["HP_Bonus"] = 0
             DIY_item["Damage"] = 0
-            DIY_item["Healing Capability"] = round(DIY_item["Healing Capability"]*0.5)
+            
         DIY_item["Worth"] = round(DIY_item["Cost"]*0.7)
         #Specifically for the empty item
         if type == "Empty":
