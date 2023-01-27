@@ -345,20 +345,20 @@ def inv_show():
                 input("\nPress enter to continue...")
                 clear_screen()
                 
-                print("Would you like to equip or unequip an item?")
-                equip_choice = int(input("1. Equip \n2. Unequip \n--> "))
-                if equip_choice == EQUIP:
-                    clear_screen()
-                    player.player_equip_item()
-                    return
+            print("Would you like to equip or unequip an item?")
+            equip_choice = int(input("1. Equip \n2. Unequip \n--> "))
+            if equip_choice == EQUIP:
+                clear_screen()
+                player.player_equip_item()
+                continue
                     
-                elif equip_choice == UNEQUIP:
-                    clear_screen()
-                    player.player_unequip_item()
-                    return
-                else:
-                    print("Invalid input")
-                    continue
+            elif equip_choice == UNEQUIP:
+                clear_screen()
+                player.player_unequip_item()
+                break
+            else:
+                print("Invalid input")
+                continue
                     
         elif inv_expasion.lower() == "n" or inv_expasion.lower() == "no" or inv_expasion.lower() == "q":
             break
@@ -1270,7 +1270,7 @@ def chest():
     chest.print_chest(chest1)
     print("Do you want to take the item? (y/N)")
     print("If you don't take the item, it will be destroyed")
-    choice = input(">>> ")
+    choice = input("--> ")
     if choice.lower() == "y":
         player.inventory.pickup_item(chest1[0])
         print("You took the item")

@@ -23,9 +23,6 @@ class Player( ):
         self.armour = armour
         self.weapon = weapon
 
-        item_test = item.create_item_DIY("Loke", "Poop", "Armor")
-        self.inventory.inv.append(item_test)
-
     #equip the item from inventory
     def player_equip_item(self):
             """Equip an item"""
@@ -70,13 +67,18 @@ class Player( ):
         if item_name == self.armour["Name"]:
             #replace armer item with an empty one
             self.armour = self.inventory.unequip_item(self.armour)
+            print("Armour unequipped")
+            input ("Press enter to continue")
             return
         elif item_name == self.weapon["Name"]:
             self.weapon = self.inventory.unequip_item(self.weapon)
+            print("Weapon unequipped")
+            input ("Press enter to continue")
             return
         else:
             print("Item not found")
             input ("Press enter to continue")
+            return
         
 class Human( ):
     """The human subclass"""
