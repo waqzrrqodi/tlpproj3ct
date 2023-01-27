@@ -197,11 +197,11 @@ class_info = '''
 ================================================================
 |        The human has a balanced amount of health,            |
 | as well as the ability to deal moderate damage to the enemy. | 
-|        He can also wear armour and wield weapons.            |
+|          He also has very high agility and speed.            |
 |                                                              | 
 |  The beast is equipped with sharp claws and thick skin,      |
 | and is thereforemore powerful in comparison to the human.    |
-|        It cannot, however, equip weapons or armour.          |
+|       It doesn't, however, possess the same speed as.        |
 ================================================================
 '''
 credits_text = '''

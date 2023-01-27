@@ -254,6 +254,7 @@ You enter the brothel but step right into a bear trap. A massive russian man app
 # Hurts the player
 ROUTE20 = [R20_TXT1]
 
+
 COIN_COLLECT1 = """
 You pick up the enemy's corpse and throw it in the trash. You find some coins in the trash."""
 
@@ -285,7 +286,38 @@ COIN_COLLECT8 = """
 Looks like the enemy was saving up for a rainy day, and today is your lucky day!
 """
 
-COIN_COLLECT_LIST = [COIN_COLLECT1, COIN_COLLECT2, COIN_COLLECT3, COIN_COLLECT4, COIN_COLLECT5, COIN_COLLECT6, COIN_COLLECT7, COIN_COLLECT8]
+COIN_COLLECT9 = """
+You plunder the enemy for all of their belongings and gain a considerable fortune.
+"""
+
+COIN_COLLECT10 = """
+The enemy doesn't have any money but you do find their digital crypto coin wallet. You see that 
+your foe has invested an immense amount of money into rimbo coin. You sell it off and gain some wealth.
+"""
+
+COIN_COLLECT11 = """
+You feel bad over hurting another living being and turn to alcoholism, as it is the only thing that
+distracts you from the guilt. You start drinking yourself do death and eventually pass out. When you 
+wake up you're surrounded by piles of money. The money instantly eliminates any feelings of guilt that 
+you may have possessed as you have earned a considerable fortune.
+"""
+
+COIN_COLLECT12 = """
+You sell the enemy's organs and get some money.
+"""
+
+COIN_COLLECT13 = """
+You don't find any money on the enemy, but you do get some income via tax fraud.
+"""
+
+COIN_COLLECT14 = """
+You realize that the enemy owns a large patch of land in Zrenjanin, Romania. You sell it and gain a
+big fortune.
+"""
+
+COIN_COLLECT_LIST = [COIN_COLLECT1, COIN_COLLECT2, COIN_COLLECT3, COIN_COLLECT4, COIN_COLLECT5, 
+COIN_COLLECT6, COIN_COLLECT7, COIN_COLLECT8, COIN_COLLECT9, COIN_COLLECT10, COIN_COLLECT11,
+COIN_COLLECT12, COIN_COLLECT13, COIN_COLLECT14]
 
 
 

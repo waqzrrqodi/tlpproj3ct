@@ -82,6 +82,11 @@ def animate_text(text, sleep_time):
         time.sleep(sleep_time)
     time.sleep(1)
 
+
+os.system('color 7')
+SETTING3 = 'white'
+
+
 def wait_for_keypress():
     '''
     Waits for a keypress on the keyboard
@@ -398,8 +403,8 @@ class PlayerAndNameSelect(DefaultActionMenu):
         user_name_input = input("What is your name? --> ")
         self.name = random.choice(VIKING_NAMES)
         clear_screen()
-        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis":
-            print("That is an absolutely beautiful name mate")
+        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis" or user_name_input == "Booster Gold":
+            print("That is an absolutely beautiful name mate.")
             self.name = user_name_input
         else:
             print(f"{user_name_input} is a good name, though I think {self.name} is a stronger and a more viking name.")
