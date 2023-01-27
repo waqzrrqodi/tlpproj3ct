@@ -12,9 +12,9 @@ from ad_screen import *
 
 # Check if the user has the required packages installed
 if system() == "Windows":
-    required = {'progressbar', 'pygame', 'wit', 'webp'}
+    required = {'progressbar', 'pygame'}
 else:
-    required = {'progressbar', 'pygame', 'getch', 'wit', 'webp'}
+    required = {'progressbar', 'pygame', 'getch'}
 installed = {pkg.key for pkg in pkg_resources.working_set}
 missing = required - installed
 
