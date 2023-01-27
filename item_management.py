@@ -291,13 +291,6 @@ class ChestSys():
             Worth: {(chest[0])["Worth"]}
             Rarity: {(chest[0])["Rarity"]}
             """)
-        print(f"And...")
-        print(f""" some scrap at the bottom of the chest. \n
-        Name: {(chest[1])["Name"]}
-        Type: {(chest[1])["Type"]}
-        Worth: {(chest[1])["Worth"]}
-        Rarity: {(chest[1])["Rarity"]}
-        """)
 '''
 Chest = ChestSys()  # Create chest
 chest1 = Chest.chest_generate() # Generate a chest
