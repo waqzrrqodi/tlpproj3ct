@@ -850,17 +850,22 @@ class FightLoopTM(DefaultActionMenu):
         """When the player selects the run option in a fight"""
         global player
         random_fight_sound(fighting_sounds)
+
         if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
             background_theme("./SoundEngine5000/battle_theme.wav")
+
         elif random.randint(1, 100) >= 10:
             print("Thau successfully run away from the fight!")
             if len(player.inventory.inv) > 0:
                 print("Though it came with an item loss")
-                player.inventory.inv.remove(random.choice(list(player.inventory.inv)))
+                item_lost = player.inventory.inv.remove(random.choice(list(player.inventory.inv)))
+                print(f"You lost {item_lost['Name']}")
             else:
                 print("Since you had no items, you lost nothing peasants.")
+            print("press enter to continue...")
             return True
+
         elif random.randint(1, 100) >= 1:
             print("You try to run, but thau trips and falls, shattering every bone in your body.")
             death()
