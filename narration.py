@@ -192,7 +192,7 @@ ROUTE14 = [R14_TXT1, R14_TXT2, R14_TXT3, R14_TXT4]
 
 # Route 15 - "Rimbo Graveyard"
 R15_TXT1 = '''
-You walk towards the graveyard, knowing the dead are restless. You quickly unsheathe your sword and 
+You walk towards the graveyard, knowing the dead are restless. You quickly unsheathe your weapon and 
 challenge the skeleton horde to a duel. A battle ensues.
 '''
 # Battle - skeletons
@@ -223,7 +223,7 @@ ROUTE17 = [R17_TXT1]
 
 # Route 18 - "Witch's Tower"
 R18_TXT1 = '''
-You approach the entrance of the Witch's Tower, and say "damn shawty you live like this?". You ready your sword and shield, and begin to ascend the tower. The witch appears out of thin air and throws a pathetic excuse of a punch towards you, a battle begins.
+You approach the entrance of the Witch's Tower, and say "damn shawty you live like this?". You ready your weapon, and begin to ascend the tower. The witch appears out of thin air and throws a pathetic excuse of a punch towards you, a battle begins.
 '''
 # Battle - Witch
 R18_TXT2 = '''

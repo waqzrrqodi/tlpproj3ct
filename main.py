@@ -48,6 +48,7 @@ else:
 SETTING1 = ""
 SETTING2 = "on"
 SETTING3 = "white"
+item_creator = Item_Creator_3000_V2()
 def animate_text(text, sleep_time):
     '''
     Makes text appear one letter at a time at a given speed
@@ -246,10 +247,10 @@ class DefaultActionMenu():
                 print("Invalid input")
                 input("Press enter to continue")
                 continue
-            except:
-                print("Unknown error hath occured")
-                input("Press enter to continue")
-                continue
+            # except:
+            #     print("Unknown error hath occured")
+            #     input("Press enter to continue")
+            #     continue
 
 
     def subclass_selection(self, subclass_1, subclass_2, subclass_3):
@@ -303,7 +304,7 @@ def inv_show():
     #small splash screen
     print(f"\nYour name: {player.name}")
     print(f"\nPlayer Health: {player.hp}")
-    print(f"\nPlayer Strenght: {player.strength}")
+    print(f"\nPlayer Strength: {player.strength}")
     print(f"\nPlayer Awesomeness level: {player.level}")
     print(f"""\nPlayer Armour: {player.armour["Name"]}""")
     print(f"""\nPlayer Weapon: {player.weapon["Name"]}""")
@@ -320,13 +321,13 @@ def inv_show():
             print(f"""
             Armour: {player.armour["Name"]} 
             Armour type: {player.armour["Type"]}
-            Armour worth: {player.armour["Worth"]}
+            Armour worth: {player.armour["Worth"]} €
             Armour rarity: {player.armour["Rarity"]}
             """)
             print(f"""
             Weapon: {player.weapon["Name"]}
             Weapon type: {player.weapon["Type"]}
-            Weapon worth: {player.weapon["Worth"]}
+            Weapon worth: {player.weapon["Worth"]} €
             Weapon rarity: {player.weapon["Rarity"]}
             """)
             print("---------------------------------------------")
@@ -513,7 +514,7 @@ def menu():
             inv_show()
             continue
         if menu_choice == CONTINUE or menu_choice == "":
-            animate_text("Continuing with story...", "default")
+            animate_text("Continuing with story...", "fast")
             clear_screen()
             return
         if menu_choice == OPTIONS:
@@ -824,9 +825,9 @@ class FightLoopTM(DefaultActionMenu):
             death()
             return
         if self.instant_win == False:
-            print(f"Thou hast encountered {enemy_name}!")
+            print(f"\nThou hast encountered {enemy_name}!")
             print(f"The {enemy_name} hath {self.enemy_health} health")
-            print(f"Thou hast {player.hp} health")
+            print(f"\nThou hast {player.hp} health")
             print(f"""Thou hast {player.weapon["Name"]} which deals {player.weapon["Damage"]} damage""")
             print(f"""Thou hast {player.armour["Name"]} which protects with {player.armour["HP_Bonus"] } armor""")
             self.fight_loop(enemy_name)
@@ -836,13 +837,14 @@ class FightLoopTM(DefaultActionMenu):
     def attack(self):
         """When the player selects the attack option in a fight"""
         random_fight_sound(fighting_sounds)
+        strength_bonus = player.strength * 0.1
         if player.weapon == None:
-            health_lost = player.strength + random.randint(1, 5)
+            health_lost = strength_bonus + random.randint(1, 5)
             enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
         else:
-            health_lost = player.strength + player.weapon["Damage"] + random.randint(1, 5)
-            enemy_health -= health_lost
+            health_lost = strength_bonus + player.weapon["Damage"] + random.randint(1, 5)
+            self.enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
 
     def run(self):
@@ -868,7 +870,7 @@ class FightLoopTM(DefaultActionMenu):
         random_fight_sound(fighting_sounds)
         damage_decrease = random.randint(0, 10)
         if player.armour["Equip"] == False or player.armour["HP_Bonus"] <= 0:
-            damage_decrease -= (damage-damage_decrease)
+            damage_decrease = (damage-damage_decrease)
         if player.armour["HP_Bonus"] > 0:
             for i in range(damage-damage_decrease-1):
                 if player.armour["HP_Bonus"] <= 0:
@@ -994,14 +996,14 @@ class FightLoopTM(DefaultActionMenu):
             player.hp -= int(attack["damage"])
         if player.armour["HP_Bonus"] != None or player.armour["HP_Bonus"] > 0:
             for i in range(int(attack["damage"]-1)):
-                if player > 0:
+                if player.hp > 0:
                     player.hp -= 1
                 else:
                     death()
         attack_probability = random.randint(1, 100)
         if attack_probability <= 20:
             player.hp -= attack["damage"]
-            print("The enemy attacks you with {} and deals {} points of damage.".format(attack, attack["damage"]))
+            print("The enemy attacks you with {} and deals {} points of damage.".format(attack.keys(), attack["damage"]))
         elif attack_probability <= 5:
             health_loss = attack["damage"] * 2
             player.hp -= health_loss
@@ -1265,13 +1267,13 @@ def story():
                 input("\nPress enter to continue")
         
         if route == narr.ROUTE17:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("", "Rare", "Weapon"))
+            player.inventory.pickup_item(item_creator.create_item_DIY("", "Rare", "Weapon"))
         elif route == narr.ROUTE6:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Used Rollin pin", "Legendary", "Weapon"))
+            player.inventory.pickup_item(item_creator.create_item_DIY("Used Rollin pin", "Legendary", "Weapon"))
         elif route == narr.ROUTE9:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("Bag of cocaine", "Mythic", "Heals"))
+            player.inventory.pickup_item(item_creator.create_item_DIY("Bag of cocaine", "Mythic", "Heals"))
         elif route == narr.ROUTE8:
-            player.inventory.pickup_item(Item_Creator_3000_V2.create_item_DIY("", "Poop", "Armor"))
+            player.inventory.pickup_item(item_creator.create_item_DIY("", "Poop", "Armor"))
         elif route == narr.ROUTE7:
             item_shop(player)
         else:
@@ -1309,14 +1311,16 @@ def trap():
 def chest():
     chest = ChestSys()
     chest1 = chest.chest_generate()
+    print("On your way to the destination you found a chest which contains:")
     chest.print_chest(chest1)
-    print("Do you want to take the item? (y/N)")
+    print("Do you want to take the item? (Y/n)")
     print("If you don't take the item, it will be destroyed")
     choice = input("--> ")
-    if choice.lower() == "y":
+    if choice.lower() != "n":
         player.inventory.pickup_item(chest1[0])
         print("You took the item")
         input("\nPress enter to continue")
+        clear_screen()
 
 def credits():
     """Play the credits of the game"""
@@ -1335,7 +1339,7 @@ if dev.lower() == "y":
 else:
     dev = False
 if dev == True:
-    player = ch.Player(100, 100, "Bing Chillin' ", "Beast", 10)
+    player = ch.Player(10, 100, "Bing Chillin' ", "Beast", 10)
     game_loop()
 else:
     intro()

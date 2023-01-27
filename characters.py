@@ -85,7 +85,7 @@ class Human( ):
     def __init__(self) -> None:
         self.HP = 100
         self.SPEED = 10
-        self.STRENGTH = 10
+        self.STRENGTH = 5
         self.SUBCLASS = "Human"
 
 class Gnoblin( ):
@@ -101,7 +101,7 @@ class Beast( ):
     def __init__(self) -> None:
         self.HP = 200
         self.SPEED = 2
-        self.STRENGTH = 15
+        self.STRENGTH = 10
         self.SUBCLASS = "Beast"
 class More_Info_Player( ):
     """The player class with more info aka the god class"""

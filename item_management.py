@@ -1,4 +1,4 @@
-import random as rand
+import random
 
 # För alla inventory system inklusive
 MAX_INV_CAP = 5
@@ -119,16 +119,26 @@ class Item_Creator_3000_V2():
         if type == "Weapon":
             DIY_item["Type"] = "Weapon"
             DIY_item["Healing Capability"] = 0
+            DIY_item["Damage"] = random.randint(1, 10)
+            DIY_item["Cost"] = round(DIY_item["Damage"]*5)
         if type == "Armor" or type == "Armour":
             DIY_item["Type"] = "Armor"
             DIY_item["Damage"] = 0
-            DIY_item["HP_Bonus"] = 0
+            if DIY_item["Name"] == "Skin":
+                DIY_item["HP_Bonus"] = 1
+            else:
+                DIY_item["HP_Bonus"] = random.randint(10, 50)
             DIY_item["Healing Capability"] = 0
+            if DIY_item["Name"] == "Skin":
+                DIY_item["Cost"] = 1
+            else:
+                DIY_item["Cost"] = round(DIY_item["HP_Bonus"]*0.5)
         if type == "Heals":
             DIY_item["Type"] = "Heals"
             DIY_item["HP_Bonus"] = 0
             DIY_item["Damage"] = 0
-
+            DIY_item = round(DIY_item["Healing Capability"]*0.5)
+        DIY_item["Worth"] = round(DIY_item["Cost"]*0.7)
         #Specifically for the empty item
         if type == "Empty":
             DIY_item["Type"] = "Empty"
@@ -149,25 +159,25 @@ class Item_Creator_3000_V2():
         WEAPON = 1
         ARMOR = 2
         HEALS = 3
-        rand_item_choice = rand.randint(1,3)
+        rand_item_choice = random.randint(1,3)
         #Creating a random item from the list with specific attributes
         if rand_item_choice == WEAPON:
             item_iteration_weapon_list = list(ITEM_LIST.get("Weapons"))
             self.type = "Weapon"
-            self.name = item_iteration_weapon_list[rand.randint(0, len(item_iteration_weapon_list)-1)]
-            self.damage = rand.randint(3, 5)
+            self.name = item_iteration_weapon_list[random.randint(0, len(item_iteration_weapon_list)-1)]
+            self.damage = random.randint(15, 50)
 
         if rand_item_choice == ARMOR:
             item_iteration_armor_list = list(ITEM_LIST.get("Armor"))
             self.type = "Armor"
-            self.name = item_iteration_armor_list[rand.randint(0, len(item_iteration_armor_list)-1)]
-            self.armor = rand.randint(60, 90)
+            self.name = item_iteration_armor_list[random.randint(0, len(item_iteration_armor_list)-1)]
+            self.armor = random.randint(60, 90)
 
         if rand_item_choice == HEALS:
             item_iteration_heals_list = list(ITEM_LIST.get("Heals"))
             self.type = "Heals"
-            self.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
-            self.healing = rand.randint(30, 50)
+            self.name = item_iteration_heals_list[random.randint(0, len(item_iteration_heals_list)-1)]
+            self.healing = random.randint(30, 50)
 
         #Creating a random cost and worth for the item
         #Generic item attributes
