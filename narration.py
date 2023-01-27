@@ -317,7 +317,7 @@ big fortune.
 
 COIN_COLLECT_LIST = [COIN_COLLECT1, COIN_COLLECT2, COIN_COLLECT3, COIN_COLLECT4, COIN_COLLECT5, 
 COIN_COLLECT6, COIN_COLLECT7, COIN_COLLECT8, COIN_COLLECT9, COIN_COLLECT10, COIN_COLLECT11,
-COIN_COLLECT12, COIN_COLLECT13, COIN_COLLECT14]
+COIN_COLLECT12, COIN_COLLECT13, COIN_COLLECT14,]
 
 
 
@@ -329,7 +329,6 @@ They attack you with spears and tie you to a cross. You are branded as a coward 
 life in agony, unable to ever escape from Rimbo.
 '''
 
-
 NORMAL_DEATH = '''
 You have fallen, and have thus been eternally condemned to the endless dead end that is Rimbo. Any chance of
 escaping has vanished into thin air, as you draw your last breath and become a trapped spirit, forever chained
@@ -337,9 +336,9 @@ to the worst hellscape in all of the realms.
 '''
 
 BOSS_DEATH = '''
-You think you've won, but the enemy is too strong.
-You are defeated and captured by Rimbo.
-You are branded as a coward and live your life in agony, unable to ever escape from Rimbo.'''
+You thought you could win, but the enemy was too strong. You are a failure. Your weakened soul is chained 
+into an eternal contract and you suffer a fate worse than death.
+'''
 
 # The Ending
 TRUE_END = '''

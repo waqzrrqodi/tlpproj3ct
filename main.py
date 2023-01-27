@@ -46,8 +46,8 @@ if system() == "Windows":
 else:
     from getch import getch as getkey_linux # For linux systems, getch is not included in the standard library on windows.
 SETTING1 = ""
-SETTING2 = ""
-SETTING3 = ""
+SETTING2 = "on"
+SETTING3 = "white"
 def animate_text(text, sleep_time):
     '''
     Makes text appear one letter at a time at a given speed
@@ -82,10 +82,6 @@ def animate_text(text, sleep_time):
         time.sleep(sleep_time)
     time.sleep(1)
 
-
-os.system('color 7')
-SETTING3 = 'white'
-SETTING2 = 'on'
 
 def wait_for_keypress():
     '''
@@ -1281,8 +1277,8 @@ def chest():
 
 def credits():
     """Play the credits of the game"""
-    background_theme("./SoundEngine5000/the kill.wav")
-    animate_text(credits_text, "medium")
+    background_theme("./SoundEngine5000/Weight of the World.wav")
+    animate_text(credits_text, "slow")
     animate_text(simpa_pic, "fast")
     input("\nPress enter to return to the main menu")
     background_theme("./SoundEngine5000/theme_song.wav")
