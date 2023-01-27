@@ -240,7 +240,12 @@ def item_shop(player):
 
         print("--------------------------------------------------")
         print("Which item would you like to buy? you have", player.gold, "amount of shillings")
-        item_choice = int(input("--> "))
+        try:
+            item_choice = int(input("--> "))
+        except ValueError:
+            print("Please provide a valid item number")
+            return
+        
         item_choice -= 1
 
         #Checks if the choice is withing range

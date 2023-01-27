@@ -349,7 +349,16 @@ def inv_show():
                 clear_screen()
                 
             print("Would you like to equip, unequip or purchase an item?")
-            equip_choice = int(input("1. Equip \n2. Unequip \n3. Purchase \n--> "))
+            try: 
+                equip_choice = int(input("1. Equip \n2. Unequip \n3. Purchase \n--> "))
+            except ValueError:
+                print("Invalid input")
+                input("Press enter to continue...")
+                continue
+            except:
+                print("Unknown error has occured")
+                input("Press enter to continue...")
+                continue
             if equip_choice == EQUIP:
                 clear_screen()
                 player.player_equip_item()
@@ -864,13 +873,13 @@ class FightLoopTM(DefaultActionMenu):
         else:
             for item in enumerate(player.inventory.inv):
                 print(f"""{item[0] + 1}. {item[1]["Name"]} """)
-            print("Which item would you like to use to heal?")
+            print("Which item would you like to use to heal? Input number of item...")
             item_choice = int(input("--> "))
             item_choice -= 1
             if item_choice <= len(player.inventory.inv):
-                if player.inventory.inv[item_choice].get("Type") == "Healing":
-                    print(f"""You used {player.inventory.inv[item_choice].get("Name")} to heal for {player.inventory.inv[item_choice].get("Healing")} health""")
-                    player.hp += player.inventory.inv[item_choice].get("Healing")
+                if player.inventory.inv[item_choice].get("Type") == "Heals":
+                    print(f"""You used {player.inventory.inv[item_choice].get("Name")} to heal for {player.inventory.inv[item_choice].get("Healing Capability")} health""")
+                    player.hp += player.inventory.inv[item_choice].get("Healing Capability")
                     player.inventory.inv.pop(item_choice)
                     print(f"Your current health is {player.hp}")
                     input("Press enter to continue \n -->")
