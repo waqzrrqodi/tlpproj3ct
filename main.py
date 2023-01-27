@@ -1085,16 +1085,19 @@ def ending1():
     """The ending for the player who is a coward and runs away from the boss"""
     print(narr.COWARD_END)
     screen_engine()
+    quit()
 
 def ending2():
     """The ending for the player who dies fighting the boss"""
     print(narr.TRUE_END_DEATH)
     screen_engine()
+    quit()
 
 def ending3():
     """The ending for the player who dies fighting a normal enemy"""
     print(narr.NORMAL_DEATH)
     screen_engine()
+    quit()
     
 #-------------------------------------------------------------------------Game Functions----------------------------------------------------------------#
 
