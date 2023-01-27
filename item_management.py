@@ -19,35 +19,28 @@ class InventorySys():
             self.inv_cap += upgrade_range
             print(f"Inventory max space upgraded to {self.inv_cap}")
 
-    def equip_item(self, item_name, current_item):
+    def equip_item(self, item, current_item):
         """Equip an item"""
-        for item in self.inv:
-            if item["Name"] == item_name:
-                item["Equip"] = True
-                self.inv.remove(item)
 
-                current_item["Equip"] = False
-                self.inv.append(current_item)
+        item["Equip"] = True
+        self.inv.remove(item)
+
+        current_item["Equip"] = False
+        self.inv.append(current_item)
                     
-                print(item)
-                return item
-        
+        print(item)
+        return item
+
             
     #let the player unequip an item
-    def unequip_item(self, current_item_name, current_item):
+    def unequip_item(self, current_item):
         """Unequip an item"""
-        for item in self.inv:
-            if item["Name"] == current_item_name:
-                item["Equip"] = False
-                self.inv.append(current_item)
+        current_item["Equip"] = False
+        self.inv.append(current_item)
                 
-                empty_item = Item_Creator_3000_V2()
-                empty_item = empty_item.create_item_random("Empty", "Empty", "Empty")
-                return empty_item
-        else:
-            print("Item not found")
-            input ("Press enter to continue")
-            return current_item
+        empty_item = Item_Creator_3000_V2()
+        empty_item = empty_item.create_item_DIY("Empty", "Empty", "Empty")
+        return empty_item
 
     def pickup_item(self, item):
         """Pickup an item"""
@@ -101,6 +94,7 @@ ITEM_LIST = {
 
 class Item_Creator_3000_V2():
     def __init__(self):
+        #Defining various item attributes
         self.hp_bonus = None
         self.healing = None
         self.damage = None
@@ -115,7 +109,6 @@ class Item_Creator_3000_V2():
 
     def create_item_DIY(self, name, rarity, type):
         """When in development you want to create an item on the fly"""
-        type = type.lower()
         DIY_item = self.create_item_random()
         DIY_item["Rarity"] = rarity
         if name == None or name == "":
@@ -156,6 +149,7 @@ class Item_Creator_3000_V2():
         ARMOR = 2
         HEALS = 3
         rand_item_choice = rand.randint(1,3)
+        #Creating a random item from the list with specific attributes
         if rand_item_choice == WEAPON:
             item_iteration_weapon_list = list(ITEM_LIST.get("Weapons"))
             self.type = "Weapon"
@@ -171,6 +165,8 @@ class Item_Creator_3000_V2():
             self.type = "Heals"
             self.name = item_iteration_heals_list[rand.randint(0, len(item_iteration_heals_list)-1)]
             self.healing = rand.randint(30, 50)
+        #Creating a random cost and worth for the item
+        #Generic item attributes
         self.cost = rand.randint(30, 350)
         self.worth = round(self.cost*0.9)
         self.rarity = self.item_rarity(self.cost)
@@ -226,6 +222,7 @@ def item_shop(player):
         else:
             print("Please provide a valid item number")
 
+    #Sell items
     elif buy_sell_item == "sell":
         print("Which item would you like to sell?")
         for i in range(len(player.inventory.inv)):
