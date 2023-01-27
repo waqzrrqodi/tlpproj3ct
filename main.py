@@ -210,9 +210,10 @@ class DefaultActionMenu():
         HEAL = "h"
         INFO = "i"
         player_action = None
-        print(fight_menu_choices)
-        selection = input("-->").lower()
+        
         while True:
+            print(fight_menu_choices)
+            selection = input("-->").lower()
             try:
                 if selection == ATTACK or selection == "attack" or selection == "1":
                     print(f"Attack Selected")
@@ -236,12 +237,8 @@ class DefaultActionMenu():
                 elif selection == INFO or selection == "info" or selection == "5":
                     """Prints more info about the player's attacks and info about the enemy"""
                     print(f"Info selected")
-                    print(f"Enemy info: {self.enemy_name} \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
-                    print(f"""Player info: \n 
-                    Player health:{player.hp} 
-                    Player Strength: {player.strength}
-                    Player weapon damage: {player.weapon["Damage"]}
-                    """)
+                    print(f"Enemy info: \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
+                    print(f"""Player info: \n Player health:{player.hp} \n Player Strength: {player.strength} \n Player weapon damage: {player.weapon["Damage"]} \n Player Armor: {player.armour["HP_Bonus"]}""")
                     input("Press enter to continue")
                     continue
                 else:
@@ -407,7 +404,7 @@ class PlayerAndNameSelect(DefaultActionMenu):
         user_name_input = input("What is your name? --> ")
         self.name = random.choice(VIKING_NAMES)
         clear_screen()
-        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis" or user_name_input == "Booster Gold":
+        if user_name_input == "Martin" or user_name_input == "Oskis" or user_name_input == "Sebbis" or user_name_input == "Kaspis" or user_name_input == "Booster shillings":
             print("That is an absolutely beautiful name mate.")
             self.name = user_name_input
         else:
@@ -843,7 +840,7 @@ class FightLoopTM(DefaultActionMenu):
         """When the player selects the attack option in a fight"""
         random_fight_sound(fighting_sounds)
         strength_bonus = player.strength * 0.1
-        if player.weapon == None:
+        if player.weapon["Name"] == "Empty":
             health_lost = strength_bonus + random.randint(1, 5)
             self.enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
@@ -860,10 +857,12 @@ class FightLoopTM(DefaultActionMenu):
         if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
             background_theme("./SoundEngine5000/battle_theme.wav")
-            self.fight_loop(self.enemy_name)
+            return False
         elif random.randint(1, 100) >= 10:
             print("Thau successfully run away from the fight!")
             print("Though it came with an item loss")
+            player.inventory.inv.pop(random.choice(list(player.inventory.inv)))
+            return True
         elif random.randint(1, 100) >= 1:
             print("You try to run, but thau trips and falls, shattering every bone in your body.")
             death()
@@ -905,7 +904,7 @@ class FightLoopTM(DefaultActionMenu):
             for item in enumerate(player.inventory.inv):
                 print(f"""{item[0] + 1}. {item[1]["Name"]} """)
             print("Which item would you like to use to heal?")
-            item_choice = input("--> ")
+            item_choice = int(input("--> "))
             item_choice -= 1
             if item_choice <= len(player.inventory.inv):
                 if player.inventory.inv[item_choice].get("Type") == "Healing":
@@ -1037,7 +1036,11 @@ class FightLoopTM(DefaultActionMenu):
             if user_selection == "attack":
                 self.attack()
             elif user_selection == "run":
-                self.run()
+                escape_rate = self.run()
+                if escape_rate == True:
+                    break
+                else:
+                    continue
             elif user_selection == "defend":
                 self.defend(self.enemy_damage)
             elif user_selection == "heal":
@@ -1051,7 +1054,7 @@ class FightLoopTM(DefaultActionMenu):
                 print("\nThou hast leveled up!")
                 print(f"Player health: {player.hp}")
                 player.gold += self.enemy_gold
-                print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} gold.")
+                print(random.choice(narr.COIN_COLLECT_LIST) + f" You have gained {self.enemy_gold} shillings.")
                 sound_engine("./SoundEngine5000/levelup.wav")
                 player.level += 1
                 break
@@ -1059,7 +1062,7 @@ class FightLoopTM(DefaultActionMenu):
                 print("\nThou hast defeated Valma the soulbroken!")
                 print(f"\nPlayer health: {player.hp}")
                 player.gold += 99998888
-                print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite gold.")
+                print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite shillings.")
                 break
 
             # Enemy attacks the player
@@ -1079,7 +1082,7 @@ def death():
     print(game_over)
     # Prints the ending and stats of the player and their achievements.
     print(f"Your level was {player.level}")
-    print(f"You had {player.gold} gold")
+    print(f"You had {player.gold} shillings")
     print(f"You killed player.kills enemies")
     print("Thanks for playing!")
     animate_text(credits_text, "default")
@@ -1255,7 +1258,7 @@ def story():
             if choice == None:
                 print("Please choose a valid route")
         route = narr.PLACE_NAMES[choice]["ROUTE"]
-        random_trap_chest = random.choice(["chest", "chest", "chest"])
+        random_trap_chest = random.choice(["chest", "trap", "chest"])
         if random_trap_chest == "trap":
             trap()
         elif random_trap_chest == "chest":
@@ -1313,6 +1316,7 @@ def trap():
         player.hp -= 20
         print("You got caught in the trap")
         input("\nPress enter to continue")
+    return
 
 def chest():
     chest = ChestSys()
@@ -1325,6 +1329,20 @@ def chest():
     if choice.lower() != "n":
         player.inventory.pickup_item(chest1[0])
         print("You took the item")
+
+        print("Would you like to equip the item? (Y/n)")
+        choice = input("--> ")
+        if choice.lower() != "n":
+            player.inventory.equip_item(chest1[0])
+            print("You equipped the item")
+            inv_show()
+        else:
+            print("You didn't equip the item")
+        
+        input("\nPress enter to continue")
+        clear_screen()
+    else:
+        print("You didn't take the item")
         input("\nPress enter to continue")
         clear_screen()
 
