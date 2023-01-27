@@ -214,44 +214,46 @@ class DefaultActionMenu():
         player_action = None
         print(fight_menu_choices)
         selection = input("-->").lower()
-        try:
-            if selection == ATTACK:
-                print(f"Attack Selected")
-                return "attack"
+        while True:
+            try:
+                if selection == ATTACK or selection == "attack" or selection == "1":
+                    print(f"Attack Selected")
+                    time.sleep(0.5)
+                    return "attack"
 
-            elif selection == DEFEND:
-                print(f"Defend selected")
-                return "defend"
+                elif selection == DEFEND or selection == "defend" or selection == "2":
+                    print(f"Defend selected")
+                    time.sleep(0.5)
+                    return "defend"
 
-            elif selection == HEAL:
-                print(f"Heal selected")
-                return "heal"
+                elif selection == HEAL or selection == "heal" or selection == "3":
+                    print(f"Heal selected")
+                    time.sleep(0.5)
+                    return "heal"
 
-            elif selection == INFO:
-                """Prints more info about the player's attacks and info about the enemy"""
-                print(f"Info selected")
-                print(f"Enemy info: {self.enemy_name} \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
-                print(f"""Player info: \n 
-                Player health:{player.hp} 
-                Player Strength: {player.strength}
-                Player weapon damage: {player.weapon["Damage"]}
-                """)
-                user_choice = input("Please type b to go back --> ")
-                if user_choice.lower() == "b":
-                    self.fight_menu()
+                elif selection == INFO or selection == "info" or selection == "4":
+                    """Prints more info about the player's attacks and info about the enemy"""
+                    print(f"Info selected")
+                    print(f"Enemy info: {self.enemy_name} \n Enemy health: {self.enemy_health} \n Enemy damage: {self.enemy_damage}")
+                    print(f"""Player info: \n 
+                    Player health:{player.hp} 
+                    Player Strength: {player.strength}
+                    Player weapon damage: {player.weapon["Damage"]}
+                    """)
+                    input("Press enter to continue")
+                    continue
                 else:
                     print("Invalid input")
-                    self.fight_menu()
-            else:
+                    input("Press enter to continue")
+                    continue
+            except(IndexError,ValueError):
                 print("Invalid input")
-                self.fight_menu()
-        except(IndexError,ValueError):
-            print("Invalid input")
-            self.fight_menu()
-        except:
-            print("Unknown error hath occured")
-            self.fight_menu()
-        return player_action
+                input("Press enter to continue")
+                continue
+            except:
+                print("Unknown error hath occured")
+                input("Press enter to continue")
+                continue
 
 
     def subclass_selection(self, subclass_1, subclass_2, subclass_3):
@@ -708,6 +710,13 @@ def sound_engine(sound):
     pygame.mixer.Sound(sound)
     return pygame.mixer.Sound(sound)
 
+def random_fight_sound(list):
+    #Randomize item from list
+    random_sound = random.choice(list)
+    #Play random item from list
+    random_sound.play()
+    
+
 chest_sound = sound_engine("./SoundEngine5000/Chest_sound.wav")
 item_sound = sound_engine("./SoundEngine5000/Item_Pickup.wav")
 enemy_grunt = sound_engine("./SoundEngine5000/Enemy_Grunt.wav")
@@ -716,6 +725,15 @@ level_up = sound_engine("./SoundEngine5000/levelup.wav")
 # level_up = sound_engine("./SoundEngine5000/Level_Up.wav")
 
 # chest_sound.play()
+
+#Legalize fighting sounds
+Dab_Holics = sound_engine("./SoundEngine5000/Nukes/Dab_Holics.wav")
+Legalize = sound_engine("./SoundEngine5000/Nukes/Legalize.wav")
+Nuke_Music = sound_engine("./SoundEngine5000/Nukes/Nuke_Music.wav")
+War_Crime = sound_engine("./SoundEngine5000/Nukes/War_Crime.wav")
+WTF_He = sound_engine("./SoundEngine5000/Nukes/WTF_He.wav")
+
+fighting_sounds = [Dab_Holics, Legalize, Nuke_Music, War_Crime, WTF_He]
 
 #-----------------------------------------------------------------------FIGHTING-----------------------------------------------------------------------#
 class FightLoopTM(DefaultActionMenu):
@@ -806,6 +824,7 @@ class FightLoopTM(DefaultActionMenu):
 
     def attack(self):
         """When the player selects the attack option in a fight"""
+        random_fight_sound(fighting_sounds)
         if player.weapon == None:
             health_lost = player.strength + random.randint(1, 5)
             enemy_health -= health_lost
@@ -817,6 +836,7 @@ class FightLoopTM(DefaultActionMenu):
 
     def run(self):
         """When the player selects the run option in a fight"""
+        random_fight_sound(fighting_sounds)
         if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
             background_theme("./SoundEngine5000/battle_theme.wav")
@@ -834,6 +854,7 @@ class FightLoopTM(DefaultActionMenu):
     def defend(self, damage):
         """When the player selects the defend option in a fight"""
         """Defend"""
+        random_fight_sound(fighting_sounds)
         damage_decrease = random.randint(0, 10)
         if player.armour["Equip"] == False or player.armour["HP_Bonus"] <= 0:
             player.hp -= (damage-damage_decrease)
@@ -860,10 +881,11 @@ class FightLoopTM(DefaultActionMenu):
 
     def heal(self):
         """When the player selects the heal option in a fight"""
-        if self.inventory.inv == []:
+        random_fight_sound(fighting_sounds)
+        if player.inventory.inv == []:
             print("You have no items to heal with!")
         else:
-            for item in enumerate(self.inventory.inv):
+            for item in enumerate(player.inventory.inv):
                 print(f"""{item[0] + 1}. {item[1]["Name"]} """)
             print("Which item would you like to use to heal?")
             item_choice = input("--> ")
@@ -946,6 +968,8 @@ class FightLoopTM(DefaultActionMenu):
             attack = random.choice(list(MONSTER_ATTACK_LIST.keys()))
         elif type == "Yodie Gang":
             attack = random.choice(list(YODIE_GANG_ATTACK_LIST.keys()))
+        else:
+            attack = random.choice(list(HUMAN_ATTACK_LIST.keys()))
             
 
         # "Oh no, the enemy hath practiced the sacred art of sparring and maketh double damage."
@@ -954,9 +978,9 @@ class FightLoopTM(DefaultActionMenu):
         # damage = damage * 3
         """Attack the player"""
         if player.armour["HP_Bonus"] == None or player.armour["HP_Bonus"] <= 0:
-            player.hp -= attack["damage"]
+            player.hp -= int(attack["damage"])
         if player.armour["HP_Bonus"] != None or player.armour["HP_Bonus"] > 0:
-            for i in range(attack["damage"]-1):
+            for i in range(int(attack["damage"]-1)):
                 if player > 0:
                     player.hp -= 1
                 else:
@@ -997,6 +1021,8 @@ class FightLoopTM(DefaultActionMenu):
                 self.defend(self.enemy_damage)
             elif user_selection == "heal":
                 self.heal()
+            else:
+                return
 
             # Check if the enemy has been defeated
             if self.enemy_health <= 0 and self.enemy_name != "Valma the Soulbroken":
