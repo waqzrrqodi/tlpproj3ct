@@ -1316,15 +1316,6 @@ def chest():
     if choice.lower() != "n":
         player.inventory.pickup_item(chest1[0])
         print("You took the item")
-
-        print("Would you like to equip the item? (Y/n)")
-        choice = input("--> ")
-        if choice.lower() != "n":
-            player.inventory.equip_item(chest1[0])
-            print("You equipped the item")
-            inv_show()
-        else:
-            print("You didn't equip the item")
         
         input("\nPress enter to continue")
         clear_screen()
