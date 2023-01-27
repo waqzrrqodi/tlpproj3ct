@@ -28,7 +28,6 @@ class InventorySys():
         current_item["Equip"] = False
         self.inv.append(current_item)
                     
-        print(item)
         return item
             
     #let the player unequip an item
