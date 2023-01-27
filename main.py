@@ -860,16 +860,13 @@ class FightLoopTM(DefaultActionMenu):
         if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
             background_theme("./SoundEngine5000/battle_theme.wav")
-            self.fight_loop()
+            self.fight_loop(self.enemy_name)
         elif random.randint(1, 100) >= 10:
             print("Thau successfully run away from the fight!")
             print("Though it came with an item loss")
         elif random.randint(1, 100) >= 1:
             print("You try to run, but thau trips and falls, shattering every bone in your body.")
             death()
-
-        else:
-            ending1()
 
     def defend(self, damage):
         """When the player selects the defend option in a fight"""
