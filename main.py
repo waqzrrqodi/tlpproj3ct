@@ -8,7 +8,7 @@ import pkg_resources
 from itertools import chain
 import narration as narr
 from item_management import *
-from ad_screen import *
+
 
 # Check if the user has the required packages installed
 if system() == "Windows":
@@ -37,6 +37,7 @@ if missing:
 
 import pygame
 from pygame.locals import *
+from ad_screen import *
 import pickle
 from ui_elements import * # production materials
 import characters as ch
