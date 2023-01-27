@@ -12,7 +12,7 @@ class Player( ):
         self.subclass = chosen_subclass
         self.speed = chosen_speed
         self.inventory = InventorySys(3)
-        self.gold = 22
+        self.gold = 122
         self.level = 1
         self.xp = 0
 

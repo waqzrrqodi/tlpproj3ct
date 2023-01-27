@@ -309,6 +309,7 @@ def inv_show():
     print(f"\nPlayer Health: {player.hp}")
     print(f"\nPlayer Strength: {player.strength}")
     print(f"\nPlayer Awesomeness level: {player.level}")
+    print(f"\nPlayer shillings: {player.gold}")
     print(f"""\nPlayer Armour: {player.armour["Name"]}""")
     print(f"""\nPlayer Weapon: {player.weapon["Name"]}""")
     
@@ -1109,7 +1110,7 @@ def game_loop():
 saveFileNumberTracker = 0 #for all the lazy mfs
 def save_game():
     """
-    Save the game to the savegame.dat file. Save game data is a paid dlc feature and is not available at launch.
+    Save the game to the savegame.dat file, upcoming feature that is paid dlc, will be free with next gen consoles or within rimbo 2
     """
     global saveFileNumberTracker
     save_game = input("Would you like to save your game? (Y/n): ")
