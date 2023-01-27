@@ -443,25 +443,22 @@ def intro_menu():
         print(intro_menu_choices)
         menu_choice = input("What doth thou wish to do? --> ")
         if menu_choice == PLAY:
-            LOAD = "1"
-            NEW_GAME = "2"
-            try:
-                clear_screen()
-                choice = input("Do you wish to load a save file or start a new game? (1)Load or (2)New Game --> ")
-                # Check if the player has a save file
-                # If the player has a save file, ask if the player wants to load the save file
-                # If the player does not have a save file, start the game
-                if choice == LOAD: # Not implemented yet
-                    animate_text("Loading...", "fast")
-                    time.sleep(0.3)
-                    clear_screen()
-                    load_game()
-                elif choice == NEW_GAME:
-                    PlayerAndNameSelect()
-                    game_loop()
-            except ValueError:
-                print("Invalid input")
-                continue
+            # LOAD = "1"
+            # NEW_GAME = "2"
+            #
+            #     clear_screen()
+            #     choice = input("Do you wish to load a save file or start a new game? (1)Load or (2)New Game --> ")
+            #     # Check if the player has a save file
+            #     # If the player has a save file, ask if the player wants to load the save file
+            #     # If the player does not have a save file, start the game
+            #     if choice == LOAD: # Not implemented yet
+            #         animate_text("Loading...", "fast")
+            #         time.sleep(0.3)
+            #         clear_screen()
+            #         load_game()
+            #     elif choice == NEW_GAME:
+            PlayerAndNameSelect()
+            game_loop()
             clear_screen()
             animate_text("Loading...", "fast")
         elif menu_choice == OPTIONS:
@@ -493,11 +490,10 @@ def menu():
     while True:
         clear_screen()
         # print(ui_textbox)
-        print("Navigation Menu: \n1. Save and Exit \n2. Inventory or stats \n3. Options \n\nTo continue with story, press [Enter]\n") # For testing purposes
+        print("Navigation Menu: \n1. Exit \n2. Inventory or stats \n3. Options \n\nTo continue with story, press [Enter]\n") # For testing purposes
         menu_choice = input("What do thau wish to do? ");
         if menu_choice == SAVE_AND_EXIT:
-            print("Save + Exit")
-            save_game()
+            print("Exit")
             screen_engine()
             exit()
         if menu_choice == INVENTORY:
@@ -957,17 +953,17 @@ class FightLoopTM(DefaultActionMenu):
         """Attack the player"""
         damage_level_reduction = round(int(attack["damage"] + player.level*2))
         attack_probability = random.randint(1, 100)
-        if attack_probability >= 60:
-            print("The enemy attacks you with {} and misses.".format(attack["name"]))
+        if attack_probability >= 90:
+            print("\nThe enemy attacks you with {} and misses.".format(attack["name"]))
             print("You have {} HP left.".format(player.hp))
-        elif attack_probability <= 20 and attack_probability >= 6:
+        elif attack_probability < 90 and attack_probability >= 6:
             player.hp -= damage_level_reduction
-            print("The enemy attacks you with {} and deals {} points of damage.".format(attack["name"], damage_level_reduction))
+            print("\nThe enemy attacks you with {} and deals {} points of damage.".format(attack["name"], damage_level_reduction))
             print("You have {} HP left.".format(player.hp))
         elif attack_probability <= 5:
             health_loss = damage_level_reduction * 2
             player.hp -= health_loss
-            print("Oh no, The enemy is listening to some banger tunes and attacks you with {} with double power and deals({}) points of damage.".format(attack["name"], health_loss))
+            print("\nOh no, The enemy is listening to some banger tunes and attacks you with {} with double power and deals({}) points of damage.".format(attack["name"], health_loss))
             print("You have {} HP left.".format(player.hp))
 
     def fight_loop(self, enemy_name):
@@ -982,7 +978,7 @@ class FightLoopTM(DefaultActionMenu):
             self.instant_win = False
             background_theme("./SoundEngine5000/theme_song.wav")
             return
-        while player.hp > 0 or self.enemy_health > 0:
+        while self.enemy_health > 0:
             # Display the current health of the player and the enemy
             
             if enemy_name == "Valma the Soulbroken":
@@ -992,18 +988,22 @@ class FightLoopTM(DefaultActionMenu):
             user_selection = self.fight_menu()
             if user_selection == "attack":
                 self.attack()
+                self.enemy_attack(enemy_name, self.enemy_type)
             elif user_selection == "run":
                 escape_rate = self.run()
                 if escape_rate == True:
                     self.instant_win = True
                     break
                 else:
+                    self.enemy_attack(enemy_name, self.enemy_type)
                     continue
             elif user_selection == "heal":
                 self.heal()
+                self.enemy_attack(enemy_name, self.enemy_type)
             else:
                 return False
-
+        if player.hp <= 0:
+            death()
             # Check if the enemy has been defeated
         if self.enemy_health <= 0 and enemy_name != "Valma the Soulbroken":
             print("\nThou hast defeated the enemy!")
@@ -1035,9 +1035,6 @@ class FightLoopTM(DefaultActionMenu):
             player.gold += 99998888
             print(random.choice(narr.COIN_COLLECT_LIST) + f"\n\nYou have gained infinite shillings.")
             return False
-
-        # Enemy attacks the player
-        self.enemy_attack(enemy_name, self.enemy_type)
 
         # Check if the player has been a "has been"
         if player.hp <= 0: death()
@@ -1098,21 +1095,21 @@ def game_loop():
                     animate_text(route[text], "fast")
                 input("\nPress enter to continue")
         # start the fight loop
-        FightLoopTM(narr.PLACE_NAMES["End game boss"]["ENEMY"])
-        # Prints the win text after the fight loop
-        if len(route) != 1:
-            print(route[-1] + "\n")
-            clear_screen()
-            print(narr.TRUE_END_WIN)
-            credits()
-            break
+            FightLoopTM(narr.PLACE_NAMES["End game boss"]["ENEMY"])
+            # Prints the win text after the fight loop
+            if len(route) != 1:
+                print(route[-1] + "\n")
+                clear_screen()
+                print(narr.TRUE_END_WIN)
+                credits()
+                break
     intro_splash_only()
 
 
 saveFileNumberTracker = 0 #for all the lazy mfs
 def save_game():
     """
-    Save the game to the savegame.dat file
+    Save the game to the savegame.dat file. Save game data is a paid dlc feature and is not available at launch.
     """
     global saveFileNumberTracker
     save_game = input("Would you like to save your game? (Y/n): ")
