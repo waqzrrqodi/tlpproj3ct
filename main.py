@@ -840,7 +840,7 @@ class FightLoopTM(DefaultActionMenu):
         """When the player selects the attack option in a fight"""
         random_fight_sound(fighting_sounds)
         strength_bonus = player.strength * 0.1
-        if player.weapon == None:
+        if player.weapon["Name"] == "Empty":
             health_lost = strength_bonus + random.randint(1, 5)
             self.enemy_health -= health_lost
             print(f"""Thou attacketh the foe and dealeth {health_lost} points of damage!""")
@@ -857,14 +857,15 @@ class FightLoopTM(DefaultActionMenu):
         if random.randint(1, 100) >= 50:
             print("You try to run, but the enemy blocks thau escape!")
             background_theme("./SoundEngine5000/battle_theme.wav")
-            self.fight_loop()
+            return False
         elif random.randint(1, 100) >= 10:
             print("Thau successfully run away from the fight!")
             print("Though it came with an item loss")
+            player.inventory.inv.pop(random.choice(list(player.inventory.inv)))
+            return True
         elif random.randint(1, 100) >= 1:
             print("You try to run, but thau trips and falls, shattering every bone in your body.")
             death()
-
         else:
             ending1()
 
@@ -1037,7 +1038,11 @@ class FightLoopTM(DefaultActionMenu):
             if user_selection == "attack":
                 self.attack()
             elif user_selection == "run":
-                self.run()
+                escape_rate = self.run()
+                if escape_rate == True:
+                    break
+                else:
+                    continue
             elif user_selection == "defend":
                 self.defend(self.enemy_damage)
             elif user_selection == "heal":
@@ -1255,7 +1260,7 @@ def story():
             if choice == None:
                 print("Please choose a valid route")
         route = narr.PLACE_NAMES[choice]["ROUTE"]
-        random_trap_chest = random.choice(["chest", "chest", "chest"])
+        random_trap_chest = random.choice(["chest", "trap", "chest"])
         if random_trap_chest == "trap":
             trap()
         elif random_trap_chest == "chest":
@@ -1313,6 +1318,7 @@ def trap():
         player.hp -= 20
         print("You got caught in the trap")
         input("\nPress enter to continue")
+    return
 
 def chest():
     chest = ChestSys()
@@ -1325,6 +1331,20 @@ def chest():
     if choice.lower() != "n":
         player.inventory.pickup_item(chest1[0])
         print("You took the item")
+
+        print("Would you like to equip the item? (Y/n)")
+        choice = input("--> ")
+        if choice.lower() != "n":
+            player.inventory.equip_item(chest1[0])
+            print("You equipped the item")
+            inv_show()
+        else:
+            print("You didn't equip the item")
+        
+        input("\nPress enter to continue")
+        clear_screen()
+    else:
+        print("You didn't take the item")
         input("\nPress enter to continue")
         clear_screen()
 
