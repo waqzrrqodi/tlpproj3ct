@@ -36,7 +36,12 @@ class Player( ):
                 for item in enumerate(self.inventory.inv):
                     print(f"""{item[0] + 1}. {item[1]["Name"]} """)
 
-            item_choice = int(input("Item number: \n --> "))
+            try:
+                item_choice = int(input("Item number: \n --> "))
+            except ValueError:
+                print("Input must be a number")
+                input ("Press enter to continue")
+                return
             item_choice -= 1
 
             if item_choice <= len(self.inventory.inv):

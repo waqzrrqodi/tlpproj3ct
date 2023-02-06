@@ -301,7 +301,8 @@ class DefaultActionMenu():
 def inv_show():
     EQUIP = 1
     UNEQUIP = 2
-    PURCHASE = 3
+    SHOP = 3
+    BACK = 4
     """
     Shows the player's inventory, in a small and a full view.
     """
@@ -352,7 +353,7 @@ def inv_show():
                 
             print("Would you like to equip, unequip or purchase an item?")
             try: 
-                equip_choice = int(input("1. Equip \n2. Unequip \n3. Purchase \n--> "))
+                equip_choice = int(input("1. Equip \n2. Unequip \n3. Shop \n4. Back \n--> "))
             except ValueError:
                 print("Invalid input")
                 input("Press enter to continue...")
@@ -369,9 +370,11 @@ def inv_show():
                 clear_screen()
                 player.player_unequip_item()
 
-            elif equip_choice == PURCHASE:
+            elif equip_choice == SHOP:
                 clear_screen()
                 item_shop(player)
+            elif equip_choice == BACK or equip_choice == "":
+                break
 
             else:
                 print("Invalid input")
@@ -864,8 +867,9 @@ class FightLoopTM(DefaultActionMenu):
             print("Thau successfully run away from the fight!")
             if len(player.inventory.inv) > 0:
                 print("Though it came with an item loss")
-                item_lost = player.inventory.inv.remove(random.choice(list(player.inventory.inv)))
-                print(f"You lost {item_lost['Name']}")
+                item = random.choice(list(player.inventory.inv))
+                player.inventory.inv.remove(item)
+                print(f"You lost {item['Name']}")
             else:
                 print("Since you had no items, you lost nothing peasants.")
             print("press enter to continue...")

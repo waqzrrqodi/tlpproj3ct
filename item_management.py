@@ -59,7 +59,13 @@ class InventorySys():
                 for item_numbah in range(self.inv):
                     print(f"{item_numbah + 1}, {self.inv[item_numbah]}")
 
-                the_item_dilemma_final_choice = int(input("Choose numbah----->"))
+                while True:
+                    try:
+                        the_item_dilemma_final_choice = int(input("Choose numbah----->"))
+                        break
+                    except ValueError:
+                        print("Please provide a number")
+
                 self.inv.pop(the_item_dilemma_final_choice-1)
                 self.inv.append(item)
 
@@ -271,8 +277,11 @@ def item_shop(player):
         for i in range(len(player.inventory.inv)):
             print(f"{i+1}. {player.inventory.inv[i].get('Name')} - {player.inventory.inv[i].get('Worth')} shillings")
         
-        item_choice = int(input("--> ")) 
-        item_choice -= 1
+        try:
+            item_choice = int(input("--> "))
+        except ValueError:
+            print("Please provide a valid item number")
+            return
 
         if item_choice <= len(player.inventory.inv):
             print(f"""You sold an item for {player.inventory.inv[item_choice].get("Worth")} shillings""")
