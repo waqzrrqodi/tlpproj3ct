@@ -279,6 +279,7 @@ def item_shop(player):
         
         try:
             item_choice = int(input("--> "))
+            item_choice -= 1
         except ValueError:
             print("Please provide a valid item number")
             return
